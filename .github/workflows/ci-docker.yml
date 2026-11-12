@@ -1,0 +1,45 @@
+name: Pull request CI
+
+on:
+  pull_request:
+    branches: [main, sprint-1-staging]
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-docker:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: approvals_test
+          POSTGRES_USER: approvals
+          POSTGRES_PASSWORD: ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U approvals -d approvals_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 15
+    env:
+      DATABASE_URL: postgresql://approvals:ci-only@127.0.0.1:5432/approvals_test
+      TEST_DATABASE_URL: postgresql://approvals:ci-only@127.0.0.1:5432/approvals_test
+      SEED_PASSWORD: ci-fixtures-only
+      BCRYPT_ROUNDS: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npx prisma migrate deploy
+      - run: npm test
+      - run: npx prisma db seed
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - run: docker build --tag approvals:ci .
