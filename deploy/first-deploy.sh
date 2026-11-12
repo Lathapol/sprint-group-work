@@ -31,7 +31,8 @@ if [[ -n "$(git status --porcelain)" ]]; then
   echo 'Commit all changes before building a release.' >&2
   exit 1
 fi
-if [[ "$(gcloud billing projects describe "$PROJECT_ID" --format='value(billingEnabled)')" != True ]]; then
+gcloud services enable cloudbilling.googleapis.com --project="$PROJECT_ID"
+if [[ "$(gcloud billing projects describe "$PROJECT_ID" --billing-project="$PROJECT_ID" --format='value(billingEnabled)')" != True ]]; then
   echo 'Project billing must be enabled before deployment.' >&2
   exit 1
 fi
