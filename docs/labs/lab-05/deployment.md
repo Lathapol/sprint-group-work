@@ -18,7 +18,7 @@ For a native build, run npm ci, npx prisma generate, and npm run build. Set DATA
 
 The lab release path is a reviewed feature PR into sprint-1-staging, followed by a reviewed release PR into main. Set test-and-docker as a required check once it has run on GitHub. Capture both a passing PR and a blocked temporary PR as evidence.
 
-The team GCP project is `vertical-set-514506-g8`. The proposed region is `asia-southeast1`, service and Artifact Registry repository `approvals`, SQL instance `approvals-pg`, database/user `approvals`, migration job `approvals-migrate`, and runtime account `approvals-runner`. Provisioning is pending.
+The team GCP project is `vertical-set-514506-g8`. Region is `asia-southeast1`, service and Artifact Registry repository `approvals`, SQL instance `approvals-pg`, database/user `approvals`, migration job `approvals-migrate`, and runtime account `approvals-runner`.
 
 `deploy/first-deploy.sh` previews its resource plan by default. After signing into the Google Cloud CLI, reviewing the plan and committing the source, `bash deploy/first-deploy.sh --execute` checks billing, enables APIs, provisions resources, generates credentials directly into Secret Manager, builds both images with Cloud Build, executes migrations and seed, deploys by image digest, and checks the public UI and database health. Run from the repository root with Bash, OpenSSL and curl available. Do not enable shell tracing because commands handle secret values. The seed uses the same secret on reruns and restores the demo account passwords to that value.
 
@@ -26,4 +26,14 @@ SQL uses PostgreSQL 16 Enterprise db-f1-micro with 10 GB of storage, storage aut
 
 The initial setup requires project permissions to enable services, manage IAM, create secrets and provision SQL/Cloud Run. Cloud Build's selected build service account must be permitted to upload images, read the build source and write logs. Read any permission error before changing roles. Do not paste credentials or connection strings into chat.
 
-The later release workflow will build from main, run migrations, deploy the image digest and check the live URL. Record the running revision and image digest alongside the commit SHA in the deployment run. Capture the same record before and after both a restart and a redeploy. The deployment issue remains open until the live URL, sign-in and business workflow have passed on GCP.
+On Windows Git Bash, the SDK shell launcher can fail when the installation path contains spaces. Invoke the SDK Python entry point through a shell function if needed, using the installed Windows Python executable and the absolute Windows path to `google-cloud-sdk/lib/gcloud.py`. Export that function before invoking the deploy script. Set MSYS_NO_PATHCONV=1 so Cloud SQL socket paths and the job's /bin/sh command are passed literally. Generated secret values must exclude both carriage returns and newlines. The script now checks that the database password is exactly 48 hexadecimal characters.
+
+## First live deployment evidence, 12 November 2026
+
+Public URL is https://approvals-389973748230.asia-southeast1.run.app . Runtime revision `approvals-00001-m64` serves 100% traffic from source commit `2c4ce6239a8888952ad4bba3b65e482bc26040aa`, the reviewed merge of PR #44. The initial Cloud Build run is https://console.cloud.google.com/cloud-build/builds/4a7e9544-835b-40e5-a259-cf318ab7103f?project=389973748230 . Both images built successfully. Successful migration/seed execution is `approvals-migrate-bk952`.
+
+Verification against the public URL returned UI HTTP 200 and database health `ok`. A demo requester signed in and created synthetic request #5. A requester attempt to claim that request was rejected with HTTP 403. The reviewer signed in, claimed it, and rejected it with a reason. The requester then retrieved the same record with state REJECTED. Credentials were read directly from Secret Manager for this check and were not printed. The record remains as demonstration evidence.
+
+The first migration execution failed authentication because the original generated password retained a Windows carriage return. Fresh clean secret versions were stored, the database user's password was updated to match, and the second execution passed. The local script fix removes both CR and LF from generated values and validates their format before use.
+
+The later release workflow will build from main, run migrations, deploy the image digest and check the live URL. Restart/redeploy persistence evidence and the required failing-PR merge gate remain for the later issues.

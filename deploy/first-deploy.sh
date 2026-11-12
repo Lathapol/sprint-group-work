@@ -55,12 +55,16 @@ fi
 
 create_random_secret() {
   if ! gcloud secrets describe "$1" --project="$PROJECT_ID" >/dev/null 2>&1; then
-    openssl rand -hex 24 | tr -d '\n' | gcloud secrets create "$1" --replication-policy=automatic --data-file=- --project="$PROJECT_ID"
+    openssl rand -hex 24 | tr -d '\r\n' | gcloud secrets create "$1" --replication-policy=automatic --data-file=- --project="$PROJECT_ID"
   fi
 }
 create_random_secret approvals-db-password
 create_random_secret approvals-seed-password
 DB_PASSWORD="$(gcloud secrets versions access latest --secret=approvals-db-password --project="$PROJECT_ID")"
+if [[ ! "$DB_PASSWORD" =~ ^[0-9a-f]{48}$ ]]; then
+  echo 'Database password secret must contain exactly 48 hexadecimal characters.' >&2
+  exit 1
+fi
 if ! gcloud sql users list --instance="$INSTANCE" --project="$PROJECT_ID" --format='value(name)' | grep -qx approvals; then
   gcloud sql users create approvals --instance="$INSTANCE" --password="$DB_PASSWORD" --project="$PROJECT_ID"
 fi
