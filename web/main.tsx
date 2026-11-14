@@ -225,7 +225,10 @@ function App() {
   return <>
     <header className="bg-dark text-white py-3">
       <div className="container d-flex justify-content-between align-items-center">
-        <Link className="text-white text-decoration-none fw-semibold" to="/">Department Requests</Link>
+        <div>
+          <Link className="text-white text-decoration-none fw-semibold" to="/">Department Requests</Link>
+          <small className="d-block text-white-50">Team approvals · Cloud release</small>
+        </div>
         {user && <div className="d-flex gap-3 align-items-center">
           <span>{user.username}</span>
           <button className="btn btn-sm btn-outline-light" disabled={busy} onClick={() => void logout()}>Sign out</button>

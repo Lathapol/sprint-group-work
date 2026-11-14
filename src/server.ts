@@ -1,4 +1,7 @@
 import 'dotenv/config';
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import { createApp } from './app';
 
@@ -7,7 +10,18 @@ const port = Number(process.env.PORT ?? 3000);
 const ttl = Number(process.env.SESSION_TTL_HOURS ?? 8);
 const rounds = Number(process.env.BCRYPT_ROUNDS ?? 12);
 
-const server = createApp(db, ttl, rounds).listen(port, () => {
+const app = createApp(db, ttl, rounds);
+const webRoot = resolve(__dirname, '../web/dist');
+const index = resolve(webRoot, 'index.html');
+if (existsSync(index)) {
+  app.use(express.static(webRoot, { index: false }));
+  app.get(/^\/(?!api(?:\/|$))/, (req, res, next) => {
+    if (!req.accepts('html')) return next();
+    res.sendFile(index);
+  });
+}
+
+const server = app.listen(port, () => {
   console.log('API listening on port', port);
 });
 
