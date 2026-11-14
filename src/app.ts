@@ -73,6 +73,10 @@ export function createApp(db: PrismaClient, ttlHours = 8, bcryptRounds = 12) {
     fail(res, 401, 'UNAUTHENTICATED', 'Log in to continue.');
   };
 
+  app.get('/api/version', (_req, res) => {
+    res.json({ data: { commit: process.env.RELEASE_COMMIT ?? 'local' } });
+  });
+
   app.get('/api/health', async (_req, res) => {
     try {
       await db.$queryRaw`SELECT 1`;
