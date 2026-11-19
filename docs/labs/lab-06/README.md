@@ -3,7 +3,7 @@
 Due: 22 November 2026, 23:59 Asia/Bangkok. One self-contained PDF per team.
 
 Product Team: Cache Me if you can, Section 31. Lathapol Srikhiao (67070503475) and Kittakorn Poungpien (67070503401).
-Partner Product/UAT Team: **not yet recorded**. Record both names, student IDs, repository, deployed URL and agreed session times before execution.
+Partner Product/UAT Team: **Macau678** — Punnapob Wirojwongchai (67070503425), Patcharak Plipat (67070503427). Repository: https://github.com/bravefe/Software-Engineer-2. See [partner handoff](partner-handoff.md); exact accessible app URL, deployed revision and agreed session times still require confirmation.
 
 ## Work and assessment
 
@@ -14,7 +14,7 @@ Partner Product/UAT Team: **not yet recorded**. Record both names, student IDs, 
 
 ## Current status
 
-Preparation draft only. No independent executions, findings disposition, partner agreement or acceptance is claimed. Lab 5 evidence may corroborate the baseline but does not substitute for Lab 6 independent testing. Do not infer that no defects exist from an empty findings table.
+Preparation draft only. No independent executions, findings disposition, agreed testing sessions or acceptance is claimed. Lab 5 evidence may corroborate the baseline but does not substitute for Lab 6 independent testing. Do not infer that no defects exist from an empty findings table.
 
 ## Proposed coordination (not agreed appointments)
 

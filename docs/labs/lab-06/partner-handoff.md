@@ -11,7 +11,8 @@ Received from the user's screenshot, 19 November 2026. This is handoff intake, n
 - Preflight GET of that transcription returned HTTP 404 on 19 November. Confirm exact URL with user/partner before attributing an availability defect to the product. No UAT case is marked PASS.
 - Private credentials supplied in screenshot; password intentionally not copied to Git or reports.
 - Screenshot's role headings appear swapped. Partner's written handoff specifies requester1@macau678.com = REQUESTER and reviewer1@macau678.com = REVIEWER. Actual signed-in role verification remains pending.
-- Both partner members' full names/student IDs, live deployed revision and coordinated sessions remain pending.
+- Partner members (confirmed by user): Punnapob Wirojwongchai, 67070503425; Patcharak Plipat, 67070503427.
+- Live deployed revision and coordinated sessions remain pending.
 
 ## Supplied cases to execute as independent testers
 
