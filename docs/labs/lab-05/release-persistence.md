@@ -12,10 +12,31 @@ To repeat a normal release, use a feature branch, teammate-reviewed PR into `spr
 
 For rollback or roll-forward, open Actions, select Deploy approval app, choose Run workflow on branch main, and enter the full SHA of a previously built pipeline image in image_tag. This reuses the stored digest and skips build, tests and migration. It preserves the current database schema. Use images from releases that provide `/api/version`. Leave image_tag empty to rerun the full quality/build/migrate/release path for current main.
 
-## Evidence still to collect
+## Verified automated release (C-06)
 
-Issue #41 requires the reviewed feature PR, reviewed release PR, successful workflow run, image digest, matching Cloud Run revision/commit, and the visible Team approvals / Cloud release label on the public app. Federation authentication is configured but its first live workflow execution remains to be verified.
+- Issue: [#41](https://github.com/Lathapol/sprint-group-work/issues/41).
+- Reviewed pipeline feature: [PR #48](https://github.com/Lathapol/sprint-group-work/pull/48), merged into sprint-1-staging.
+- Reviewed staging-to-main release: [PR #49](https://github.com/Lathapol/sprint-group-work/pull/49).
+- Release commit: `c502fa49faa9557af7c46b108095a9bb9249bc0c`.
+- Successful [deployment run 43610712825](https://github.com/Lathapol/sprint-group-work/actions/runs/43610712825), attempt 2. Quality tests/build passed; GitHub-to-GCP federation, image publication, migration, deployment and live smoke test passed. Attempt 1 failed at OIDC before changing the live service; the subject-format correction is documented in github-gcp.md.
+- Runtime image: `asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app@sha256:c08b0810cc9bad192315e3e9b8eb5b185bad748411246e650ceb798af3f85da3`.
+- Serving revision: `approvals-r43610712825-2`, 100% traffic.
+- Live app: https://approvals-ia5ybuqdoq-as.a.run.app/ . The numeric-project URL https://approvals-389973748230.asia-southeast1.run.app/ reaches the same service.
+- Read-only /api/version returned the full release commit above. /api/health reported status ok.
+- UI shows **Team approvals - Cloud release** (the actual UI uses a middle dot). See [live screenshot](evidence/live-release.jpg), [run screenshot](evidence/deployment-success.jpg) and [revision snapshot](evidence/after-redeploy-revision.json).
 
-For issue #42, create a uniquely named synthetic request on the public app and record its ID and fields. Capture the page and commit before the restart, after a fresh application revision using the same image, and after a separate pipeline build/redeploy. Reuse the same signed-in session to check that PostgreSQL-backed sessions persist as well. Record the revisions, workflow links, commit and observation at each stage. Keep the record as grading evidence. A database backup, schema migration or successful health check alone does not establish application-data persistence.
+## Persistence across restart AND redeploy (C-05)
 
-The initial manual deployment is recorded in deployment.md. This file will receive the actual release and persistence observations after verification.
+Issue [#42](https://github.com/Lathapol/sprint-group-work/issues/42) used synthetic request **#6**, created before either operation. Its title is Lab 5 persistence 2026-11-14T14:37:48.523Z, category PURCHASE, amount THB149.75 and state PENDING.
+
+| Observation | Revision | Result |
+| --- | --- | --- |
+| Before restart | approvals-00001-m64 | Request #6 created; baseline fields recorded. |
+| After same-image restart | approvals-restart-1794667103 | Same record and existing requester1 session persisted. |
+| After independent pipeline build/redeploy | approvals-r43610712825-2 | Same record and original session persisted; running commit matches release. |
+
+The automated comparison checked id, title, category, amount, justification, state, requesterId and createdAt against the original baseline. The after-redeploy API check reused the privately stored pre-restart requester1 session and did not log in again. The final UI capture was taken separately in the user's signed-in browser; it proves the record is visible, while the API comparison establishes survival of the original session.
+
+Evidence: [before](evidence/before-restart.png), [after restart](evidence/after-restart.png), [after redeploy](evidence/after-redeploy.jpg), [baseline](evidence/baseline.json), [after-redeploy comparison](evidence/after-redeploy-api.json). No passwords, session cookies or federation credential files are included.
+
+See [evidence index](evidence-index.md) for report assembly and the remaining whole-lab evidence scope.

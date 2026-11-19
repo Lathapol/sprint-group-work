@@ -1,0 +1,25 @@
+{
+  "stage": "after-restart",
+  "observedAt": "2026-11-14T14:38:40.724Z",
+  "url": "https://approvals-389973748230.asia-southeast1.run.app/requests/6",
+  "request": {
+    "id": 6,
+    "title": "Lab 5 persistence 2026-11-14T14:37:48.523Z",
+    "category": "PURCHASE",
+    "amount": "149.75",
+    "justification": "Synthetic record retained across application restart and pipeline redeploy.",
+    "state": "PENDING",
+    "requesterId": 1,
+    "reviewerId": null,
+    "decisionReason": null,
+    "createdAt": "2026-11-14T14:37:53.307Z",
+    "updatedAt": "2026-11-14T14:37:53.307Z",
+    "decidedAt": null,
+    "requester": {
+      "id": 1,
+      "username": "requester1"
+    },
+    "reviewer": null
+  },
+  "sessionSurvived": true
+}

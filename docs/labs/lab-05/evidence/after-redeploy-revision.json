@@ -1,0 +1,30 @@
+{
+  "spec": {
+    "template": {
+      "metadata": {
+        "labels": {
+          "commit-sha": "c502fa49faa9557af7c46b108095a9bb9249bc0c",
+          "run.googleapis.com/startupProbeType": "Default"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app@sha256:c08b0810cc9bad192315e3e9b8eb5b185bad748411246e650ceb798af3f85da3"
+          }
+        ]
+      }
+    }
+  },
+  "status": {
+    "latestReadyRevisionName": "approvals-r43610712825-2",
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100,
+        "revisionName": "approvals-r43610712825-2"
+      }
+    ],
+    "url": "https://approvals-ia5ybuqdoq-as.a.run.app"
+  }
+}
