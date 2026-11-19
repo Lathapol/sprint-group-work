@@ -10,13 +10,14 @@ The Workflow and Approval System uses React/Vite, Express, Prisma and PostgreSQL
 | SESSION_TTL_HOURS | Session lifetime, defaults to 8 | No | Runtime environment |
 | BCRYPT_ROUNDS | Password hashing cost, defaults to 12 | No | Runtime or seed environment |
 | SEED_PASSWORD | Password for synthetic demo accounts | Yes | Local environment, disposable CI fixture, or Secret Manager |
+| RELEASE_COMMIT | Full source commit served by /api/version | No | Release workflow |
 | TEST_DATABASE_URL | Isolated database for integration/browser tests | Yes | Local environment or disposable CI PostgreSQL service |
 
 From a clean clone, run docker compose up --build and open http://localhost:3000. Compose runs migrations before starting the app. Check /api/health for database readiness. To seed demo accounts locally, set SEED_PASSWORD to a disposable value in your shell and run docker compose run --rm -e SEED_PASSWORD migrate node prisma/seed.cjs. Never point the demo seed at real user data. Use docker compose down to stop the stack and retain the volume.
 
 For a native build, run npm ci, npx prisma generate, and npm run build. Set DATABASE_URL before npx prisma migrate deploy and npm start. Run npm test against a separate migrated TEST_DATABASE_URL. Seed that test database, install Chromium with npx playwright install chromium, and run npm run test:e2e with TEST_DATABASE_URL and SEED_PASSWORD set. The PR workflow performs these steps with a disposable database.
 
-The lab release path is a reviewed feature PR into sprint-1-staging, followed by a reviewed release PR into main. Set test-and-docker as a required check once it has run on GitHub. Capture both a passing PR and a blocked temporary PR as evidence.
+The lab release path is a reviewed feature PR into sprint-1-staging, followed by a reviewed release PR into main. The active ruleset requires test-and-docker on main and sprint-1-staging. The deliberately failing temporary PR #46 is retained as failed-check evidence and must not be merged.
 
 The team GCP project is `vertical-set-514506-g8`. Region is `asia-southeast1`, service and Artifact Registry repository `approvals`, SQL instance `approvals-pg`, database/user `approvals`, migration job `approvals-migrate`, and runtime account `approvals-runner`.
 
@@ -36,4 +37,4 @@ Verification against the public URL returned UI HTTP 200 and database health `ok
 
 The first migration execution failed authentication because the original generated password retained a Windows carriage return. Fresh clean secret versions were stored, the database user's password was updated to match, and the second execution passed. The local script fix removes both CR and LF from generated values and validates their format before use.
 
-The later release workflow will build from main, run migrations, deploy the image digest and check the live URL. Restart/redeploy persistence evidence and the required failing-PR merge gate remain for the later issues.
+The automated main release passed on 14 November 2026. Current revision approvals-r43610712825-2 serves release commit c502fa49faa9557af7c46b108095a9bb9249bc0c. Request #6 survived both the same-image application restart and the separate pipeline rebuild/redeploy. See release-persistence.md for the run, digests, session verification and before/after captures; see github-gcp.md for the required-check rule and OIDC configuration.

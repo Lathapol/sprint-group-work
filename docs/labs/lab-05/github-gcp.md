@@ -2,7 +2,7 @@
 
 ## Branch protection
 
-Ruleset `Lab 5 reviewed and tested releases` (ID 27124596) is active on `main` and `sprint-1-staging`, with an empty bypass list. Both branches require a PR, one approving teammate review, approval of the latest push, resolved review threads, an up-to-date branch and a passing `test-and-docker` status. Stale approvals are dismissed. Branch deletion and force pushes are blocked. The PR author cannot approve their own changes.
+Ruleset `Lab 5 reviewed and tested releases` (ID 27124596) is active on `main` and `sprint-1-staging`, with an empty bypass list. Both branches require a PR, one approving teammate review, resolved review threads, an up-to-date branch and a passing `test-and-docker` status. Stale approvals are dismissed. Branch deletion and force pushes are blocked. The PR author cannot approve their own changes.
 
 The setting is visible at https://github.com/Lathapol/sprint-group-work/settings/rules/27124596 . The normal release path remains reviewed feature PR into sprint-1-staging, then reviewed release PR into main. Merge main back into staging when necessary to keep the release branch up to date.
 
@@ -30,8 +30,14 @@ Pool `github-actions` and provider `github-main` use the GitHub OIDC issuer `htt
 - Repository ID `1446559361` and owner ID `186375007`.
 - Ref `refs/heads/main`.
 - Workflow ref `Lathapol/sprint-group-work/.github/workflows/deploy.yml@refs/heads/main`.
-- Subject `repo:Lathapol/sprint-group-work:environment:demo`.
+- Subject `repo:Lathapol@186375007/sprint-group-work@1446559361:environment:demo`.
 
 The repository principal set can impersonate `approvals-deployer` using `roles/iam.workloadIdentityUser`. The deployer has Artifact Registry Writer on the approvals repository, Cloud Run Developer on the project and Service Account User on approvals-runner. The runtime account retains its existing Cloud SQL and Secret Manager access. No service-account JSON key was created.
 
-The deployment workflow will declare `environment: demo` and job permissions `contents: read` and `id-token: write`, then authenticate through the provider and service account above. Use the exact filename deploy.yml to match the trust condition. The first end-to-end OIDC authentication and automated release remain to be verified in issue #41 after that workflow reaches main.
+The deployment workflow will declare `environment: demo` and job permissions `contents: read` and `id-token: write`, then authenticate through the provider and service account above. Use the exact filename deploy.yml to match the trust condition. End-to-end OIDC authentication and the automated release passed on 14 November 2026 in run 43610712825, attempt 2. See release-persistence.md and evidence-index.md.
+
+## Verified configuration corrections, 14 November 2026
+
+The repository uses GitHub immutable OIDC subjects (`use_immutable_subject: true`). The first release attempt was rejected because the provider expected the older name-only subject. The subject condition now includes the immutable owner/repository IDs shown above; repository ID, owner ID, main ref, deploy.yml workflow ref and demo environment restrictions remain unchanged. No service-account key or additional cloud role was added.
+
+The owner disabled require_last_push_approval in ruleset 27124596 for the two-person workflow. One approving non-author review, stale-review dismissal, resolved review threads, the up-to-date required test check, deletion protection and force-push protection remain active. The rule covers both main and sprint-1-staging. PR #49 became approved and was merged by the team.
