@@ -1,0 +1,90 @@
+name: Deploy approval app
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Optional full commit SHA of an existing image for rollback/roll-forward'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: approvals-demo
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require main and a valid image tag
+        env:
+          SOURCE_REF: ${{ github.ref }}
+          IMAGE_TAG: ${{ inputs.image_tag }}
+        run: |
+          test "$SOURCE_REF" = refs/heads/main
+          if [[ -n "$IMAGE_TAG" && ! "$IMAGE_TAG" =~ ^[0-9a-f]{40}$ ]]; then
+            echo 'image_tag must be a full 40-character commit SHA.' >&2
+            exit 1
+          fi
+
+  quality:
+    needs: validate
+    if: ${{ !inputs.image_tag }}
+    uses: ./.github/workflows/ci-docker.yml
+
+  deploy:
+    needs: [validate, quality]
+    if: ${{ always() && needs.validate.result == 'success' && (needs.quality.result == 'success' || (needs.quality.result == 'skipped' && inputs.image_tag != '')) }}
+    runs-on: ubuntu-latest
+    environment: demo
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      GCP_REGION: ${{ vars.GCP_REGION }}
+      IMAGE_TAG: ${{ inputs.image_tag || github.sha }}
+      REUSE_IMAGE: ${{ inputs.image_tag != '' }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Validate deployment configuration
+        env:
+          WIF_PROVIDER: ${{ vars.WIF_PROVIDER }}
+          WIF_SERVICE_ACCOUNT: ${{ vars.WIF_SERVICE_ACCOUNT }}
+        run: |
+          test -n "$GCP_PROJECT_ID"
+          test -n "$GCP_REGION"
+          test -n "$WIF_PROVIDER"
+          test -n "$WIF_SERVICE_ACCOUNT"
+      - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3
+      - name: Build and push commit images
+        if: ${{ !inputs.image_tag }}
+        run: |
+          IMAGE_BASE="$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/approvals"
+          gcloud auth configure-docker "$GCP_REGION-docker.pkg.dev" --quiet
+          docker build -t "$IMAGE_BASE/app:$IMAGE_TAG" .
+          docker build --target migration -t "$IMAGE_BASE/migration:$IMAGE_TAG" .
+          docker push "$IMAGE_BASE/app:$IMAGE_TAG"
+          docker push "$IMAGE_BASE/migration:$IMAGE_TAG"
+      - name: Migrate and release by digest
+        run: bash deploy/release.sh
+      - name: Read-only live smoke test
+        run: python deploy/smoke_test.py "$SERVICE_URL" "$IMAGE_TAG"
+      - name: Record release
+        run: |
+          {
+            echo '### Approval app release'
+            echo "Commit image tag: $IMAGE_TAG"
+            echo "Image: $APP_IMAGE"
+            echo "Revision: $SERVICE_REVISION"
+            echo "Public URL: $SERVICE_URL"
+          } >> "$GITHUB_STEP_SUMMARY"

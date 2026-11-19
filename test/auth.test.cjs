@@ -6,6 +6,18 @@ const { hash } = require('bcryptjs');
 const request = require('supertest');
 const { createApp } = require('../dist/app');
 
+test('public version reports the release commit without database access', async (t) => {
+  const previous = process.env.RELEASE_COMMIT;
+  t.after(() => {
+    if (previous === undefined) delete process.env.RELEASE_COMMIT;
+    else process.env.RELEASE_COMMIT = previous;
+  });
+  const api = request(createApp({}, 8, 10));
+  process.env.RELEASE_COMMIT = 'a'.repeat(40);
+  const version = await api.get('/api/version').expect(200);
+  assert.equal(version.body.data.commit, 'a'.repeat(40));
+});
+
 test('login, current user, session expiry and logout against PostgreSQL', async (t) => {
   assert.ok(process.env.TEST_DATABASE_URL, 'Set TEST_DATABASE_URL to a migrated test database.');
   const db = new PrismaClient({ datasourceUrl: process.env.TEST_DATABASE_URL });
