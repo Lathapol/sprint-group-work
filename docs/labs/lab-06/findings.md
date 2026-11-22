@@ -1,6 +1,6 @@
 # Findings and disposition records
 
-Status: execution has not started. Findings are not yet received/reported; this is NOT a claim of zero defects.
+Status updated 22 November 2026: a partial incoming partner report was supplied in a Discord screenshot. Its reported outcomes are not substituted for our execution, reproduction or acceptance records. Full original report and exact tested version/request details remain pending.
 
 ## Individual finding (copy for each real failure)
 
@@ -25,3 +25,21 @@ Allowed classifications: accepted defect, duplicate (link original), not-defect 
 6. Independent named tester, date, original reproduction/affected cases, corrected version, actual results/evidence and closure.
 
 Do not fabricate a bug if none is found. Instructor-approved controlled exercises must identify approval, isolated version and independent retest, separately from the healthy release.
+
+## Incoming record IN-01 — reported 404 instead of 403
+
+Tracking: https://github.com/Lathapol/sprint-group-work/issues/60. Product owner: our team. Reporter: partner report visible in user-supplied Discord screenshot; individual executor not visible. Observed screenshot received 22 Nov; original execution time and source/revision unknown.
+
+Partner reports five of six scenarios passed and one low-priority status mismatch: requester2 received 404 when attempting another request claim, expected 403. Partner observed no unauthorized modification/disclosure. Six original case IDs and complete outgoing_report.md are not visible; do not infer these equal our eight draft cases.
+
+Classification: pending exact reproduction/clarification. Preliminary severity minor/low per reported impact; not yet a confirmed accepted implementation defect or confirmed not-defect. Investigation owner: Lathapol / Product Team. Disposition: open, obtain exact URL/method/body/record ID/session role/tested SHA and full report.
+
+Contract AC-01-04 and UAT6-03 distinguish forbidden-role POST (403) from cross-owner GET (404). Developer verification on live source 51b57adc1c51d57e23d047d628cf55966e268ad9: requester2 GET /api/requests/6 returned 404; POST /api/requests/6/claim returned 403; malformed-ID POST /api/requests/not-a-number/claim returned 404. Existing requester1 record #6 was exactly unchanged before/after. See evidence/claim-status-preflight.json for actual UTC timestamp/results. The script takes SEED_PASSWORD privately and outputs no cookie/password. Run from an evidence workspace with that environment variable; it creates lab6-evidence/claim-status-preflight.json. These are AI-assisted developer API checks, not independent manual retest.
+
+Do not change expected 403 to 404 merely to match a reported failure: identify the actual route and input first. No code fix, RED/GREEN run, independent closure or acceptance is claimed. No message was sent to Discord or partner team. Partner must independently rerun the correctly formed forbidden claim and verify protected state is unchanged.
+
+## Outgoing test dependency OUT-SETUP-01 — Macau678 TC-03 Part B
+
+Tracking: https://github.com/Lathapol/sprint-group-work/issues/61. Pai's visible message suggests marking Fail because only one requester account was initially supplied. Record the missing prerequisite as BLOCKED; if a human report used FAIL retain that historical label with its setup reason, rather than invent a product authorization defect.
+
+The screenshot now provides requester2@macau678.com. Account/role and private credential availability are not verified. Rerun TC-03 Part B using a known real record owned by the other requester, record both student testers' actual participation, full version, time and denial/no-disclosure/unchanged-state evidence. No rerun or PASS/FAIL is claimed here.

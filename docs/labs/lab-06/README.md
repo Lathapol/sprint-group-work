@@ -14,7 +14,7 @@ Partner Product/UAT Team: **Macau678** — Punnapob Wirojwongchai (67070503425),
 
 ## Current status
 
-Preparation draft only. No independent executions, findings disposition, agreed testing sessions or acceptance is claimed. Lab 5 evidence may corroborate the baseline but does not substitute for Lab 6 independent testing. Do not infer that no defects exist from an empty findings table.
+Preparation draft only. A partial independent partner report was received via screenshot on 22 November; exact request/version and final disposition remain pending. No own-team independent executions, agreed testing sessions or acceptance is claimed. See [received findings](findings.md), issues #60 and #61. Lab 5 evidence may corroborate the baseline but does not substitute for Lab 6 independent testing. Do not infer that no defects exist from an empty findings table.
 
 ## Proposed coordination (not agreed appointments)
 

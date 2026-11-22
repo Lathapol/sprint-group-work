@@ -24,3 +24,7 @@ Do not accept unresolved critical/major defects or required BLOCKED tests. Do no
 | Our baseline | 51b57adc1c51d57e23d047d628cf55966e268ad9 | Not executed | approvals-r44500910145-1 | Proposed UAT6-01–08 | Lab 5 release observation, not independent UAT |
 
 Add defective, RED-test, corrected, staging-merge and final-main versions only when they exist; explain merge differences. Log deployment notifications, TA requests and partner access failures with actual dates and evidence. Pending communications are not sent communications.
+
+## 22 November partner report intake
+
+Partial screenshot reports five of six scenarios passed and one low-priority HTTP status mismatch. It gives no exact tested release and no explicit final acceptance statement. Decision remains PENDING; issue #60 records investigation and independent retest requirements. Do not turn a summary into a sign-off.

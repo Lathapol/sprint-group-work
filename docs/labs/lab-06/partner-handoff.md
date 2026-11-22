@@ -26,6 +26,8 @@ Received from the user's screenshot, 19 November 2026. This is handoff intake, n
 
 Execute the partner's requirements, not our app's state machine: their return/edit/history UI belongs to their declared Sprint 1 scope even though ours differs.
 
-Potential setup clarification: only one Requester and one Reviewer are supplied. TC-03 Part B requires a real record owned by another Requester; request a second safe requester account and known target record to complete that step. A nonexistent random ID does not prove cross-owner protection. TC-03 Part A's returned/draft visibility expectation should be confirmed against their assignment contract before classifying a defect.
+Initial setup clarification: only one Requester and one Reviewer were originally supplied. On 22 November the Discord screenshot supplied second account label requester2@macau678.com; its credentials/role remain unverified. TC-03 Part B requires a real record owned by another Requester; request a second safe requester account and known target record to complete that step. A nonexistent random ID does not prove cross-owner protection. TC-03 Part A's returned/draft visibility expectation should be confirmed against their assignment contract before classifying a defect.
 
 Our own smoke tests/AI-assisted preflight are supporting checks, not proof both students performed independent manual UAT. Record each student's real execution and evidence. No external message, defect report or acceptance has been sent or recorded by this intake.
+
+22 November intake: TC-03 Part B was previously blocked by missing cross-user setup; second requester label now received, independent rerun pending. See findings.md and issue #61. The separate five-of-six partner report concerns their testing of our app and must not be recorded as our results on Macau678.
