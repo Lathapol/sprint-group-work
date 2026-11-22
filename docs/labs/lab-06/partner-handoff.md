@@ -31,3 +31,7 @@ Initial setup clarification: only one Requester and one Reviewer were originally
 Our own smoke tests/AI-assisted preflight are supporting checks, not proof both students performed independent manual UAT. Record each student's real execution and evidence. No external message, defect report or acceptance has been sent or recorded by this intake.
 
 22 November intake: TC-03 Part B was previously blocked by missing cross-user setup; second requester label now received, independent rerun pending. See findings.md and issue #61. The separate five-of-six partner report concerns their testing of our app and must not be recorded as our results on Macau678.
+
+## URL correction from linked partner document
+
+Correct exact URL: https://macau678-purchase-approval-1084101367777.asia-southeast1.run.app/ (project number has one more final 7 than the original transcription). Source: linked Google Doc cover, reviewed 22 November. The prior 404 was our transcription error and must not be reported as a product availability defect. Live signed-in baseline/roles still require confirmation; this correction is not completed UAT.
