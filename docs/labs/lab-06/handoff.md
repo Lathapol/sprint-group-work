@@ -32,3 +32,7 @@ Read [cases](uat-cases.md); record actual observations in execution.csv (both st
 Case 07 requires an announced Product Team restart window on the SAME database. No restart is scheduled or performed by this draft. Capture state before/after; record BLOCKED if unavailable. Persisted internal history may be verified using a Product Team-provided sanitized database extract correlated with the partner's UI actions; do not claim a nonexistent timeline UI.
 
 Agree partner contact, initial session, deployment freeze, defect reporting destination and retest session before handoff. Never deploy changes affecting their tests without notifying them. Use findings.md and acceptance.md; only the independent UAT Team can record acceptance.
+
+## Follow-up prepared 23 November
+
+See [received results](received-results.md) and [exact partner rerun](partner-retest.md). Fixture #13 was created as a fresh Pending request solely for the issue #60 rerun. Developer checks returned expected 403 and unchanged business data; independent retest remains pending.

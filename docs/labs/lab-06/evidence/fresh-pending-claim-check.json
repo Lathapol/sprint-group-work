@@ -1,0 +1,74 @@
+{
+  "observedAt": "2026-11-23T13:56:33.788Z",
+  "kind": "AI-assisted developer API verification; NOT independent partner UAT",
+  "base": "https://approvals-389973748230.asia-southeast1.run.app",
+  "version": {
+    "data": {
+      "commit": "51b57adc1c51d57e23d047d628cf55966e268ad9"
+    }
+  },
+  "requestId": 13,
+  "owner": "requester1",
+  "forbiddenActor": "requester2",
+  "exactMethod": "POST",
+  "exactPath": "/api/requests/13/claim",
+  "jsonBody": {},
+  "crossOwnerGet": {
+    "status": 404,
+    "body": {
+      "error": {
+        "code": "NOT_FOUND",
+        "message": "Request not found."
+      }
+    }
+  },
+  "forbiddenClaim": {
+    "status": 403,
+    "body": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "This operation is forbidden."
+      }
+    }
+  },
+  "before": {
+    "id": 13,
+    "title": "UAT6-03 independent rerun fixture 2026-11-23T13:56:33.386Z",
+    "category": "PURCHASE",
+    "amount": "25.5",
+    "justification": "Synthetic fresh Pending fixture; retain for partner retest of issue 60.",
+    "state": "PENDING",
+    "requesterId": 1,
+    "reviewerId": null,
+    "decisionReason": null,
+    "createdAt": "2026-11-23T13:56:43.942Z",
+    "updatedAt": "2026-11-23T13:56:43.942Z",
+    "decidedAt": null,
+    "requester": {
+      "id": 1,
+      "username": "requester1"
+    },
+    "reviewer": null
+  },
+  "after": {
+    "id": 13,
+    "title": "UAT6-03 independent rerun fixture 2026-11-23T13:56:33.386Z",
+    "category": "PURCHASE",
+    "amount": "25.5",
+    "justification": "Synthetic fresh Pending fixture; retain for partner retest of issue 60.",
+    "state": "PENDING",
+    "requesterId": 1,
+    "reviewerId": null,
+    "decisionReason": null,
+    "createdAt": "2026-11-23T13:56:43.942Z",
+    "updatedAt": "2026-11-23T13:56:43.942Z",
+    "decidedAt": null,
+    "requester": {
+      "id": 1,
+      "username": "requester1"
+    },
+    "reviewer": null
+  },
+  "businessRecordUnchanged": true,
+  "limitation": "Business representation compared; database history count not independently queried. Fixture remains Pending for partner rerun."
+}

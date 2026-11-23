@@ -32,3 +32,7 @@ AI use: Codex assisted initial contract mapping, draft UAT cases and recording t
 |---|---|---|
 | Lathapol | Preparation initiated with AI assistance; verify/update on review | Pending |
 | Kittakorn | Not yet recorded | Pending |
+
+## 23 November continuation
+
+Corrected Macau678 public URL returned HTTP 200 (Purchase Approval System), confirming reachability only. Own-product fresh Pending fixture #13 is ready for exact partner claim-status retest. See [rerun guide](partner-retest.md) and [reported outcome matrix](received-results.md). Independent execution/sign-off, teammate review, defect disposition, remaining case coverage and final PDF remain unfinished. Deadline was 22 November; no extension or successful submission is claimed.
