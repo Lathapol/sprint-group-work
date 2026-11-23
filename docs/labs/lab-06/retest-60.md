@@ -23,3 +23,14 @@ Earlier developer before/after checks corroborate unchanged business representat
 **Resolved — not a reproduced implementation defect; initial evidence/request-method interpretation issue.** Correctly formed requester2 POST returned the specified 403; the owner's visible protected state matched baseline afterward. The expected POST result remains 403 and the private GET remains 404. No application code or acceptance criterion was changed to obtain the pass; no code-fix RED/GREEN chain is claimed. The original partner FAIL and subsequent partner PASS remain traceable.
 
 Finding #60 can close on this evidence. This does not finish UAT6-07/08, our reciprocal UAT on Macau678, final independent Sprint 1 acceptance, instructor-approved controlled exercise if no legitimate defect exists, or the final submission PDF. Those issues remain open.
+
+## Complete written confirmation received 24 November
+
+The partner's complete report is preserved verbatim in evidence/partner-retest-report-received-24nov.txt. It links issue #60, names Patcharak Plipat, records 23-Nov-2026, the exact source/revision above, explicitly reports private GET 404, forbidden POST 403, and Pending/no reviewer/unchanged title, amount and justification afterward. It labels UAT6-03 PASS and allows closure after final evidence is added to the shared evidence document. The screenshots are preserved alongside this record in the evidence PR; incorporation into the partner's external Google Doc is not independently confirmed here.
+
+Technical clarifications without changing the original supplied report:
+
+- GET /api/requests/:id returns `{ data: ... }`. To inspect fields use `request: body.data`, not `body.request`; the latter caused the earlier null/undefined console display. The owner UI remains readable state evidence.
+- A fetch Response.statusText may be empty, including on HTTP/2. Require numeric status 403 and the forbidden response, not a mandatory literal statusText Forbidden.
+- Our original contract and UAT6-03 correctly expected GET 404 and POST 403. The partner's sentence describing an old 403 private-read expectation is their interpretation, not an amendment/history change to our contract.
+- “All test passed successfully” in this single-case retest report applies to its UAT6-03 checks. It is not sign-off for UAT6-07/08, reciprocal UAT or the entire lab.

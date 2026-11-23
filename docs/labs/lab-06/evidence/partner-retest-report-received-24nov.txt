@@ -1,0 +1,86 @@
+# UAT Report Retest
+
+**Test Evidence:** [https://docs.google.com/document/d/15YZejPw8yIwcs4R5TKNnu7FhPABnV89XdWPvdhN5TMg/edit?tab=t.0#heading=h.8y5fey5hd4yf](https://docs.google.com/document/d/15YZejPw8yIwcs4R5TKNnu7FhPABnV89XdWPvdhN5TMg/edit?tab=t.0#heading=h.8y5fey5hd4yf)
+**Issue:** [#60 - Cross-requester ownership and forbidden review](https://github.com/Lathapol/sprint-group-work/issues/60)
+
+**Overall: PASS.**
+**Testdate:** 23-Nov-2026
+**Tester Name:** Patcharak Plipat
+Current release
+**App:** https://approvals-389973748230.asia-southeast1.run.app/
+**SHA:** 8bc9448d478464784acb48fce6bbe4c18973946d
+**Cloud Run revision:** approvals-r45190529393-1
+
+The retest for UAT6-03 confirmed the cross-requester access restriction.
+
+## Test Results Summary
+
+| Test ID | Test Area                                      | Result |
+| ------- | ---------------------------------------------- | ------ |
+| UAT6-03 | Cross-requester ownership and forbidden review | PASS   |
+
+## Defect Report
+
+### UAT6-03 – Cross-requester Ownership and Forbidden Review
+
+- **Expected:** HTTP 404 (Not Found) for requester2's private read; HTTP 403 (Forbidden) for the POST claim attempt
+- **Actual:** Private read: HTTP 404 (Not Found); POST claim: HTTP 403 (Forbidden)
+- **Actual state after claimant attempt:** Request #13 remains Pending, has no reviewer, and its title, justification, and THB 25.50 amount are unchanged
+- **Impact:** No unauthorized access, claim, modification, or private data disclosure occurred
+
+**Finding:**
+
+No issue was observed in the retested behavior. The private read of request #13 by requester2 returned HTTP 404 (Not Found), preventing private data disclosure. The POST `/api/requests/13/claim` attempt by requester2 returned HTTP 403 (Forbidden), as required. After signing out of requester2 and signing in as requester1, request #13 was shown as Pending with no reviewer. The title, justification, and THB 25.50 amount remained unchanged.
+
+After independent confirmation, HTTP 404 (Not Found) is the expected and correct response for the private-read check. HTTP 403 (Forbidden) is the expected and correct response for the forbidden claim attempt. The old UAT result that listed HTTP 403 for the private read is outdated.
+
+**Issue #60 disposition:**
+
+PASS. UAT6-03 is satisfied, and issue #60 may be closed after the final evidence is added to the shared test evidence document.
+
+**Before/after verification using the API**
+
+Run this after signing in as requester1, first before the claim attempt and again after the requester2 claim attempt:
+
+```javascript
+const response = await fetch('/api/requests/13', {
+  method: 'GET',
+  credentials: 'include'
+});
+
+const body = await response.json();
+console.log({
+  status: response.status,
+  statusText: response.statusText,
+  url: '/api/requests/13',
+  request: body.request
+});
+```
+
+Record the response fields for status, reviewer, title, amount, and justification. Capture the browser result and compare before and after; both views must show Pending, no reviewer, and unchanged title, THB 25.50 amount, and justification.
+
+While signed in as requester2, use this fetch request to verify that the claim attempt is forbidden:
+
+```javascript
+const response = await fetch('/api/requests/13/claim', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  credentials: 'include',
+  body: JSON.stringify({})
+});
+
+const body = await response.text();
+console.log({
+  status: response.status,
+  statusText: response.statusText,
+  url: '/api/requests/13/claim',
+  method: 'POST',
+  body: body ? JSON.parse(body) : null
+});
+```
+
+The POST evidence must show status `403` and status text `Forbidden`. Capture the exact URL, method, status, and response together.
+
+## Conclusion
+
+All test passed successfully.
