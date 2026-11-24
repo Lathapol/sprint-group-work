@@ -37,7 +37,7 @@ test('requester submits and retrieves a reviewer rejection', async ({ page }) =>
       .getByText('Pending → In review', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Reject', exact: true }).click();
     await expect(page.getByRole('alert')).toHaveText('Enter a valid decision reason.');
-    await page.getByLabel('Decision reason (required for rejection)').fill('Budget limit');
+    await page.getByLabel('Decision reason (required for rejection or return)').fill('Budget limit');
     await page.getByRole('button', { name: 'Reject', exact: true }).click();
     await expect(page.getByText('Rejected', { exact: true })).toBeVisible();
     await expect(page.getByRole('region', { name: 'Request history', exact: true })

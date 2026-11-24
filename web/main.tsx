@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 type User = { id: number; username: string; role: 'REQUESTER' | 'REVIEWER' };
 type Row = {
   id: number; title: string; category: string; amount: string; justification: string;
-  state: 'PENDING' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED';
+  state: 'PENDING' | 'IN_REVIEW' | 'RETURNED' | 'APPROVED' | 'REJECTED';
   reviewerId: number | null; reviewer: { username: string } | null; decisionReason: string | null;
   updatedAt: string;
 };
@@ -21,9 +21,9 @@ class ApiError extends Error {
   }
 }
 
-async function api<T>(path: string, body?: object, signal?: AbortSignal): Promise<T> {
+async function api<T>(path: string, body?: object, signal?: AbortSignal, method = 'POST'): Promise<T> {
   const response = await fetch('/api' + path, {
-    method: body === undefined ? 'GET' : 'POST',
+    method: body === undefined ? 'GET' : method,
     headers: body === undefined ? {} : { 'Content-Type': 'application/json' },
     body: body === undefined ? undefined : JSON.stringify(body),
     signal,
@@ -54,7 +54,7 @@ function ErrorMessage({ error }: { error: unknown }) {
 }
 
 const labels: Record<Row['state'], string> = {
-  PENDING: 'Pending', IN_REVIEW: 'In review', APPROVED: 'Approved', REJECTED: 'Rejected',
+  PENDING: 'Pending', IN_REVIEW: 'In review', RETURNED: 'Returned', APPROVED: 'Approved', REJECTED: 'Rejected',
 };
 
 function Login({ onLogin }: { onLogin: (user: User) => void }) {
@@ -160,7 +160,8 @@ function HistoryContent({ id, retry }: { id: number; retry: () => void }) {
   if (!history.data?.length) return <p>No history recorded for this request.</p>;
   return <ol className="list-group list-group-numbered">
     {history.data.map((entry) => <li className="list-group-item" key={entry.id}>
-      <p className="fw-semibold mb-1">{entry.fromState ? labels[entry.fromState] : 'Created'} → {labels[entry.toState]}</p>
+      <p className="fw-semibold mb-1">{entry.fromState === 'RETURNED' && entry.toState === 'RETURNED'
+        ? 'Edited' : `${entry.fromState ? labels[entry.fromState] : 'Created'} → ${labels[entry.toState]}`}</p>
       <p className="mb-1">{entry.actor.username} ({entry.actor.role})</p>
       <time className="text-body-secondary" dateTime={entry.createdAt}>
         {new Date(entry.createdAt).toLocaleString(undefined, { timeZone: 'UTC' })} UTC
@@ -178,6 +179,72 @@ function RequestHistory({ id }: { id: number }) {
   </section>;
 }
 
+function ReturnedEditor({ row, onSaved }: { row: Row; onSaved: (row: Row) => void }) {
+  const values = (record: Row) => ({ title: record.title, category: record.category, amount: record.amount, justification: record.justification });
+  const [draft, setDraft] = useState(() => values(row));
+  const [error, setError] = useState<unknown>();
+  const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [conflict, setConflict] = useState<Row>();
+  const dirty = Object.entries(draft).some(([name, value]) => value !== values(row)[name as keyof typeof draft]);
+  async function update(resubmit: boolean) {
+    setError(undefined); setSaved(false); setBusy(true);
+    try {
+      const next = await api<Row>('/requests/' + row.id + (resubmit ? '/resubmit' : ''),
+        resubmit ? {} : draft, undefined, resubmit ? 'POST' : 'PATCH');
+      setDraft(values(next)); setSaved(!resubmit); onSaved(next);
+    } catch (failure) {
+      setError(failure);
+      if (failure instanceof ApiError && failure.status === 409) {
+        try { setConflict(await api<Row>('/requests/' + row.id)); } catch { /* Keep original conflict and unsaved inputs. */ }
+      }
+    } finally { setBusy(false); }
+  }
+  function field(name: keyof typeof draft, label: string, multiline = false) {
+    const message = error instanceof ApiError ? error.fields[name] : undefined;
+    const props = { id: 'edit-' + name, className: 'form-control', value: draft[name],
+      onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setDraft(current => ({ ...current, [name]: event.target.value })); setSaved(false);
+      } };
+    return <div className="mb-3">
+      <label className="form-label" htmlFor={props.id}>{label}</label>
+      {multiline ? <textarea {...props} /> : <input {...props} inputMode={name === 'amount' ? 'decimal' : undefined} />}
+      {message && <div className="text-danger">{message}</div>}
+    </div>;
+  }
+  return <section className="card p-4 mt-3" aria-label="Returned request editor">
+    <h2 className="h4">Edit returned request</h2>
+    <p>Save any changes, then resubmit to the same reviewer.</p>
+    <ErrorMessage error={error} />
+    {conflict && <div role="status">
+      <p>Latest state: {labels[conflict.state]}. Your unsaved input is retained below.</p>
+      <button type="button" className="btn btn-outline-primary mb-3" onClick={() => onSaved(conflict)}>Refresh request</button>
+    </div>}
+    {saved && <p role="status">Changes saved. Resubmit when ready.</p>}
+    <form onSubmit={event => { event.preventDefault(); void update(false); }}>
+      <fieldset disabled={busy || Boolean(conflict)}>
+        {field('title', 'Title')}
+        <div className="mb-3">
+          <label className="form-label" htmlFor="edit-category">Category</label>
+          <select className="form-select" id="edit-category" value={draft.category}
+            onChange={event => { setDraft(current => ({ ...current, category: event.target.value })); setSaved(false); }}>
+            {['Funding', 'Purchase', 'Travel', 'Reimbursement'].map(name => <option key={name} value={name.toUpperCase()}>{name}</option>)}
+          </select>
+          {error instanceof ApiError && error.fields.category && <div className="text-danger">{error.fields.category}</div>}
+        </div>
+        {field('amount', 'Amount (THB)')}
+        {field('justification', 'Justification', true)}
+        <div className="d-flex gap-2">
+          <button className="btn btn-primary" disabled={!dirty}>Save changes</button>
+          <button type="button" className="btn btn-outline-primary" disabled={dirty}
+            onClick={() => void update(true)}>Resubmit request</button>
+        </div>
+        {dirty && <p className="mt-2 mb-0">Save your changes before resubmitting.</p>}
+      </fieldset>
+    </form>
+  </section>;
+}
+
 function RequestDetail({ user }: { user: User }) {
   const { id } = useParams();
   const path = '/requests/' + id;
@@ -188,7 +255,7 @@ function RequestDetail({ user }: { user: User }) {
   const [busy, setBusy] = useState(false);
   const row = updated ?? result?.data;
 
-  async function act(action: 'claim' | 'approve' | 'reject') {
+  async function act(action: 'claim' | 'approve' | 'reject' | 'return') {
     setError(undefined);
     setBusy(true);
     try {
@@ -220,14 +287,16 @@ function RequestDetail({ user }: { user: User }) {
       {user.role === 'REVIEWER' && row.state === 'PENDING' &&
         <button className="btn btn-primary align-self-start" disabled={busy} onClick={() => void act('claim')}>Claim request</button>}
       {user.role === 'REVIEWER' && row.state === 'IN_REVIEW' && row.reviewerId === user.id && <>
-        <label className="form-label" htmlFor="reason">Decision reason (required for rejection)</label>
+        <label className="form-label" htmlFor="reason">Decision reason (required for rejection or return)</label>
         <textarea className="form-control mb-3" id="reason" value={reason} onChange={(event) => setReason(event.target.value)} />
         <div className="d-flex gap-2">
           <button className="btn btn-success" disabled={busy} onClick={() => void act('approve')}>Approve</button>
           <button className="btn btn-outline-danger" disabled={busy} onClick={() => void act('reject')}>Reject</button>
+          <button className="btn btn-outline-warning" disabled={busy} onClick={() => void act('return')}>Return request</button>
         </div>
       </>}
     </section>}
+    {row?.state === 'RETURNED' && user.role === 'REQUESTER' && <ReturnedEditor row={row} onSaved={setUpdated} />}
     {row && <RequestHistory key={row.id + ':' + row.updatedAt} id={row.id} />}
   </>;
 }
