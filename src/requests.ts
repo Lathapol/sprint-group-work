@@ -87,6 +87,28 @@ export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, re
     res.json({ data });
   });
 
+  router.get('/:id/history', async (_req, res) => {
+    const { id, role } = res.locals.user;
+    // Use the detail visibility rule before reading any private audit rows.
+    const accessible = await db.request.findFirst({
+      where: { id: res.locals.requestId, requesterId: role === 'REQUESTER' ? id : undefined },
+      select: { id: true },
+    });
+    if (!accessible) {
+      error(res, 404, 'NOT_FOUND', 'Request not found.');
+      return;
+    }
+    const data = await db.requestHistory.findMany({
+      where: { requestId: accessible.id },
+      orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
+      select: {
+        id: true, fromState: true, toState: true, reason: true, createdAt: true,
+        actor: { select: { id: true, username: true, role: true } },
+      },
+    });
+    res.json({ data });
+  });
+
   function transition(target: 'IN_REVIEW' | 'APPROVED' | 'REJECTED'): RequestHandler {
     return async (req, res) => {
       const id: number = res.locals.requestId;

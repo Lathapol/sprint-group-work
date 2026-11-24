@@ -1,0 +1,83 @@
+▶ F-06 persisted history chronology, safe actors and ownership
+  ✖ TEST-06-01: owner and both reviewers retrieve one ordered event per transition (8.7194ms)
+  ✖ TEST-06-02: protected history is private and read-only (13.7279ms)
+  ✖ TEST-06-04: a fresh app instance reads identical stored events without duplicates (97.3041ms)
+✖ F-06 persisted history chronology, safe actors and ownership (495.1847ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1112.3923
+
+✖ failing tests:
+
+test at test\history.test.cjs:45:11
+✖ TEST-06-01: owner and both reviewers retrieve one ordered event per transition (8.7194ms)
+  Error: expected 200 "OK", got 404 "Not Found"
+      at TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\history.test.cjs:46:65)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at TestContext.test (node:internal/test_runner/test:368:20)
+      at TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\history.test.cjs:45:11)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ----
+      at Test._assertStatus (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:404:14)
+      at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:460:13
+      at Test._assertFunction (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:437:13)
+      at Test.assert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:302:23)
+      at localAssert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:220:38)
+      at Server.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:227:13)
+      at Object.onceWrapper (node:events:622:28)
+      at Server.emit (node:events:508:28)
+      at emitCloseNT (node:net:2427:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+
+test at test\history.test.cjs:62:11
+✖ TEST-06-02: protected history is private and read-only (13.7279ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'NOT_FOUND'
+  
+      at TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\history.test.cjs:65:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\history.test.cjs:62:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'NOT_FOUND',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\history.test.cjs:79:11
+✖ TEST-06-04: a fresh app instance reads identical stored events without duplicates (97.3041ms)
+  Error: expected 200 "OK", got 404 "Not Found"
+      at TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\history.test.cjs:81:70)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at TestContext.test (node:internal/test_runner/test:368:20)
+      at TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\history.test.cjs:79:11)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+  ----
+      at Test._assertStatus (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:404:14)
+      at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:460:13
+      at Test._assertFunction (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:437:13)
+      at Test.assert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:302:23)
+      at localAssert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:220:38)
+      at Server.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:227:13)
+      at Object.onceWrapper (node:events:622:28)
+      at Server.emit (node:events:508:28)
+      at emitCloseNT (node:net:2427:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:89:21)

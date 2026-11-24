@@ -1,0 +1,8 @@
+{
+  "phase": "GREEN regression",
+  "command": "npm test",
+  "source": "0505773db381f3314b1754e855bf881bc42f27a4",
+  "exitCode": 0,
+  "database": "isolated local PostgreSQL; credentials omitted",
+  "observedAt": "2026-11-24T09:30:48.6288025Z"
+}
