@@ -1,0 +1,8 @@
+{
+  "phase": "RED",
+  "command": "node --test test/history.test.cjs",
+  "source": "15f2434486f8f91231f44e7a9e705dd15f6d5176",
+  "exitCode": 1,
+  "database": "isolated local PostgreSQL; credentials omitted",
+  "observedAt": "2026-11-24T09:29:24.7416485Z"
+}

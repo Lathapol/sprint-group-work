@@ -1,0 +1,41 @@
+
+[WebServer] (node:28300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:26156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:25724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] test\browser\history.spec.ts:5:1 › TEST-06-03: history renders safe reasons and retries a failed read
+  1) test\browser\history.spec.ts:5:1 › TEST-06-03: history renders safe reasons and retries a failed read 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('region', { name: 'Request history', exact: true }).getByRole('alert')
+    Expected: "History temporarily unavailable."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('region', { name: 'Request history', exact: true }).getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Request history', exact: true }).getByRole('alert')
+
+
+      34 |     await page.goto('/requests/' + id);
+      35 |     const history = page.getByRole('region', { name: 'Request history', exact: true });
+    > 36 |     await expect(history.getByRole('alert')).toHaveText('History temporarily unavailable.');
+         |                                              ^
+      37 |     await history.getByRole('button', { name: 'Retry history' }).click();
+      38 |     await expect(history.getByRole('listitem')).toHaveCount(3);
+      39 |     await expect(history.getByRole('listitem').nth(0)).toContainText('Created → Pending');
+        at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\browser\history.spec.ts:36:46
+
+    Error Context: test-results\history-TEST-06-03-history-eedcb-s-and-retries-a-failed-read\error-context.md
+
+
+  1 failed
+    test\browser\history.spec.ts:5:1 › TEST-06-03: history renders safe reasons and retries a failed read 

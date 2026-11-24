@@ -1,0 +1,7 @@
+{
+  "phase": "UI RED",
+  "command": "node node_modules/@playwright/test/cli.js test test/browser/history.spec.ts --reporter=line",
+  "source": "15f2434486f8f91231f44e7a9e705dd15f6d5176",
+  "exitCode": 1,
+  "observedAt": "2026-11-24T09:30:00.5773114Z"
+}

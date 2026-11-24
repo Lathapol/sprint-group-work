@@ -1,0 +1,7 @@
+{
+  "node": "v24.14.0",
+  "postgresql": "postgres (PostgreSQL) 18.6 (Debian 18.6-1.pgdg13+2)",
+  "database": "dedicated local approvals_history_test, distinct from production",
+  "os": "Windows",
+  "seed": "local synthetic fixtures; secret values omitted"
+}
