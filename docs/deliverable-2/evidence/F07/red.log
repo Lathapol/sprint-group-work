@@ -1,0 +1,124 @@
+▶ F-07 return edit and same-reviewer resubmission
+  ✖ TEST-07-01: assigned return persists reason and invalid returns change nothing (128.7645ms)
+  ✖ TEST-07-02: Returned edits are owner-only, validated and audited once (37.0724ms)
+  ✖ TEST-07-03: resubmit retains reviewer and reason history, and supports a final decision (32.9616ms)
+  ✖ TEST-07-04: duplicate resubmission and edit/resubmit races serialize (37.2031ms)
+  ✖ TEST-07-05: non-Returned states cannot be edited or resubmitted (35.6316ms)
+✖ F-07 return edit and same-reviewer resubmission (482.6523ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 0
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 843.066
+
+✖ failing tests:
+
+test at test\returns.test.cjs:48:11
+✖ TEST-07-01: assigned return persists reason and invalid returns change nothing (128.7645ms)
+  Error: expected 200 "OK", got 404 "Not Found"
+      at TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:50:124)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:48:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ----
+      at Test._assertStatus (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:404:14)
+      at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:460:13
+      at Test._assertFunction (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:437:13)
+      at Test.assert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:302:23)
+      at localAssert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:220:38)
+      at Server.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:227:13)
+      at Object.onceWrapper (node:events:622:28)
+      at Server.emit (node:events:508:28)
+      at emitCloseNT (node:net:2427:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+
+test at test\returns.test.cjs:72:11
+✖ TEST-07-02: Returned edits are owner-only, validated and audited once (37.0724ms)
+  Error: expected 200 "OK", got 404 "Not Found"
+      at returned (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:41:109)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:73:26)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:72:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ----
+      at Test._assertStatus (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:404:14)
+      at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:460:13
+      at Test._assertFunction (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:437:13)
+      at Test.assert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:302:23)
+      at localAssert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:220:38)
+      at Server.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:227:13)
+      at Object.onceWrapper (node:events:622:28)
+      at Server.emit (node:events:508:28)
+      at emitCloseNT (node:net:2427:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+
+test at test\returns.test.cjs:97:11
+✖ TEST-07-03: resubmit retains reviewer and reason history, and supports a final decision (32.9616ms)
+  Error: expected 200 "OK", got 404 "Not Found"
+      at returned (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:41:109)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:98:26)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:97:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ----
+      at Test._assertStatus (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:404:14)
+      at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:460:13
+      at Test._assertFunction (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:437:13)
+      at Test.assert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:302:23)
+      at localAssert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:220:38)
+      at Server.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:227:13)
+      at Object.onceWrapper (node:events:622:28)
+      at Server.emit (node:events:508:28)
+      at emitCloseNT (node:net:2427:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+
+test at test\returns.test.cjs:123:11
+✖ TEST-07-04: duplicate resubmission and edit/resubmit races serialize (37.2031ms)
+  Error: expected 200 "OK", got 404 "Not Found"
+      at returned (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:41:109)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:124:15)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:123:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ----
+      at Test._assertStatus (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:404:14)
+      at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:460:13
+      at Test._assertFunction (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:437:13)
+      at Test.assert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:302:23)
+      at localAssert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:220:38)
+      at Server.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:227:13)
+      at Object.onceWrapper (node:events:622:28)
+      at Server.emit (node:events:508:28)
+      at emitCloseNT (node:net:2427:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+
+test at test\returns.test.cjs:142:11
+✖ TEST-07-05: non-Returned states cannot be edited or resubmitted (35.6316ms)
+  Error: expected 409 "Conflict", got 404 "Not Found"
+      at TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:147:88)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\returns.test.cjs:142:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ----
+      at Test._assertStatus (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:404:14)
+      at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:460:13
+      at Test._assertFunction (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:437:13)
+      at Test.assert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:302:23)
+      at localAssert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:220:38)
+      at Server.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:227:13)
+      at Object.onceWrapper (node:events:622:28)
+      at Server.emit (node:events:508:28)
+      at emitCloseNT (node:net:2427:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:89:21)

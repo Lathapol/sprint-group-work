@@ -1,0 +1,6 @@
+{
+  "command": "node --test test/returns.test.cjs",
+  "source": "f1fac68a6c580978a7c70bd50838c11b90171459",
+  "exitCode": 1,
+  "observedAt": "2026-11-24T09:56:15.2948553Z"
+}

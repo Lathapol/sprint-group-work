@@ -68,3 +68,7 @@ UI: state/category/date/text controls on requester own list and reviewer All/Que
 | AC-08-03 | Every filtered requester result remains own-only; Reviewer Queue/Mine cannot widen; anonymous 401 | TEST-08-03 API/DB: guess other's title/date/id-related input; assert no private row/fields; forged owner/mine handling, wrong type errors |
 | AC-08-04 | Filter/Clear/empty/error UI works across roles/tabs, inputs retained on failure; no mutation or lost existing actions | TEST-08-04 UI + Sprint 1/2 regression: filtered saved results, clear within current tab, validation errors, submit/claim/return unaffected; target test/browser/filters.spec.ts |
 
+
+## Recorded implementation clarification proposed 24 November 2026
+
+F-07 UI presentation: the candidate implementation reuses the existing inline decision-reason panel for Return, instead of adding a separate modal described as a dialog above. Required reason/errors/retained inputs/busy protection remain unchanged. This layer-only clarification is explicitly submitted for teammate review with issue #70; it is not an approval claim or a change to permissions, same-reviewer routing, validation, AC or STS. The original version remains identifiable in PR #77 history.

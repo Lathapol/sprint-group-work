@@ -61,3 +61,14 @@ For the browser test, migrate and seed the separate test database with the
 same SEED_PASSWORD you pass to the test runner. Keep ports 3000 and 4173 free.
 Run npx playwright install chromium, npm run build, and npm run test:e2e.
 The test runner starts both servers and removes its own sample request.
+
+
+## Sprint 2 return and resubmission
+
+After applying committed migrations and regenerating the Prisma client, an assigned Reviewer can return an In Review request with a required reason. Its owner can edit the returned title/category/amount/justification, Save changes, then Resubmit to the SAME reviewer (In Review, not the unassigned Queue). Earlier return reasons and edit/resubmit history remain visible. Other owners and roles cannot edit it; final Approved/Rejected records remain locked.
+
+New API paths: POST /api/requests/:id/return, PATCH /api/requests/:id, POST /api/requests/:id/resubmit. Partial edits accept only title/category/amount/justification; resubmit accepts {}. Validation and role/session/ownership rules remain server-side. No new secret or environment variable is needed.
+
+Development: apply `npx prisma migrate deploy` to your isolated local DB, `npx prisma generate`, then `npm test` and the documented seeded Playwright checks. Cloud releases run the existing migration job before deployment; do not reset/reseed a shared production database. RETURNED enum addition is not safely undone by dropping the value. Once Returned data exists, roll back only to a compatible image or roll forward with a reviewed fix, not a pre-F-07 client unable to understand Returned records.
+
+Feature/test design: docs/sprints/sprint-2/contracts.md. Actual RED/GREEN and migration evidence: docs/deliverable-2/evidence/F07. A feature branch is not a claim the assessed main release has deployed it.
