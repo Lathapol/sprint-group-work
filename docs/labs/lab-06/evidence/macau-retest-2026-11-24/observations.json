@@ -1,0 +1,157 @@
+[
+  {
+    "name": "01-draft-owner",
+    "time": "2026-11-24T16:47:32.394Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 0 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11"
+  },
+  {
+    "name": "02-assigned-reviewer-queue",
+    "time": "2026-11-24T16:48:03.808Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 6 link Description: Review Queue, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue"
+  },
+  {
+    "name": "03-assigned-reviewer-detail-denied",
+    "time": "2026-11-24T16:48:11.124Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11\".\n1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11\n\t2 container root\n\t\t3 container\n\t\t\t4 link Description: Macau678, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t5 link Description: Home, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t6 link Description: Health, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/health\n\t\t\t7 link Description: Review Queue, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue\n\t\t\t8 link Description: Reports, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reports\n\t\t\t9 text Carol Reviewer  ( REVIEWER )\n\t\t\t10 button Sign Out\n\t\t11 text Access denied: draft requests are visible only to their requester\n\t\t12 button Go Back\n\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11"
+  },
+  {
+    "name": "04-assigned-reviewer-history-denied",
+    "time": "2026-11-24T16:48:14.769Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\n\t2 text {\"error\":\"Access denied: draft requests are visible only to their requester\",\"code\":\"ACCESS_DENIED\"}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history"
+  },
+  {
+    "name": "05-unassigned-reviewer-queue",
+    "time": "2026-11-24T16:48:29.048Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue\".\n1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue\n\t2 container root\n\t\t3 container\n\t\t\t4 link Description: Macau678, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t5 link Description: Home, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t6 link Description: Health, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/health\n\t\t\t7 link Description: Review Queue, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue\n\t\t\t8 link Description: Reports, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reports\n\t\t\t9 text Dave Reviewer  ( REVIEWER )\n\t\t\t10 button Sign Out\n\t\t11 heading Reviewer Queue, Value: 1\n\t\t\t12 text Reviewer Queue\n\t\t13 text Evaluate purchase requests assigned to your review portfolio\n\t\t14 container\n\t\t\t15 heading No requests assigned to your queue, Value: 3\n\t\t\t\t16 text No requests assigned to your queue\n\t\t\t17 text New purchase requests assigned to you will appear here for evaluation.\n\nThe focused UI element is 7 link Description: Review Queue, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue"
+  },
+  {
+    "name": "06-unassigned-reviewer-detail-denied",
+    "time": "2026-11-24T16:48:37.534Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11\".\n1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11\n\t2 container root\n\t\t3 container\n\t\t\t4 link Description: Macau678, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t5 link Description: Home, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t6 link Description: Health, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/health\n\t\t\t7 link Description: Review Queue, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue\n\t\t\t8 link Description: Reports, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reports\n\t\t\t9 text Dave Reviewer  ( REVIEWER )\n\t\t\t10 button Sign Out\n\t\t11 text Access denied: request is not assigned to you\n\t\t12 button Go Back\n\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11"
+  },
+  {
+    "name": "07-unassigned-reviewer-history-denied",
+    "time": "2026-11-24T16:48:37.770Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\n\t2 text {\"error\":\"Access denied: request is not assigned to you\",\"code\":\"ACCESS_DENIED\"}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history"
+  },
+  {
+    "name": "08-other-requester-detail-denied",
+    "time": "2026-11-24T16:48:54.665Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11\".\n1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11\n\t2 container root\n\t\t3 container\n\t\t\t4 link Description: Macau678, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t5 link Description: Home, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t6 link Description: Health, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/health\n\t\t\t7 link Description: My Requests, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests\n\t\t\t8 link Description: New Request, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/new\n\t\t\t9 text Bob Requester  ( REQUESTER )\n\t\t\t10 button Sign Out\n\t\t11 text Access denied: cannot view history of another user's request\n\t\t12 button Go Back\n\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11"
+  },
+  {
+    "name": "09-other-requester-history-denied",
+    "time": "2026-11-24T16:48:54.885Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\n\t2 text {\"error\":\"Access denied: cannot view history of another user's request\",\"code\":\"ACCESS_DENIED\"}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history"
+  },
+  {
+    "name": "10-owner-draft-history",
+    "time": "2026-11-24T16:49:09.751Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\n\t2 text {\"history\":[{\"id\":24,\"requestId\":11,\"actorId\":1,\"action\":\"CREATED\",\"fromStatus\":null,\"toStatus\":\"DRAFT\",\"reason\":\"Draft purchase request created\",\"createdAt\":\"2026-11-24T16:47:37.488Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}}]}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history"
+  },
+  {
+    "name": "11-form-wording",
+    "time": "2026-11-24T16:49:16.747Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/new\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\n~\t\t\t16 text 39  / 150\n~\t\t\t17 text field (settable) Request Title *, Value: UAT retest 2026-11-24 TC01 Office Chair, ID: request-title\n~\t\t\t20 stepper (settable, integer) Estimated Amount ($) *, Value: 12500, ID: request-amount\n~\t\t\t30 text 63  / 2000\n~\t\t\t31 text entry area (settable) Description *, Value: Synthetic Office Chair. Quantity: 1. Retest TC01 direct submit., ID: request-description\n~\t\t\t34 text 45  / 2000\n~\t\t\t35 text entry area (settable) Business Justification *, Value: Synthetic ergonomic replacement for UAT only., ID: request-justification\n~\t\t\t37 button Save as Draft\n~\t\t\t38 button Submit for Review\nThe focused UI element is 35 text entry area (settable) Business Justification *, Value: Synthetic ergonomic replacement for UAT only., ID: request-justification"
+  },
+  {
+    "name": "12-tc01-owner-submitted",
+    "time": "2026-11-24T16:49:22.997Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/12\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/12"
+  },
+  {
+    "name": "13-tc04-owner-pending",
+    "time": "2026-11-24T16:49:31.276Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13"
+  },
+  {
+    "name": "14-assigned-reviewer-api-detail-denied",
+    "time": "2026-11-24T16:49:37.947Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11\n\t2 text {\"error\":\"Access denied: draft requests are visible only to their requester\",\"code\":\"ACCESS_DENIED\"}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11"
+  },
+  {
+    "name": "15-tc01-reviewer-submitted",
+    "time": "2026-11-24T16:49:43.405Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/12\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/12"
+  },
+  {
+    "name": "16-tc01-reviewer-approved",
+    "time": "2026-11-24T16:49:50.035Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/12\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/12"
+  },
+  {
+    "name": "17-tc04-reviewer-returned",
+    "time": "2026-11-24T16:50:03.802Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13"
+  },
+  {
+    "name": "18-tc01-owner-approved",
+    "time": "2026-11-24T16:50:16.848Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/12\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/12"
+  },
+  {
+    "name": "19-tc04-owner-edit-A",
+    "time": "2026-11-24T16:50:29.674Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13"
+  },
+  {
+    "name": "20-tc04-owner-edit-B",
+    "time": "2026-11-24T16:50:38.219Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13"
+  },
+  {
+    "name": "21-tc04-owner-resubmitted",
+    "time": "2026-11-24T16:50:52.909Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13"
+  },
+  {
+    "name": "22-tc04-owner-history-json",
+    "time": "2026-11-24T16:50:53.276Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history"
+  },
+  {
+    "name": "23-tc04-reviewer-resubmitted",
+    "time": "2026-11-24T16:51:10.213Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/13"
+  },
+  {
+    "name": "24-tc04-reviewer-history-json",
+    "time": "2026-11-24T16:51:10.548Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history"
+  },
+  {
+    "name": "25-version-observed",
+    "time": "2026-11-24T16:51:15.751Z",
+    "state": "Browser tab: 2, Title: \"Purchase Approval System\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/\".\n1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t2 container root\n\t\t3 container\n\t\t\t4 link Description: Macau678, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t5 link Description: Home, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/\n\t\t\t6 link Description: Health, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/health\n\t\t\t7 link Description: Review Queue, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue\n\t\t\t8 link Description: Reports, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reports\n\t\t\t9 text Carol Reviewer  ( REVIEWER )\n\t\t\t10 button Sign Out\n\t\t11 container\n\t\t\t12 heading Macau678 Purchase Approval System Version 0.2.2, Value: 1\n\t\t\t\t13 text Macau678 Purchase Approval System Version 0.2.2\n\t\t\t14 text The application foundation is ready for the Sprint 1 approval workflow.\n\t\t\t15 link Description: Check system health, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/health\n\nThe focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/"
+  },
+  {
+    "name": "26-unassigned-reviewer-api-detail-denied",
+    "time": "2026-11-24T16:51:22.474Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11\n\t2 text {\"error\":\"Access denied: draft requests are visible only to their requester\",\"code\":\"ACCESS_DENIED\"}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11"
+  },
+  {
+    "name": "27-reviewer-history-full-text",
+    "time": "2026-11-24T16:54:23.911Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\n\t2 text {\"history\":[{\"id\":28,\"requestId\":13,\"actorId\":1,\"action\":\"SUBMITTED\",\"fromStatus\":null,\"toStatus\":\"PENDING_REVIEW\",\"reason\":\"Purchase request submitted for review\",\"createdAt\":\"2026-11-24T16:49:41.903Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}},{\"id\":30,\"requestId\":13,\"actorId\":2,\"action\":\"RETURNED\",\"fromStatus\":\"PENDING_REVIEW\",\"toStatus\":\"RETURNED\",\"reason\":\"Retest TC04: revise quantity and estimate; preserve each edit note.\",\"createdAt\":\"2026-11-24T16:50:12.652Z\",\"actor\":{\"id\":2,\"name\":\"Carol Reviewer\",\"email\":\"reviewer1@macau678.com\",\"role\":\"REVIEWER\"}},{\"id\":34,\"requestId\":13,\"actorId\":1,\"action\":\"RESUBMITTED\",\"fromStatus\":\"RETURNED\",\"toStatus\":\"PENDING_REVIEW\",\"reason\":\"Requester changes since return: Retest edit A: quantity changed to 2. | Retest edit B: estimate changed to 18750. | Retest edit C: final specification confirmed.\",\"createdAt\":\"2026-11-24T16:50:57.645Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}}]}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history"
+  },
+  {
+    "name": "28-assigned-detail-full-text",
+    "time": "2026-11-24T16:54:31.163Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11\n\t2 text {\"error\":\"Access denied: draft requests are visible only to their requester\",\"code\":\"ACCESS_DENIED\"}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11"
+  },
+  {
+    "name": "29-assigned-history-full-text",
+    "time": "2026-11-24T16:54:31.422Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\n\t2 text {\"error\":\"Access denied: draft requests are visible only to their requester\",\"code\":\"ACCESS_DENIED\"}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history"
+  },
+  {
+    "name": "30-owner-history-full-text",
+    "time": "2026-11-24T16:54:41.488Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history\n\t2 text {\"history\":[{\"id\":27,\"requestId\":13,\"actorId\":1,\"action\":\"CREATED\",\"fromStatus\":null,\"toStatus\":null,\"reason\":\"Purchase request created\",\"createdAt\":\"2026-11-24T16:49:41.899Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}},{\"id\":28,\"requestId\":13,\"actorId\":1,\"action\":\"SUBMITTED\",\"fromStatus\":null,\"toStatus\":\"PENDING_REVIEW\",\"reason\":\"Purchase request submitted for review\",\"createdAt\":\"2026-11-24T16:49:41.903Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}},{\"id\":30,\"requestId\":13,\"actorId\":2,\"action\":\"RETURNED\",\"fromStatus\":\"PENDING_REVIEW\",\"toStatus\":\"RETURNED\",\"reason\":\"Retest TC04: revise quantity and estimate; preserve each edit note.\",\"createdAt\":\"2026-11-24T16:50:12.652Z\",\"actor\":{\"id\":2,\"name\":\"Carol Reviewer\",\"email\":\"reviewer1@macau678.com\",\"role\":\"REVIEWER\"}},{\"id\":31,\"requestId\":13,\"actorId\":1,\"action\":\"EDITED\",\"fromStatus\":\"RETURNED\",\"toStatus\":\"RETURNED\",\"reason\":\"Retest edit A: quantity changed to 2.\",\"createdAt\":\"2026-11-24T16:50:40.290Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}},{\"id\":32,\"requestId\":13,\"actorId\":1,\"action\":\"EDITED\",\"fromStatus\":\"RETURNED\",\"toStatus\":\"RETURNED\",\"reason\":\"Retest edit B: estimate changed to 18750.\",\"createdAt\":\"2026-11-24T16:50:47.607Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}},{\"id\":33,\"requestId\":13,\"actorId\":1,\"action\":\"EDITED\",\"fromStatus\":\"RETURNED\",\"toStatus\":\"RETURNED\",\"reason\":\"Retest edit C: final specification confirmed.\",\"createdAt\":\"2026-11-24T16:50:57.535Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}},{\"id\":34,\"requestId\":13,\"actorId\":1,\"action\":\"RESUBMITTED\",\"fromStatus\":\"RETURNED\",\"toStatus\":\"PENDING_REVIEW\",\"reason\":\"Requester changes since return: Retest edit A: quantity changed to 2. | Retest edit B: estimate changed to 18750. | Retest edit C: final specification confirmed.\",\"createdAt\":\"2026-11-24T16:50:57.645Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}}]}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history"
+  },
+  {
+    "name": "31-owner-draft-full-text",
+    "time": "2026-11-24T16:54:41.803Z",
+    "state": "Browser tab: 2, Title: \"macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\", URL: \"https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\".\n1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history\n\t2 text {\"history\":[{\"id\":24,\"requestId\":11,\"actorId\":1,\"action\":\"CREATED\",\"fromStatus\":null,\"toStatus\":\"DRAFT\",\"reason\":\"Draft purchase request created\",\"createdAt\":\"2026-11-24T16:47:37.488Z\",\"actor\":{\"id\":1,\"name\":\"Alice Requester\",\"email\":\"requester1@macau678.com\",\"role\":\"REQUESTER\"}}]}\n\t3 container\n\t\t4 checkbox 0\n\nThe focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history"
+  }
+]
