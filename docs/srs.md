@@ -1,7 +1,7 @@
 # Software Requirements Specification
 
 **Product:** Workflow and Approval System (university department)
-**Version:** 0.1 (draft) | **Date:** 5 November 2026 | **Theme:** 5. Workflow and Approval System
+**Version:** 0.2 (planning decisions recorded) | **Date:** 24 November 2026 | **Theme:** 5. Workflow and Approval System
 
 ## 1. Stakeholder problem and context
 
@@ -88,7 +88,7 @@ Each account has exactly one role. There is no administrator role in this produc
 | A-03 | Amounts are in Thai baht (THB) with no currency conversion. |
 | A-04 | Reviewers can see all requests, including those claimed by other Reviewers, but only for reading; they cannot claim or decide them (BR-11, D-14). |
 | A-05 | The categories list is fixed and is not editable by users. |
-| A-06 | The second approval stage (FR-17, BR-14) applies above a threshold amount that will be fixed before Sprint 3 (see Q-02). |
+| A-06 | The second approval stage (FR-17, BR-14) applies at or above THB 50,000.00 (Q-02 resolved by user 24 November 2026); implementation remains planned. |
 
 ## 8. Resolved decisions
 
@@ -109,16 +109,20 @@ Each account has exactly one role. There is no administrator role in this produc
 | D-13 | Unclaimed or unrelated decision | A reviewer who has not claimed a request cannot approve or reject it (403, no state change). |
 | D-14 | Reviewer visibility | Reviewers can view all requests read-only, including those claimed by other Reviewers. They can claim only Pending requests and decide only requests they claimed. |
 
-## 9. Open questions
+| D-15 | Returned resubmission | User decision 24 Nov 2026: keep the same Reviewer; resubmit to In Review. Sprint 2 contract pending teammate review. |
+| D-16 | Second approval threshold | User decision 24 Nov 2026: at or above THB 50,000.00, including equality. Sprint 3 implementation remains planned. |
+
+## 9. Question status
 
 | ID | Question | Needed by | Status |
 |---|---|---|---|
-| Q-01 | After a Returned request is resubmitted, does it go back to the queue or to the same Reviewer? | Sprint 2 contracts | Open |
-| Q-02 | What amount threshold triggers the second approval stage? | Sprint 3 contracts | Open |
-| Q-03 | Authentication mechanism (session cookie or token, expiry, hashing algorithm). | System SDS (Part C) | Open |
+| Q-01 | After a Returned request is resubmitted, does it go back to the queue or to the same Reviewer? | Sprint 2 contracts | Resolved by user 24 Nov: SAME reviewer, IN_REVIEW |
+| Q-02 | What amount threshold triggers the second approval stage? | Sprint 3 contracts | Resolved by user 24 Nov: amount >= THB 50,000.00 |
+| Q-03 | Authentication mechanism (session cookie or token, expiry, hashing algorithm). | System SDS (Part C) | Already resolved in System SDS DD-01/02/03: DB session cookie, 8h absolute expiry, bcrypt |
 
 ## 10. Revision history
 
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 5 Nov 2026 | First draft from Issue #1 decisions D-01 to D-13. |
+| 0.2 | 24 Nov 2026 | Record user resolutions Q-01 same reviewer and Q-02 inclusive THB50,000 threshold; acknowledge prior Q-03 design resolution. No new feature implementation/acceptance claimed. Detailed Sprint 2/3 contracts are pending review; full integrated baseline refresh remains #74. |
