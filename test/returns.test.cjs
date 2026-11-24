@@ -28,13 +28,17 @@ test('F-07 return edit and same-reviewer resubmission', async (t) => {
   }
   const owner = await actor('REQUESTER'), other = await actor('REQUESTER');
   const reviewer = await actor('REVIEWER'), unrelated = await actor('REVIEWER');
-  async function claimed() {
+  async function submitted() {
     const created = await api.post('/api/requests').set('Cookie', owner.cookie).send({
       title: 'Return ' + randomUUID(), category: 'PURCHASE', amount: '99.50', justification: 'Synthetic original',
     }).expect(201);
     const path = '/api/requests/' + created.body.data.id;
-    await api.post(path + '/claim').set('Cookie', reviewer.cookie).send({}).expect(200);
     return { id: created.body.data.id, path };
+  }
+  async function claimed() {
+    const row = await submitted();
+    await api.post(row.path + '/claim').set('Cookie', reviewer.cookie).send({}).expect(200);
+    return row;
   }
   async function returned() {
     const row = await claimed();
@@ -64,6 +68,9 @@ test('F-07 return edit and same-reviewer resubmission', async (t) => {
     await api.post(fresh.path + '/return').send({ reason: 'x' }).expect(401);
     for (const actor of [owner, unrelated]) await api.post(fresh.path + '/return').set('Cookie', actor.cookie).send({ reason: 'x' }).expect(403);
     assert.deepEqual(await snapshot(fresh.id), before);
+    await assert.rejects(db.request.update({ where: { id: fresh.id }, data: { state: 'RETURNED', decisionReason: ' ' } }),
+      'Database must also reject a Returned record without a reason');
+    assert.deepEqual(await snapshot(fresh.id), before);
     const after = await snapshot(id);
     await api.post(path + '/return').set('Cookie', reviewer.cookie).send({ reason: 'again' }).expect(409);
     assert.deepEqual(await snapshot(id), after);
@@ -90,7 +97,7 @@ test('F-07 return edit and same-reviewer resubmission', async (t) => {
     assert.equal(edited.history[3].fromState, 'RETURNED');
     assert.equal(edited.history[3].toState, 'RETURNED');
     assert.equal(edited.history[3].actorId, owner.id);
-    await api.patch(path).set('Cookie', owner.cookie).send({ title: 'Revised', amount: '149.750'.slice(0,6) }).expect(200);
+    await api.patch(path).set('Cookie', owner.cookie).send({ title: 'Revised', amount: '149.75' }).expect(200);
     assert.deepEqual(await snapshot(id), edited, 'No effective edits must not append or update');
   });
 
@@ -140,13 +147,14 @@ test('F-07 return edit and same-reviewer resubmission', async (t) => {
   });
 
   await t.test('TEST-07-05: non-Returned states cannot be edited or resubmitted', async () => {
-    const a = await claimed();
-    for (const state of ['IN_REVIEW', 'APPROVED']) {
-      if (state === 'APPROVED') await api.post(a.path + '/approve').set('Cookie', reviewer.cookie).send({}).expect(200);
-      const before = await snapshot(a.id);
-      await api.patch(a.path).set('Cookie', owner.cookie).send({ title: 'forbidden' }).expect(409);
-      await api.post(a.path + '/resubmit').set('Cookie', owner.cookie).send({}).expect(409);
-      assert.deepEqual(await snapshot(a.id), before);
+    const pending = await submitted(), inReview = await claimed(), approved = await claimed(), rejected = await claimed();
+    await api.post(approved.path + '/approve').set('Cookie', reviewer.cookie).send({}).expect(200);
+    await api.post(rejected.path + '/reject').set('Cookie', reviewer.cookie).send({ reason: 'Final' }).expect(200);
+    for (const row of [pending, inReview, approved, rejected]) {
+      const before = await snapshot(row.id);
+      await api.patch(row.path).set('Cookie', owner.cookie).send({ title: 'forbidden' }).expect(409);
+      await api.post(row.path + '/resubmit').set('Cookie', owner.cookie).send({}).expect(409);
+      assert.deepEqual(await snapshot(row.id), before);
     }
   });
 });
