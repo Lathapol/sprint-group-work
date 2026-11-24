@@ -8,6 +8,11 @@ type Row = {
   id: number; title: string; category: string; amount: string; justification: string;
   state: 'PENDING' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED';
   reviewerId: number | null; reviewer: { username: string } | null; decisionReason: string | null;
+  updatedAt: string;
+};
+type HistoryRow = {
+  id: number; actor: User; fromState: Row['state'] | null; toState: Row['state'];
+  reason: string | null; createdAt: string;
 };
 
 class ApiError extends Error {
@@ -145,6 +150,34 @@ function NewRequest() {
   </section>;
 }
 
+function HistoryContent({ id, retry }: { id: number; retry: () => void }) {
+  const history = useRead<HistoryRow[]>('/requests/' + id + '/history');
+  if (!history) return <p role="status">Loading history…</p>;
+  if (history.error) return <>
+    <ErrorMessage error={history.error} />
+    <button type="button" className="btn btn-outline-primary" onClick={retry}>Retry history</button>
+  </>;
+  if (!history.data?.length) return <p>No history recorded for this request.</p>;
+  return <ol className="list-group list-group-numbered">
+    {history.data.map((entry) => <li className="list-group-item" key={entry.id}>
+      <p className="fw-semibold mb-1">{entry.fromState ? labels[entry.fromState] : 'Created'} → {labels[entry.toState]}</p>
+      <p className="mb-1">{entry.actor.username} ({entry.actor.role})</p>
+      <time className="text-body-secondary" dateTime={entry.createdAt}>
+        {new Date(entry.createdAt).toLocaleString(undefined, { timeZone: 'UTC' })} UTC
+      </time>
+      {entry.reason && <p className="mb-0 mt-1">{'Reason: ' + entry.reason}</p>}
+    </li>)}
+  </ol>;
+}
+
+function RequestHistory({ id }: { id: number }) {
+  const [attempt, setAttempt] = useState(0);
+  return <section className="card p-4 mt-3" aria-label="Request history">
+    <h2 className="h4">History</h2>
+    <HistoryContent key={attempt} id={id} retry={() => setAttempt(value => value + 1)} />
+  </section>;
+}
+
 function RequestDetail({ user }: { user: User }) {
   const { id } = useParams();
   const path = '/requests/' + id;
@@ -195,6 +228,7 @@ function RequestDetail({ user }: { user: User }) {
         </div>
       </>}
     </section>}
+    {row && <RequestHistory key={row.id + ':' + row.updatedAt} id={row.id} />}
   </>;
 }
 
