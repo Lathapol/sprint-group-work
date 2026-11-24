@@ -62,7 +62,7 @@ test('F-06 persisted history chronology, safe actors and ownership', async (t) =
   await t.test('TEST-06-02: protected history is private and read-only', async () => {
     await api.get(path).expect(401);
     const denied = await api.get(path).set('Cookie', other.cookie).expect(404);
-    assert.equal(denied.body.error.code, 'NOT_FOUND');
+    assert.equal(denied.body.error?.code, 'NOT_FOUND');
     assert.equal(denied.body.data, undefined);
     assert.ok(!JSON.stringify(denied.body).includes(reason));
     for (const bad of ['0', 'not-an-id', '2147483648', '2147483647']) {
