@@ -104,11 +104,10 @@ Each account has exactly one role. There is no administrator role in this produc
 | D-08 | Rejection reason | Required on Reject, optional on Approve. |
 | D-09 | Sprint 1 states | Pending (unassigned), In Review, Approved, Rejected. Valid: Pending→In Review, In Review→Approved, In Review→Rejected. Everything else is rejected. |
 | D-10 | Seed data | Two requesters and two reviewers. |
-| D-11 | Stack | Frontend: React, TypeScript, Vite, React Router, Bootstrap. Backend: Node.js, Express, TypeScript. Database: PostgreSQL with Prisma ORM. Testing: Vitest and Supertest (unit, API/database integration, UI), Playwright (end-to-end). |
+| D-11 | Stack | Frontend: React, TypeScript, Vite, React Router, Bootstrap. Backend: Node.js, Express, TypeScript. Database: PostgreSQL with Prisma ORM. Testing as implemented: Node.js built-in test runner with Supertest (unit/API/database integration), Playwright (end-to-end). The earlier Vitest proposal was not installed. |
 | D-12 | Terminology | "Reviewer" (matches the spec), not "approver". |
 | D-13 | Unclaimed or unrelated decision | A reviewer who has not claimed a request cannot approve or reject it (403, no state change). |
 | D-14 | Reviewer visibility | Reviewers can view all requests read-only, including those claimed by other Reviewers. They can claim only Pending requests and decide only requests they claimed. |
-
 | D-15 | Returned resubmission | User decision 24 Nov 2026: keep the same Reviewer; resubmit to In Review. Sprint 2 contract pending teammate review. |
 | D-16 | Second approval threshold | User decision 24 Nov 2026: at or above THB 50,000.00, including equality. Sprint 3 implementation remains planned. |
 
