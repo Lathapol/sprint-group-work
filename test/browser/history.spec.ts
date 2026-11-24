@@ -42,6 +42,7 @@ test('TEST-06-03: history renders safe reasons and retries a failed read', async
     await expect(history.getByText('Reason: ' + reason, { exact: true })).toBeVisible();
     await expect(history.locator('img')).toHaveCount(0);
     await expect(history.getByText(/UTC/).first()).toBeVisible();
+    await page.screenshot({ path: test.info().outputPath('history.png'), fullPage: true });
 
     // Legacy empty history gets a real empty state rather than an invented event.
     await db.requestHistory.deleteMany({ where: { requestId: id } });

@@ -33,11 +33,15 @@ test('requester submits and retrieves a reviewer rejection', async ({ page }) =>
     await page.getByRole('link', { name: title }).click();
     await page.getByRole('button', { name: 'Claim request' }).click();
     await expect(page.getByText('In review', { exact: true })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Request history', exact: true })
+      .getByText('Pending → In review', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Reject', exact: true }).click();
     await expect(page.getByRole('alert')).toHaveText('Enter a valid decision reason.');
     await page.getByLabel('Decision reason (required for rejection)').fill('Budget limit');
     await page.getByRole('button', { name: 'Reject', exact: true }).click();
     await expect(page.getByText('Rejected', { exact: true })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Request history', exact: true })
+      .getByText('In review → Rejected', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Sign out' }).click();
 
     await login('requester1');
