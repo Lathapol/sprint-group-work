@@ -1,0 +1,6 @@
+{
+  "sha": "519c4922c3931fd004560f3b9f7bbb42d82c230e",
+  "exitCode": 1,
+  "time": "2026-11-25T13:09:37.5556945Z",
+  "command": "npm test"
+}

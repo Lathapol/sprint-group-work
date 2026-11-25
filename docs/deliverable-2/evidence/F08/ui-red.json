@@ -1,0 +1,6 @@
+{
+  "time": "2026-11-25T13:08:13.3340065Z",
+  "exitCode": 1,
+  "command": "playwright test test/browser/filters.spec.ts --reporter=line --timeout=15000",
+  "sha": "d81325e202c478712dce5d020a1b53e9f36a5c0e"
+}
