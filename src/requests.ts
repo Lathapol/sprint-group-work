@@ -15,6 +15,20 @@ function trimmed(value: unknown) {
   return typeof value === 'string' ? value.trim() : '';
 }
 
+function validateFields(input: Record<string, unknown>) {
+  const title = trimmed(input.title), justification = trimmed(input.justification);
+  const category = input.category as Category;
+  const amount = typeof input.amount === 'number' ? String(input.amount) : trimmed(input.amount);
+  const fields: Record<string, string> = {};
+  if (!title) fields.title = 'Enter a title.';
+  if (!justification) fields.justification = 'Enter a justification.';
+  if (!categories.includes(category)) fields.category = 'Choose a valid category.';
+  if (!/^\d{1,10}(?:\.\d{1,2})?$/.test(amount) || Number(amount) <= 0) {
+    fields.amount = 'Enter a positive THB amount with up to two decimal places.';
+  }
+  return { fields, data: { title, justification, category, amount } };
+}
+
 export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, requireJson: RequestHandler, requesterOnly: RequestHandler, reviewerOnly: RequestHandler) {
   const router = Router();
   router.use(authenticate);
@@ -29,18 +43,7 @@ export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, re
   });
 
   router.post('/', requesterOnly, requireJson, async (req, res) => {
-    const title = trimmed(req.body?.title);
-    const justification = trimmed(req.body?.justification);
-    const category = req.body?.category as Category;
-    const rawAmount: unknown = req.body?.amount;
-    const amount = typeof rawAmount === 'number' ? String(rawAmount) : trimmed(rawAmount);
-    const fields: Record<string, string> = {};
-    if (!title) fields.title = 'Enter a title.';
-    if (!justification) fields.justification = 'Enter a justification.';
-    if (!categories.includes(category)) fields.category = 'Choose a valid category.';
-    if (!/^\d{1,10}(?:\.\d{1,2})?$/.test(amount) || Number(amount) <= 0) {
-      fields.amount = 'Enter a positive THB amount with up to two decimal places.';
-    }
+    const { fields, data: values } = validateFields(req.body ?? {});
     if (Object.keys(fields).length) {
       error(res, 400, 'INVALID_INPUT', 'Check the highlighted fields.', fields);
       return;
@@ -49,7 +52,7 @@ export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, re
     const requesterId: number = res.locals.user.id;
     const data = await db.request.create({
       data: {
-        title, justification, category, amount, requesterId,
+        ...values, requesterId,
         history: { create: { actorId: requesterId, toState: 'PENDING' } },
       },
       include: people,
@@ -109,7 +112,7 @@ export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, re
     res.json({ data });
   });
 
-  function transition(target: 'IN_REVIEW' | 'APPROVED' | 'REJECTED'): RequestHandler {
+  function transition(target: 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'RETURNED'): RequestHandler {
     return async (req, res) => {
       const id: number = res.locals.requestId;
       const actorId: number = res.locals.user.id;
@@ -117,7 +120,8 @@ export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, re
       const from = claiming ? 'PENDING' : 'IN_REVIEW';
       const rawReason: unknown = req.body?.reason;
       const reason = claiming ? null : trimmed(rawReason) || null;
-      if (!claiming && ((rawReason != null && typeof rawReason !== 'string') || (target === 'REJECTED' && !reason))) {
+      if (!claiming && ((rawReason != null && typeof rawReason !== 'string') ||
+        ((target === 'REJECTED' || target === 'RETURNED') && !reason))) {
         error(res, 400, 'INVALID_INPUT', 'Enter a valid decision reason.', { reason: 'Enter a reason.' });
         return;
       }
@@ -126,7 +130,7 @@ export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, re
           where: { id, state: from, reviewerId: claiming ? null : actorId, requesterId: { not: actorId } },
           data: claiming
             ? { state: target, reviewerId: actorId }
-            : { state: target, decisionReason: reason, decidedAt: new Date() },
+            : { state: target, decisionReason: reason, decidedAt: target === 'RETURNED' ? null : new Date() },
         });
         if (update.count === 1) {
           await tx.requestHistory.create({
@@ -152,5 +156,51 @@ export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, re
   router.post('/:id/claim', reviewerOnly, requireJson, transition('IN_REVIEW'));
   router.post('/:id/approve', reviewerOnly, requireJson, transition('APPROVED'));
   router.post('/:id/reject', reviewerOnly, requireJson, transition('REJECTED'));
+  router.post('/:id/return', reviewerOnly, requireJson, transition('RETURNED'));
+
+  function ownerUpdate(resubmit: boolean): RequestHandler {
+    return async (req, res) => {
+      const id: number = res.locals.requestId, ownerId: number = res.locals.user.id;
+      const result = await db.$transaction(async tx => {
+        // Both operations take the SAME owner-scoped row lock before state/read/write.
+        // An edit therefore cannot commit after a concurrent resubmission.
+        await tx.$queryRaw`SELECT "id" FROM "Request" WHERE "id" = ${id} AND "requesterId" = ${ownerId} FOR UPDATE`;
+        const current = await tx.request.findFirst({ where: { id, requesterId: ownerId }, include: people });
+        if (!current) return { status: 404, code: 'NOT_FOUND', message: 'Request not found.' };
+        if (current.state !== 'RETURNED') return { status: 409, code: 'INVALID_TRANSITION', message: 'Only returned requests can be edited or resubmitted.' };
+        const allowed = resubmit ? [] : ['title', 'category', 'amount', 'justification'];
+        if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body) ||
+          Object.keys(req.body).some(key => !allowed.includes(key))) {
+          return { status: 400, code: 'INVALID_INPUT', message: 'Only editable request fields are allowed.' };
+        }
+        const { fields, data } = validateFields({
+          title: current.title, category: current.category, amount: current.amount.toString(),
+          justification: current.justification, ...(resubmit ? {} : req.body),
+        });
+        if (Object.keys(fields).length) return { status: 400, code: 'INVALID_INPUT', message: 'Check the highlighted fields.', fields };
+        if (!resubmit && data.title === current.title && data.category === current.category &&
+          data.justification === current.justification && new Prisma.Decimal(data.amount).equals(current.amount)) {
+          return { data: current };
+        }
+        const saved = await tx.request.update({
+          where: { id },
+          data: resubmit
+            ? { state: 'IN_REVIEW', decisionReason: null, decidedAt: null }
+            : data,
+          include: people,
+        });
+        await tx.requestHistory.create({ data: {
+          requestId: id, actorId: ownerId, fromState: 'RETURNED',
+          toState: resubmit ? 'IN_REVIEW' : 'RETURNED',
+          reason: resubmit ? null : 'Request details updated.',
+        } });
+        return { data: saved };
+      });
+      if (result.data) res.json({ data: result.data });
+      else error(res, result.status!, result.code!, result.message!, result.fields);
+    };
+  }
+  router.patch('/:id', requesterOnly, requireJson, ownerUpdate(false));
+  router.post('/:id/resubmit', requesterOnly, requireJson, ownerUpdate(true));
   return router;
 }

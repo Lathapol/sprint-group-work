@@ -1,0 +1,6 @@
+{
+  "command": "node node_modules/@playwright/test/cli.js test test/browser/returns.spec.ts --reporter=line --timeout=15000",
+  "source": "71a10085ed8863c7203d9eb4a04b7125cf7310aa",
+  "exitCode": 1,
+  "observedAt": "2026-11-24T09:57:37.5865092Z"
+}

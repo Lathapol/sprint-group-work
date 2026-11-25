@@ -1,0 +1,36 @@
+
+[WebServer] (node:31132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:22688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:8448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] test\browser\returns.spec.ts:5:1 › TEST-07-03 UI: returned edits resubmit to the same reviewer and retain history
+  1) test\browser\returns.spec.ts:5:1 › TEST-07-03 UI: returned edits resubmit to the same reviewer and retain history 
+
+    Test timeout of 15000ms exceeded.
+
+    Error: locator.click: Test timeout of 15000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Return request', exact: true })
+
+
+      26 |     await page.getByRole('link', { name: title }).click();
+      27 |     await page.getByRole('button', { name: 'Claim request' }).click();
+    > 28 |     await page.getByRole('button', { name: 'Return request', exact: true }).click();
+         |                                                                             ^
+      29 |     await expect(page.getByRole('alert')).toHaveText('Enter a valid decision reason.');
+      30 |     await page.getByLabel('Decision reason (required for rejection or return)').fill('Revise the estimate');
+      31 |     await page.getByRole('button', { name: 'Return request', exact: true }).click();
+        at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\browser\returns.spec.ts:28:77
+
+    Error Context: test-results\returns-TEST-07-03-UI-retu-cc064-reviewer-and-retain-history\error-context.md
+
+
+  1 failed
+    test\browser\returns.spec.ts:5:1 › TEST-07-03 UI: returned edits resubmit to the same reviewer and retain history 
