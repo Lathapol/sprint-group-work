@@ -33,17 +33,17 @@ async function api<T>(path: string, body?: object, signal?: AbortSignal, method 
   return payload.data;
 }
 
-function useRead<T>(path: string) {
-  const [result, setResult] = useState<{ path: string; data?: T; error?: unknown }>();
+function useRead<T>(path: string, refresh = 0) {
+  const [result, setResult] = useState<{ path: string; refresh: number; data?: T; error?: unknown }>();
   useEffect(() => {
     const controller = new AbortController();
     api<T>(path, undefined, controller.signal).then(
-      (data) => { if (!controller.signal.aborted) setResult({ path, data }); },
-      (error: unknown) => { if (!controller.signal.aborted) setResult({ path, error }); },
+      (data) => { if (!controller.signal.aborted) setResult({ path, refresh, data }); },
+      (error: unknown) => { if (!controller.signal.aborted) setResult({ path, refresh, error }); },
     );
     return () => controller.abort();
-  }, [path]);
-  return result?.path === path ? result : undefined;
+  }, [path, refresh]);
+  return result?.path === path && result.refresh === refresh ? result : undefined;
 }
 
 function ErrorMessage({ error }: { error: unknown }) {
@@ -87,8 +87,39 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
 
 function RequestList({ reviewer }: { reviewer: boolean }) {
   const [tab, setTab] = useState('all');
-  const filter = tab === 'queue' ? '?state=PENDING' : tab === 'mine' ? '?mine=true' : '';
-  const result = useRead<Row[]>('/requests' + filter);
+  const empty = { state: '', category: '', from: '', to: '', q: '' };
+  const [draft, setDraft] = useState(empty);
+  const [applied, setApplied] = useState(empty);
+  const [refresh, setRefresh] = useState(0);
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(applied)) if (value) params.set(key, value);
+  if (tab === 'queue') params.set('state', 'PENDING');
+  if (tab === 'mine') params.set('mine', 'true');
+  const query = params.toString();
+  const result = useRead<Row[]>('/requests' + (query ? '?' + query : ''), refresh);
+  const fields = result?.error instanceof ApiError ? result.error.fields : {};
+  function apply(event: FormEvent) {
+    event.preventDefault();
+    setApplied({ ...draft });
+    setRefresh(value => value + 1);
+  }
+  function chooseTab(next: string) {
+    setTab(next);
+    setDraft(value => ({ ...value, state: '' }));
+    setApplied(value => ({ ...value, state: '' }));
+    setRefresh(value => value + 1);
+  }
+  function control(name: keyof typeof draft, label: string, input: ReactNode) {
+    return <div className="col-sm-6 col-lg-4">
+      <label className="form-label" htmlFor={'filter-' + name}>{label}</label>
+      {input}{fields[name] && <div id={'filter-' + name + '-error'} className="text-danger">{fields[name]}</div>}
+    </div>;
+  }
+  function attributes(name: keyof typeof draft) {
+    return { id: 'filter-' + name, value: draft[name], 'aria-invalid': !!fields[name],
+      'aria-describedby': fields[name] ? 'filter-' + name + '-error' : undefined,
+      onChange: (event: { target: { value: string } }) => setDraft(value => ({ ...value, [name]: event.target.value })) };
+  }
   return <>
     <div className="d-flex justify-content-between align-items-center mb-3">
       <h1 className="h3 mb-0">{reviewer ? 'Review requests' : 'My requests'}</h1>
@@ -97,8 +128,31 @@ function RequestList({ reviewer }: { reviewer: boolean }) {
     {reviewer && <div className="btn-group mb-3" aria-label="Request filters">
       {['All', 'Queue', 'Mine'].map((name) => <button key={name} type="button"
         className={'btn ' + (tab === name.toLowerCase() ? 'btn-primary' : 'btn-outline-primary')}
-        aria-pressed={tab === name.toLowerCase()} onClick={() => setTab(name.toLowerCase())}>{name}</button>)}
+        aria-pressed={tab === name.toLowerCase()} onClick={() => chooseTab(name.toLowerCase())}>{name}</button>)}
     </div>}
+    <form className="card p-3 mb-3" onSubmit={apply} aria-label="Filter requests">
+      <div className="row g-3">
+        {control('state', 'Filter state', <select className="form-select" {...attributes('state')}
+          value={tab === 'queue' ? 'PENDING' : draft.state} disabled={tab === 'queue'}>
+          <option value="">All states</option>
+          {Object.entries(labels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+        </select>)}
+        {control('category', 'Filter category', <select className="form-select" {...attributes('category')}>
+          <option value="">All categories</option>
+          {['Funding', 'Purchase', 'Travel', 'Reimbursement'].map(name => <option key={name} value={name.toUpperCase()}>{name}</option>)}
+        </select>)}
+        {control('q', 'Search title or justification', <input className="form-control" {...attributes('q')} />)}
+        {control('from', 'Created from (UTC)', <input className="form-control" type="date" {...attributes('from')} />)}
+        {control('to', 'Created through (UTC)', <input className="form-control" type="date" {...attributes('to')} />)}
+      </div>
+      <p className="text-body-secondary mt-3 mb-2">Dates include the whole UTC day. Search matches literal text, ignoring case.</p>
+      <div className="d-flex gap-2">
+        <button className="btn btn-primary" disabled={!result}>Apply filters</button>
+        <button className="btn btn-outline-secondary" type="button" onClick={() => {
+          setDraft(empty); setApplied(empty); setRefresh(value => value + 1);
+        }}>Clear filters</button>
+      </div>
+    </form>
     {!result && <p role="status">Loading requests…</p>}
     <ErrorMessage error={result?.error} />
     {result?.data?.length === 0 && <p>No requests in this view.</p>}
