@@ -1,0 +1,54 @@
+Browser tab: 2, Title: "Department Requests", URL: "https://approvals-389973748230.asia-southeast1.run.app/".
+0 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/
+	1 container root
+		2 container
+			3 link Description: Department Requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			4 text Team approvals · Cloud release requester1
+			5 button Sign out
+		6 container
+			7 heading My requests, Value: 1
+				8 text My requests
+			9 link Description: New request, Value: approvals-389973748230.asia-southeast1.run.app/new
+			10 container Filter requests
+				11 text Filter state
+				12 pop up button (collapsed, settable) Filter state, Value: Approved, ID: filter-state, Secondary Actions: Expand
+					13 menu
+						14 All states
+						15 Pending
+						16 In review
+						17 Returned
+						18 (selected) Approved
+						19 Rejected
+				20 text Filter category
+				21 pop up button (collapsed, settable) Filter category, Value: Purchase, ID: filter-category, Secondary Actions: Expand
+					22 menu
+						23 All categories
+						24 Funding
+						25 (selected) Purchase
+						26 Travel
+						27 Reimbursement
+				28 text Search title or justification
+				29 text field (settable) Search title or justification, Value: 100%_\, ID: filter-q
+				30 text Created from (UTC)
+				31 date field (settable) Created from (UTC), ID: filter-from
+					32 container
+						33 stepper
+						34 stepper
+						35 stepper
+					36 pop up button Show date picker Show date picker
+				37 text Created through (UTC)
+				38 date field (settable) Created through (UTC), ID: filter-to
+					39 container
+						40 stepper
+						41 stepper
+						42 stepper
+					43 pop up button Show date picker Show date picker
+				44 text Dates include the whole UTC day. Search matches literal text, ignoring case.
+				45 button Apply filters
+				46 button Clear filters
+			47 content list
+				48 container
+					49 link Description: Sprint2 release 2026-11-25T14:05:46.205Z returned cycle, Value: approvals-389973748230.asia-southeast1.run.app/requests/17
+					50 text Approved
+
+The focused UI element is 0 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/

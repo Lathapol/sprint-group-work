@@ -1,6 +1,6 @@
 # Deliverable 2 checkpoint
 
-Sprint 2 completion and Sprint 3 progress. Due **29 November 2026 23:59 Asia/Bangkok**, 70 points; final product completion target 13 December. Same team, Workflow and Approval System, same repository. Status updated 25 November: contracts reviewed/merged in #77; F-06 and F-07 implemented, tested and merged into staging in #78/#79. F-08 is a locally verified review candidate. Sprint 2 main release/deployment acceptance remains pending.
+Sprint 2 completion and Sprint 3 progress. Due **29 November 2026 23:59 Asia/Bangkok**, 70 points; final product completion target 13 December. Same team, Workflow and Approval System, same repository. Status updated 25 November: contracts #77 and F-06/F-07/F-08 #78/#79/#81 merged; release #82 is deployed at main `f9a0d2f`, tag `sprint-2-2026-11-25`, revision `approvals-r45629268302-1`. Main CI passes 22 API tests and 4 UI tests; 43 live API calls and deployed UI checks passed, including retained-data comparison. See [actual release evidence](evidence/sprint-2-release/README.md). Human evidence acceptance and the remaining Deliverable 2 work are separate.
 
 ## Recorded decisions
 
@@ -9,7 +9,7 @@ User decisions received 24 November 2026 (not invented course approval):
 - Q-02: amount **at or above THB 50,000.00** needs a second, different reviewer. Equality is included.
 - Q-03 was already resolved by System SDS DD-01/02/03: PostgreSQL session cookie, absolute 8-hour expiry and bcrypt.
 
-Complete contracts: [Sprint 2](../sprints/sprint-2/contracts.md), [Sprint 3](../sprints/sprint-3/contracts.md). Their review/merge occurred in #77 before implementation. Actual results: [F-06](evidence/F06/README.md), [F-07](evidence/F07/README.md), [F-08](evidence/F08/README.md). Feature review and accepted main release are separate steps. Do not silently rewrite Sprint 1 contract history.
+Complete contracts: [Sprint 2](../sprints/sprint-2/contracts.md), [Sprint 3](../sprints/sprint-3/contracts.md). Their review/merge occurred in #77 before implementation. Actual results: [F-06](evidence/F06/README.md), [F-07](evidence/F07/README.md), [F-08](evidence/F08/README.md), [F-10 candidate](evidence/F10/README.md). Sprint 2 evidence #84 was approved/merged and feature issues #69–#71 closed. F-10 now has real local API/UI implementation and RED/GREEN (27 API/regression tests and 5 browser tests pass); teammate review/integration/deployment are pending. Do not silently rewrite Sprint 1 contract history or claim local F-10 evidence is a deployed Sprint 3 release.
 
 ## Scope and build order
 
@@ -27,7 +27,7 @@ C (15): #72 all Sprint 3 contracts, #73 F-10 working progress.
 D (10): #74 complete SRS, feature inventory, System SDS and actual-result traceability.
 E (15): #75 integrated reviewed GCP candidate; #76 PDF and controlled finish plan.
 
-Existing Sprint 1 reference: source 51b57adc1c51d57e23d047d628cf55966e268ad9. Independent case-specific UAT6-03 PASS was recorded at 8bc9448d478464784acb48fce6bbe4c18973946d / approvals-r45190529393-1. Current documentation-only release 3846a503893d6f5fc0fcfb602e79883fc7eab0d6 / approvals-r45358400560-1. These do not mean whole Sprint 1 UAT acceptance is complete.
+Existing Sprint 1 reference: source 51b57adc1c51d57e23d047d628cf55966e268ad9. Independent case-specific UAT6-03 PASS was recorded at 8bc9448d478464784acb48fce6bbe4c18973946d / approvals-r45190529393-1. Previous documentation-only release 3846a503893d6f5fc0fcfb602e79883fc7eab0d6 / approvals-r45358400560-1 supplied the preserved #13 baseline. Current Sprint 2 release is identified above. These do not mean whole Sprint 1 UAT acceptance is complete.
 
 ## Required evidence discipline
 

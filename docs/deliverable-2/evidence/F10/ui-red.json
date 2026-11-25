@@ -1,0 +1,6 @@
+{
+  "exitCode": 0,
+  "time": "2026-11-25T14:24:49.7061614Z",
+  "sha": "c2367f2c579fafb912cf120c118dae1483635e5e",
+  "command": "playwright test test/browser/summary.spec.ts --reporter=line --timeout=15000"
+}

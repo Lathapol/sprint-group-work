@@ -1,0 +1,36 @@
+
+[WebServer] (node:10504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:29816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:29424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] test\browser\summary.spec.ts:6:1 › TEST-10-04 UI: real decision counts, reload, loading empty and retry
+  1) test\browser\summary.spec.ts:6:1 › TEST-10-04 UI: real decision counts, reload, loading empty and retry 
+
+    Test timeout of 15000ms exceeded.
+
+    Error: locator.click: Test timeout of 15000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: 'Decision summary', exact: true })
+
+
+      68 |     await page.getByRole('button', { name: 'Sign out', exact: true }).click();
+      69 |     await login(reviewer.username);
+    > 70 |     await page.getByRole('link', { name: 'Decision summary', exact: true }).click();
+         |                                                                             ^
+      71 |     await matchesActual();
+      72 |     await expect(page.getByRole('table', { name: 'Decisions by reviewer', exact: true }).getByText(reviewer.username, { exact: true })).toHaveCount(0);
+      73 |     await page.getByRole('link', { name: 'Back to requests', exact: true }).click();
+        at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\browser\summary.spec.ts:70:77
+
+    Error Context: test-results\summary-TEST-10-04-UI-real-c632c-oad-loading-empty-and-retry\error-context.md
+
+
+  1 failed
+    test\browser\summary.spec.ts:6:1 › TEST-10-04 UI: real decision counts, reload, loading empty and retry 
