@@ -1,0 +1,1267 @@
+{
+  "startedAt": "2026-11-25T14:05:46.205Z",
+  "completedAt": "2026-11-25T14:05:51.473Z",
+  "kind": "AI-assisted developer API release verification, not independent manual UAT",
+  "base": "https://approvals-389973748230.asia-southeast1.run.app",
+  "source": "f9a0d2f704c868e4a0b2048f4cc85c2bf8949997",
+  "version": {
+    "data": {
+      "commit": "f9a0d2f704c868e4a0b2048f4cc85c2bf8949997"
+    }
+  },
+  "retainedFixtureId": 13,
+  "retainedFixtureUnchanged": true,
+  "retainedHash": "d0be45c5fbe92c5c79544af75176b6e379716a861f9c95b9f653d7ac8c3a2738",
+  "syntheticIds": {
+    "rejected": 16,
+    "approvedReturnCycle": 17
+  },
+  "originalHistory": [
+    {
+      "id": 34,
+      "fromState": null,
+      "toState": "PENDING",
+      "reason": null,
+      "createdAt": "2026-11-25T14:06:05.312Z",
+      "actor": {
+        "id": 1,
+        "username": "requester1",
+        "role": "REQUESTER"
+      }
+    },
+    {
+      "id": 35,
+      "fromState": "PENDING",
+      "toState": "IN_REVIEW",
+      "reason": null,
+      "createdAt": "2026-11-25T14:06:05.409Z",
+      "actor": {
+        "id": 3,
+        "username": "reviewer1",
+        "role": "REVIEWER"
+      }
+    },
+    {
+      "id": 36,
+      "fromState": "IN_REVIEW",
+      "toState": "REJECTED",
+      "reason": "Synthetic release rejection; no real purchase.",
+      "createdAt": "2026-11-25T14:06:05.546Z",
+      "actor": {
+        "id": 3,
+        "username": "reviewer1",
+        "role": "REVIEWER"
+      }
+    }
+  ],
+  "cycleHistory": [
+    {
+      "id": 37,
+      "fromState": null,
+      "toState": "PENDING",
+      "reason": null,
+      "createdAt": "2026-11-25T14:06:05.813Z",
+      "actor": {
+        "id": 1,
+        "username": "requester1",
+        "role": "REQUESTER"
+      }
+    },
+    {
+      "id": 38,
+      "fromState": "PENDING",
+      "toState": "IN_REVIEW",
+      "reason": null,
+      "createdAt": "2026-11-25T14:06:05.888Z",
+      "actor": {
+        "id": 3,
+        "username": "reviewer1",
+        "role": "REVIEWER"
+      }
+    },
+    {
+      "id": 39,
+      "fromState": "IN_REVIEW",
+      "toState": "RETURNED",
+      "reason": "Revise the synthetic estimate.",
+      "createdAt": "2026-11-25T14:06:06.009Z",
+      "actor": {
+        "id": 3,
+        "username": "reviewer1",
+        "role": "REVIEWER"
+      }
+    },
+    {
+      "id": 40,
+      "fromState": "RETURNED",
+      "toState": "RETURNED",
+      "reason": "Request details updated.",
+      "createdAt": "2026-11-25T14:06:06.475Z",
+      "actor": {
+        "id": 1,
+        "username": "requester1",
+        "role": "REQUESTER"
+      }
+    },
+    {
+      "id": 41,
+      "fromState": "RETURNED",
+      "toState": "IN_REVIEW",
+      "reason": null,
+      "createdAt": "2026-11-25T14:06:06.754Z",
+      "actor": {
+        "id": 1,
+        "username": "requester1",
+        "role": "REQUESTER"
+      }
+    },
+    {
+      "id": 42,
+      "fromState": "IN_REVIEW",
+      "toState": "APPROVED",
+      "reason": "Synthetic revised estimate accepted.",
+      "createdAt": "2026-11-25T14:06:07.139Z",
+      "actor": {
+        "id": 3,
+        "username": "reviewer1",
+        "role": "REVIEWER"
+      }
+    }
+  ],
+  "concurrentResubmitStatuses": [
+    200,
+    409
+  ],
+  "final": {
+    "id": 17,
+    "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+    "category": "PURCHASE",
+    "amount": "17.75",
+    "justification": "Receipt 100%_\\ verified; synthetic release only.",
+    "state": "APPROVED",
+    "requesterId": 1,
+    "reviewerId": 3,
+    "decisionReason": "Synthetic revised estimate accepted.",
+    "createdAt": "2026-11-25T14:06:05.813Z",
+    "updatedAt": "2026-11-25T14:06:07.135Z",
+    "decidedAt": "2026-11-25T14:06:07.135Z",
+    "requester": {
+      "id": 1,
+      "username": "requester1"
+    },
+    "reviewer": {
+      "id": 3,
+      "username": "reviewer1"
+    }
+  },
+  "calls": [
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/13",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 13,
+          "title": "UAT6-03 independent rerun fixture 2026-11-23T13:56:33.386Z",
+          "category": "PURCHASE",
+          "amount": "25.5",
+          "justification": "Synthetic fresh Pending fixture; retain for partner retest of issue 60.",
+          "state": "PENDING",
+          "requesterId": 1,
+          "reviewerId": null,
+          "decisionReason": null,
+          "createdAt": "2026-11-23T13:56:43.942Z",
+          "updatedAt": "2026-11-23T13:56:43.942Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": null
+        }
+      }
+    },
+    {
+      "actor": "anonymous",
+      "method": "GET",
+      "endpoint": "/api/requests",
+      "status": 401,
+      "payload": {
+        "error": {
+          "code": "UNAUTHENTICATED",
+          "message": "Log in to continue."
+        }
+      }
+    },
+    {
+      "actor": "requester2",
+      "method": "GET",
+      "endpoint": "/api/requests/13",
+      "status": 404,
+      "payload": {
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "Request not found."
+        }
+      }
+    },
+    {
+      "actor": "requester2",
+      "method": "GET",
+      "endpoint": "/api/requests/13/history",
+      "status": 404,
+      "payload": {
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "Request not found."
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "endpoint": "/api/requests/13/claim",
+      "status": 403,
+      "payload": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "This operation is forbidden."
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "endpoint": "/api/requests",
+      "status": 400,
+      "payload": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Check the highlighted fields.",
+          "fields": {
+            "amount": "Enter a positive THB amount with up to two decimal places."
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "endpoint": "/api/requests",
+      "status": 201,
+      "payload": {
+        "data": {
+          "id": 16,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z original journey",
+          "category": "PURCHASE",
+          "amount": "10.25",
+          "justification": "Synthetic release regression only; retain for evidence.",
+          "state": "PENDING",
+          "requesterId": 1,
+          "reviewerId": null,
+          "decisionReason": null,
+          "createdAt": "2026-11-25T14:06:05.312Z",
+          "updatedAt": "2026-11-25T14:06:05.312Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": null
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "endpoint": "/api/requests/16/claim",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 16,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z original journey",
+          "category": "PURCHASE",
+          "amount": "10.25",
+          "justification": "Synthetic release regression only; retain for evidence.",
+          "state": "IN_REVIEW",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": null,
+          "createdAt": "2026-11-25T14:06:05.312Z",
+          "updatedAt": "2026-11-25T14:06:05.401Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "endpoint": "/api/requests/16/reject",
+      "status": 400,
+      "payload": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Enter a valid decision reason.",
+          "fields": {
+            "reason": "Enter a reason."
+          }
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "endpoint": "/api/requests/16/reject",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 16,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z original journey",
+          "category": "PURCHASE",
+          "amount": "10.25",
+          "justification": "Synthetic release regression only; retain for evidence.",
+          "state": "REJECTED",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": "Synthetic release rejection; no real purchase.",
+          "createdAt": "2026-11-25T14:06:05.312Z",
+          "updatedAt": "2026-11-25T14:06:05.540Z",
+          "decidedAt": "2026-11-25T14:06:05.539Z",
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/16",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 16,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z original journey",
+          "category": "PURCHASE",
+          "amount": "10.25",
+          "justification": "Synthetic release regression only; retain for evidence.",
+          "state": "REJECTED",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": "Synthetic release rejection; no real purchase.",
+          "createdAt": "2026-11-25T14:06:05.312Z",
+          "updatedAt": "2026-11-25T14:06:05.540Z",
+          "decidedAt": "2026-11-25T14:06:05.539Z",
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "PATCH",
+      "endpoint": "/api/requests/16",
+      "status": 409,
+      "payload": {
+        "error": {
+          "code": "INVALID_TRANSITION",
+          "message": "Only returned requests can be edited or resubmitted."
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/16/history",
+      "status": 200,
+      "payload": {
+        "data": [
+          {
+            "id": 34,
+            "fromState": null,
+            "toState": "PENDING",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:05.312Z",
+            "actor": {
+              "id": 1,
+              "username": "requester1",
+              "role": "REQUESTER"
+            }
+          },
+          {
+            "id": 35,
+            "fromState": "PENDING",
+            "toState": "IN_REVIEW",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:05.409Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          },
+          {
+            "id": 36,
+            "fromState": "IN_REVIEW",
+            "toState": "REJECTED",
+            "reason": "Synthetic release rejection; no real purchase.",
+            "createdAt": "2026-11-25T14:06:05.546Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "endpoint": "/api/requests",
+      "status": 201,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "10.25",
+          "justification": "Synthetic release regression only; retain for evidence.",
+          "state": "PENDING",
+          "requesterId": 1,
+          "reviewerId": null,
+          "decisionReason": null,
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:05.813Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": null
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "endpoint": "/api/requests/17/claim",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "10.25",
+          "justification": "Synthetic release regression only; retain for evidence.",
+          "state": "IN_REVIEW",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": null,
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:05.884Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "endpoint": "/api/requests/17/return",
+      "status": 400,
+      "payload": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Enter a valid decision reason.",
+          "fields": {
+            "reason": "Enter a reason."
+          }
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "endpoint": "/api/requests/17/return",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "10.25",
+          "justification": "Synthetic release regression only; retain for evidence.",
+          "state": "RETURNED",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": "Revise the synthetic estimate.",
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:06.005Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/17",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "10.25",
+          "justification": "Synthetic release regression only; retain for evidence.",
+          "state": "RETURNED",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": "Revise the synthetic estimate.",
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:06.005Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester2",
+      "method": "PATCH",
+      "endpoint": "/api/requests/17",
+      "status": 404,
+      "payload": {
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "Request not found."
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "PATCH",
+      "endpoint": "/api/requests/17",
+      "status": 403,
+      "payload": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "This operation is forbidden."
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "PATCH",
+      "endpoint": "/api/requests/17",
+      "status": 400,
+      "payload": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Check the highlighted fields.",
+          "fields": {
+            "amount": "Enter a positive THB amount with up to two decimal places."
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "PATCH",
+      "endpoint": "/api/requests/17",
+      "status": 400,
+      "payload": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Only editable request fields are allowed."
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/17",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "10.25",
+          "justification": "Synthetic release regression only; retain for evidence.",
+          "state": "RETURNED",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": "Revise the synthetic estimate.",
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:06.005Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "PATCH",
+      "endpoint": "/api/requests/17",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "17.75",
+          "justification": "Receipt 100%_\\ verified; synthetic release only.",
+          "state": "RETURNED",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": "Revise the synthetic estimate.",
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:06.461Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "PATCH",
+      "endpoint": "/api/requests/17",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "17.75",
+          "justification": "Receipt 100%_\\ verified; synthetic release only.",
+          "state": "RETURNED",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": "Revise the synthetic estimate.",
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:06.461Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/17/history",
+      "status": 200,
+      "payload": {
+        "data": [
+          {
+            "id": 37,
+            "fromState": null,
+            "toState": "PENDING",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:05.813Z",
+            "actor": {
+              "id": 1,
+              "username": "requester1",
+              "role": "REQUESTER"
+            }
+          },
+          {
+            "id": 38,
+            "fromState": "PENDING",
+            "toState": "IN_REVIEW",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:05.888Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          },
+          {
+            "id": 39,
+            "fromState": "IN_REVIEW",
+            "toState": "RETURNED",
+            "reason": "Revise the synthetic estimate.",
+            "createdAt": "2026-11-25T14:06:06.009Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          },
+          {
+            "id": 40,
+            "fromState": "RETURNED",
+            "toState": "RETURNED",
+            "reason": "Request details updated.",
+            "createdAt": "2026-11-25T14:06:06.475Z",
+            "actor": {
+              "id": 1,
+              "username": "requester1",
+              "role": "REQUESTER"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "endpoint": "/api/requests/17/resubmit",
+      "status": 400,
+      "payload": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Only editable request fields are allowed."
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "endpoint": "/api/requests/17/resubmit",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "17.75",
+          "justification": "Receipt 100%_\\ verified; synthetic release only.",
+          "state": "IN_REVIEW",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": null,
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:06.741Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "endpoint": "/api/requests/17/resubmit",
+      "status": 409,
+      "payload": {
+        "error": {
+          "code": "INVALID_TRANSITION",
+          "message": "Only returned requests can be edited or resubmitted."
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/17",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "17.75",
+          "justification": "Receipt 100%_\\ verified; synthetic release only.",
+          "state": "IN_REVIEW",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": null,
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:06.741Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests?state=PENDING&q=Sprint2%20release%202026-11-25T14%3A05%3A46.205Z",
+      "status": 200,
+      "payload": {
+        "data": []
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests?mine=true&q=Sprint2%20release%202026-11-25T14%3A05%3A46.205Z",
+      "status": 200,
+      "payload": {
+        "data": [
+          {
+            "id": 17,
+            "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+            "category": "PURCHASE",
+            "amount": "17.75",
+            "justification": "Receipt 100%_\\ verified; synthetic release only.",
+            "state": "IN_REVIEW",
+            "requesterId": 1,
+            "reviewerId": 3,
+            "decisionReason": null,
+            "createdAt": "2026-11-25T14:06:05.813Z",
+            "updatedAt": "2026-11-25T14:06:06.741Z",
+            "decidedAt": null,
+            "requester": {
+              "id": 1,
+              "username": "requester1"
+            },
+            "reviewer": {
+              "id": 3,
+              "username": "reviewer1"
+            }
+          },
+          {
+            "id": 16,
+            "title": "Sprint2 release 2026-11-25T14:05:46.205Z original journey",
+            "category": "PURCHASE",
+            "amount": "10.25",
+            "justification": "Synthetic release regression only; retain for evidence.",
+            "state": "REJECTED",
+            "requesterId": 1,
+            "reviewerId": 3,
+            "decisionReason": "Synthetic release rejection; no real purchase.",
+            "createdAt": "2026-11-25T14:06:05.312Z",
+            "updatedAt": "2026-11-25T14:06:05.540Z",
+            "decidedAt": "2026-11-25T14:06:05.539Z",
+            "requester": {
+              "id": 1,
+              "username": "requester1"
+            },
+            "reviewer": {
+              "id": 3,
+              "username": "reviewer1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "actor": "reviewer2",
+      "method": "POST",
+      "endpoint": "/api/requests/17/approve",
+      "status": 403,
+      "payload": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "This operation is forbidden."
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "endpoint": "/api/requests/17/approve",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "17.75",
+          "justification": "Receipt 100%_\\ verified; synthetic release only.",
+          "state": "APPROVED",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": "Synthetic revised estimate accepted.",
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:07.135Z",
+          "decidedAt": "2026-11-25T14:06:07.135Z",
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/17",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 17,
+          "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+          "category": "PURCHASE",
+          "amount": "17.75",
+          "justification": "Receipt 100%_\\ verified; synthetic release only.",
+          "state": "APPROVED",
+          "requesterId": 1,
+          "reviewerId": 3,
+          "decisionReason": "Synthetic revised estimate accepted.",
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "updatedAt": "2026-11-25T14:06:07.135Z",
+          "decidedAt": "2026-11-25T14:06:07.135Z",
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": {
+            "id": 3,
+            "username": "reviewer1"
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/17/history",
+      "status": 200,
+      "payload": {
+        "data": [
+          {
+            "id": 37,
+            "fromState": null,
+            "toState": "PENDING",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:05.813Z",
+            "actor": {
+              "id": 1,
+              "username": "requester1",
+              "role": "REQUESTER"
+            }
+          },
+          {
+            "id": 38,
+            "fromState": "PENDING",
+            "toState": "IN_REVIEW",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:05.888Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          },
+          {
+            "id": 39,
+            "fromState": "IN_REVIEW",
+            "toState": "RETURNED",
+            "reason": "Revise the synthetic estimate.",
+            "createdAt": "2026-11-25T14:06:06.009Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          },
+          {
+            "id": 40,
+            "fromState": "RETURNED",
+            "toState": "RETURNED",
+            "reason": "Request details updated.",
+            "createdAt": "2026-11-25T14:06:06.475Z",
+            "actor": {
+              "id": 1,
+              "username": "requester1",
+              "role": "REQUESTER"
+            }
+          },
+          {
+            "id": 41,
+            "fromState": "RETURNED",
+            "toState": "IN_REVIEW",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:06.754Z",
+            "actor": {
+              "id": 1,
+              "username": "requester1",
+              "role": "REQUESTER"
+            }
+          },
+          {
+            "id": 42,
+            "fromState": "IN_REVIEW",
+            "toState": "APPROVED",
+            "reason": "Synthetic revised estimate accepted.",
+            "createdAt": "2026-11-25T14:06:07.139Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "actor": "reviewer2",
+      "method": "GET",
+      "endpoint": "/api/requests/17/history",
+      "status": 200,
+      "payload": {
+        "data": [
+          {
+            "id": 37,
+            "fromState": null,
+            "toState": "PENDING",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:05.813Z",
+            "actor": {
+              "id": 1,
+              "username": "requester1",
+              "role": "REQUESTER"
+            }
+          },
+          {
+            "id": 38,
+            "fromState": "PENDING",
+            "toState": "IN_REVIEW",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:05.888Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          },
+          {
+            "id": 39,
+            "fromState": "IN_REVIEW",
+            "toState": "RETURNED",
+            "reason": "Revise the synthetic estimate.",
+            "createdAt": "2026-11-25T14:06:06.009Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          },
+          {
+            "id": 40,
+            "fromState": "RETURNED",
+            "toState": "RETURNED",
+            "reason": "Request details updated.",
+            "createdAt": "2026-11-25T14:06:06.475Z",
+            "actor": {
+              "id": 1,
+              "username": "requester1",
+              "role": "REQUESTER"
+            }
+          },
+          {
+            "id": 41,
+            "fromState": "RETURNED",
+            "toState": "IN_REVIEW",
+            "reason": null,
+            "createdAt": "2026-11-25T14:06:06.754Z",
+            "actor": {
+              "id": 1,
+              "username": "requester1",
+              "role": "REQUESTER"
+            }
+          },
+          {
+            "id": 42,
+            "fromState": "IN_REVIEW",
+            "toState": "APPROVED",
+            "reason": "Synthetic revised estimate accepted.",
+            "createdAt": "2026-11-25T14:06:07.139Z",
+            "actor": {
+              "id": 3,
+              "username": "reviewer1",
+              "role": "REVIEWER"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests?state=APPROVED&category=PURCHASE&from=2026-11-25&to=2026-11-25&q=100%25_%5C",
+      "status": 200,
+      "payload": {
+        "data": [
+          {
+            "id": 17,
+            "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+            "category": "PURCHASE",
+            "amount": "17.75",
+            "justification": "Receipt 100%_\\ verified; synthetic release only.",
+            "state": "APPROVED",
+            "requesterId": 1,
+            "reviewerId": 3,
+            "decisionReason": "Synthetic revised estimate accepted.",
+            "createdAt": "2026-11-25T14:06:05.813Z",
+            "updatedAt": "2026-11-25T14:06:07.135Z",
+            "decidedAt": "2026-11-25T14:06:07.135Z",
+            "requester": {
+              "id": 1,
+              "username": "requester1"
+            },
+            "reviewer": {
+              "id": 3,
+              "username": "reviewer1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "actor": "requester2",
+      "method": "GET",
+      "endpoint": "/api/requests?q=Sprint2%20release%202026-11-25T14%3A05%3A46.205Z",
+      "status": 200,
+      "payload": {
+        "data": []
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests?requesterId=2",
+      "status": 400,
+      "payload": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Check the highlighted filters.",
+          "fields": {
+            "requesterId": "Unsupported filter."
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests?from=2026-02-30",
+      "status": 400,
+      "payload": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Check the highlighted filters.",
+          "fields": {
+            "from": "Enter a valid calendar date (YYYY-MM-DD)."
+          }
+        }
+      }
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests?state=PENDING&state=APPROVED",
+      "status": 400,
+      "payload": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Check the highlighted filters.",
+          "fields": {
+            "state": "Supply this filter once as text."
+          }
+        }
+      }
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/13",
+      "status": 200,
+      "payload": {
+        "data": {
+          "id": 13,
+          "title": "UAT6-03 independent rerun fixture 2026-11-23T13:56:33.386Z",
+          "category": "PURCHASE",
+          "amount": "25.5",
+          "justification": "Synthetic fresh Pending fixture; retain for partner retest of issue 60.",
+          "state": "PENDING",
+          "requesterId": 1,
+          "reviewerId": null,
+          "decisionReason": null,
+          "createdAt": "2026-11-23T13:56:43.942Z",
+          "updatedAt": "2026-11-23T13:56:43.942Z",
+          "decidedAt": null,
+          "requester": {
+            "id": 1,
+            "username": "requester1"
+          },
+          "reviewer": null
+        }
+      }
+    }
+  ],
+  "dataPolicy": "New synthetic requests retained; no reset, reseed or deletion; existing fixture #13 untouched"
+}

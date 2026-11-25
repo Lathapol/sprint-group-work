@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "labels": {
+      "cloud.googleapis.com/location": "asia-southeast1",
+      "commit-sha": "f9a0d2f704c868e4a0b2048f4cc85c2bf8949997",
+      "run.googleapis.com/satisfiesPzs": "true",
+      "run.googleapis.com/startupProbeType": "Default",
+      "serving.knative.dev/configuration": "approvals",
+      "serving.knative.dev/configurationGeneration": "7",
+      "serving.knative.dev/route": "approvals",
+      "serving.knative.dev/service": "approvals",
+      "serving.knative.dev/serviceUid": "66ffaa5d-3570-445c-b385-d741309db05e"
+    },
+    "name": "approvals-r45629268302-1"
+  },
+  "spec": {
+    "containers": [
+      {
+        "image": "asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app@sha256:19bd5a1fbd82f633167eda850f31149bda989e3f99e965ec1cd20fbf68baa510"
+      }
+    ]
+  },
+  "status": {
+    "conditions": [
+      {
+        "lastTransitionTime": "2026-11-25T14:05:24.551525Z",
+        "message": "Deploying revision succeeded in 11.01s.",
+        "status": "True",
+        "type": "Ready"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T14:05:24.717142Z",
+        "severity": "Info",
+        "status": "True",
+        "type": "Active"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T14:05:24.495124Z",
+        "message": "Containers became healthy in 1.11s.",
+        "status": "True",
+        "type": "ContainerHealthy"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T14:05:21.034891Z",
+        "message": "Container image import completed in 6.97s.",
+        "status": "True",
+        "type": "ContainerReady"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T14:05:22.903559Z",
+        "message": "Provisioning imported containers completed in 1.87s. Checking container health. This will wait for up to 4m for the configured startup probe, including an initial delay of 0s.",
+        "status": "True",
+        "type": "ResourcesAvailable"
+      }
+    ],
+    "imageDigest": "asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app@sha256:19bd5a1fbd82f633167eda850f31149bda989e3f99e965ec1cd20fbf68baa510"
+  }
+}

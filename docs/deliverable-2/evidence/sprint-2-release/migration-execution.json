@@ -1,0 +1,37 @@
+[
+  {
+    "metadata": {
+      "name": "approvals-migrate-kl55b"
+    },
+    "status": {
+      "completionTime": "2026-11-25T14:05:07.080627Z",
+      "conditions": [
+        {
+          "lastTransitionTime": "2026-11-25T14:05:07.080627Z",
+          "message": "Execution completed successfully in 21.89s.",
+          "status": "True",
+          "type": "Completed"
+        },
+        {
+          "lastTransitionTime": "2026-11-25T14:04:43.219898Z",
+          "message": "Provisioned imported containers.",
+          "status": "True",
+          "type": "ResourcesAvailable"
+        },
+        {
+          "lastTransitionTime": "2026-11-25T14:04:49.423529Z",
+          "message": "Started deployed execution in 6.2s.",
+          "status": "True",
+          "type": "Started"
+        },
+        {
+          "lastTransitionTime": "2026-11-25T14:04:43.100630Z",
+          "message": "Imported container image in 12.08s.",
+          "status": "True",
+          "type": "ContainerReady"
+        }
+      ],
+      "succeededCount": 1
+    }
+  }
+]
