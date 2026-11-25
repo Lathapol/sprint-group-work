@@ -1,7 +1,9 @@
 # Software Requirements Specification
 
 **Product:** Workflow and Approval System (university department)
-**Version:** 0.2 (planning decisions recorded) | **Date:** 24 November 2026 | **Theme:** 5. Workflow and Approval System
+**Version:** 0.3 (current product baseline; review in #74) | **Date:** 25 November 2026 | **Theme:** 5. Workflow and Approval System
+
+Current implementation reference: main `0877808fb5a8084e040974cb56b16648b274bb04`, tag `f10-2026-11-25`, revision `approvals-r45637901908-1`. This specification includes the whole product, including unimplemented requirements. Implementation is not equivalent to complete verification or independent UAT acceptance; see the [complete result matrix](traceability.md) and [baseline audit](deliverable-2/baseline-audit.md).
 
 ## 1. Stakeholder problem and context
 
@@ -13,14 +15,14 @@ The product is a web application in which staff submit requests, reviewers pick 
 
 | Actor | Responsibilities |
 |---|---|
-| Requester | Logs in, submits requests, views the status, decision and reason of their own requests, (later) edits and resubmits returned requests. |
-| Reviewer | Logs in, views the queue of unassigned requests, claims a request, approves or rejects it (with a reason when rejecting), (later) returns requests and gives second-stage approval. |
+| Requester | Logs in, submits requests, views and filters their own requests and history, edits Returned requests and resubmits to the same Reviewer. |
+| Reviewer | Logs in, reads all requests and history, filters All/Queue/Mine, claims Pending requests, approves/rejects/returns assigned requests, and views the global summary. Distinct second approval remains planned. |
 
 Each account has exactly one role. There is no administrator role in this product.
 
 ## 3. Scope and exclusions
 
-**In scope (whole product):** authentication and role-based access; request submission with category and amount; reviewer queue and claiming; approve/reject decisions with reasons; append-only history log; (later) return and resubmission, filtering and search, second approval stage, decision summaries.
+**In scope (whole product):** authentication and role-based access; request submission with category and amount; reviewer queue and claiming; approve/reject decisions with reasons; append-only history log and visible chronology; return/edit/resubmission; filtering/search; second approval stage; decision summaries; persistence, reproducible delivery and hardening. F-01 through F-08 and F-10 are implemented/deployed. F-09 is specified but unimplemented; F-11 remains incomplete. No Sprint 2 feature was moved to Sprint 3.
 
 **Exclusions:** self-registration, password recovery, email verification, user administration, multiple roles per account, file attachments, email or other notifications, real payment or budget systems, any external API, multi-department support.
 
@@ -42,10 +44,10 @@ Each account has exactly one role. There is no administrator role in this produc
 | FR-12 | A Reviewer can list the requests they have claimed. |
 | FR-13 | A request's detail view shows its history log to its Requester and to any Reviewer. |
 | FR-14 | The assigned Reviewer can return an In Review request to its Requester with a reason. |
-| FR-15 | A Requester can edit a Returned request and resubmit it. |
-| FR-16 | Request lists can be filtered and searched by status, category, date range and text. |
-| FR-17 | Requests at or above an amount threshold require a second approval from a different Reviewer. |
-| FR-18 | A Reviewer can view a decision summary (counts by status, category and Reviewer). |
+| FR-15 | Only the owner can edit a Returned request and resubmit it directly to In Review with the same Reviewer; the old return reason remains in history. |
+| FR-16 | Authorized request lists can be filtered by current state, category and inclusive UTC creation dates and searched by literal case-insensitive title/justification text; all supplied filters combine with AND and cannot widen ownership. |
+| FR-17 | Requests at or above THB 50,000.00 require a second approval from a different Reviewer. This requirement is planned and is NOT enforced by the current release. |
+| FR-18 | A Reviewer can view global counts by current state and category and terminal decisions attributed to the final decision's Reviewer. One request contributes once; unmatched legacy terminal decisions are explicitly unattributed. All totals come from one database snapshot. |
 
 ## 5. Business rules
 
@@ -53,18 +55,18 @@ Each account has exactly one role. There is no administrator role in this produc
 |---|---|
 | BR-01 | A request must have a non-empty title, a category from the fixed list (Funding, Purchase, Travel, Reimbursement), an amount greater than 0 (in THB) and a non-empty justification; otherwise it is rejected and nothing is stored. |
 | BR-02 | A newly submitted request has state Pending and no reviewer. |
-| BR-03 | Only these transitions are valid in Sprint 1: Pending → In Review, In Review → Approved, In Review → Rejected. Any other transition is rejected and the stored state does not change. |
-| BR-04 | A request has exactly one reviewer. If two Reviewers claim the same request at the same time, exactly one claim succeeds. |
-| BR-05 | Only the Reviewer who claimed a request may approve or reject it. A decision by any other Reviewer is rejected with no state change. |
+| BR-03 | Current transitions: Pending -> In Review; In Review -> Approved, Rejected or Returned; Returned -> In Review on owner resubmission. A valid owner edit keeps Returned and is audited. Other transitions fail without mutation. The future second-approval transition in FR-17 is not implemented. |
+| BR-04 | Pending is unassigned. Claim assigns exactly one first Reviewer, retained through return/resubmission. Two simultaneous claims yield one success and one conflict. A future second decision actor under BR-14 will be separate from this first assignment. |
+| BR-05 | Only the assigned first Reviewer may currently approve, reject or return an In Review request. An unrelated Reviewer is denied without mutation. Future second-stage authority follows BR-14. |
 | BR-06 | A Reviewer cannot claim or decide a request whose Requester is that same user (self-approval is blocked even if roles were ever combined). |
-| BR-07 | Rejecting a request requires a non-empty reason. A reason is optional when approving. |
+| BR-07 | Rejecting or returning requires a trimmed non-empty reason. A reason is optional when approving. |
 | BR-08 | A submitted request cannot be edited by anyone, except that a Returned request can be edited by its Requester (see BR-13). |
 | BR-09 | Approved and Rejected are final states. |
 | BR-10 | History entries are append-only: they cannot be edited or deleted through the application. |
 | BR-11 | A Requester can see only their own requests. A Reviewer can view all requests read-only, but can claim only Pending requests and can decide only requests they claimed (BR-05). |
 | BR-12 | Every account has exactly one role. |
-| BR-13 | Only a Returned request may be edited, and only by its own Requester. |
-| BR-14 | The second approval of a request must come from a Reviewer different from the first Reviewer and from the Requester. |
+| BR-13 | Only a Returned request may be edited or resubmitted, only by its owner. Resubmit retains the first Reviewer, clears the current reason and returns to In Review, never to the unassigned queue. A no-op edit writes no history. |
+| BR-14 | At amount >= THB 50,000.00, the second approval must come from a Reviewer different from the first Reviewer and from the Requester. Planned F-09; current release still finalizes after one approval. |
 
 ## 6. Non-functional requirements
 
@@ -97,19 +99,21 @@ Each account has exactly one role. There is no administrator role in this produc
 | D-01 | Roles | Requester and Reviewer. One role per account. |
 | D-02 | Request categories | Fixed list: Funding, Purchase, Travel, Reimbursement. |
 | D-03 | Request fields | Title, category, amount, justification. |
-| D-04 | Reviewer assignment | Reviewers claim requests from a queue of unassigned requests. Claiming assigns the request to that reviewer. Each request has exactly one reviewer. |
+| D-04 | Reviewer assignment | Claim from unassigned Pending queue assigns one first Reviewer; same assignment persists through return/resubmission. Future second actor is separate. |
 | D-05 | Self-approval | A claim or decision is rejected if the reviewer is the request's requester. No account has both roles. |
-| D-06 | Editing after submission | Locked in Sprint 1. Return and resubmission are Sprint 2. |
+| D-06 | Editing after submission | Locked except for an owner's Returned request, implemented in Sprint 2. |
 | D-07 | History | Append-only log entry per transition: actor, time, from-state, to-state, reason. |
-| D-08 | Rejection reason | Required on Reject, optional on Approve. |
-| D-09 | Sprint 1 states | Pending (unassigned), In Review, Approved, Rejected. Valid: Pending→In Review, In Review→Approved, In Review→Rejected. Everything else is rejected. |
+| D-08 | Reason | Required on Reject and Return, optional on Approve. Current reason is cleared on resubmit; previous reason remains in history. |
+| D-09 | States | Sprint 1 had four states. Current five: Pending, In Review, Returned, Approved, Rejected, with BR-03 transitions. No awaiting-second state exists yet. |
 | D-10 | Seed data | Two requesters and two reviewers. |
 | D-11 | Stack | Frontend: React, TypeScript, Vite, React Router, Bootstrap. Backend: Node.js, Express, TypeScript. Database: PostgreSQL with Prisma ORM. Testing as implemented: Node.js built-in test runner with Supertest (unit/API/database integration), Playwright (end-to-end). The earlier Vitest proposal was not installed. |
 | D-12 | Terminology | "Reviewer" (matches the spec), not "approver". |
 | D-13 | Unclaimed or unrelated decision | A reviewer who has not claimed a request cannot approve or reject it (403, no state change). |
 | D-14 | Reviewer visibility | Reviewers can view all requests read-only, including those claimed by other Reviewers. They can claim only Pending requests and decide only requests they claimed. |
-| D-15 | Returned resubmission | User decision 24 Nov 2026: keep the same Reviewer; resubmit to In Review. Sprint 2 contract pending teammate review. |
+| D-15 | Returned resubmission | User decision 24 Nov 2026: same Reviewer, In Review. Contract #77 and implementation #79 reviewed/merged; deployed Sprint 2 release. |
 | D-16 | Second approval threshold | User decision 24 Nov 2026: at or above THB 50,000.00, including equality. Sprint 3 implementation remains planned. |
+| D-17 | Summary attribution | Reviewed F-10 #85: latest matching terminal transition, stable timestamp/ID order, actual Reviewer actor rather than assigned reviewer; missing/invalid legacy actor is unattributed. One SQL statement gives consistent totals. No amounts or private request text are returned. |
+| D-18 | Filter semantics | Reviewed F-08 #81: inclusive UTC creation-day range, literal case-insensitive title/justification text, maximum 200 Unicode code points, all filters AND authorized scope. Queue remains Pending; Clear retains current Queue/Mine scope. |
 
 ## 9. Question status
 
@@ -125,3 +129,8 @@ Each account has exactly one role. There is no administrator role in this produc
 |---|---|---|
 | 0.1 | 5 Nov 2026 | First draft from Issue #1 decisions D-01 to D-13. |
 | 0.2 | 24 Nov 2026 | Record user resolutions Q-01 same reviewer and Q-02 inclusive THB50,000 threshold; acknowledge prior Q-03 design resolution. No new feature implementation/acceptance claimed. Detailed Sprint 2/3 contracts are pending review; full integrated baseline refresh remains #74. |
+| 0.3 | 25 Nov 2026 | #74 complete baseline refresh against deployed source: actual Returned workflow, filter/report semantics, current five states and Node runner; preserve all 40 requirement IDs and unimplemented F-09/F-11 targets. Earlier versions remain in Git. |
+
+## 11. Verification and outstanding scope
+
+All 18 FR, 14 BR and 8 NFR remain in scope. The [matrix](traceability.md) records actual tests, evidence/version and gaps, rather than treating planned tests as executed. In particular FR-17/BR-14 are unimplemented; NFR-05 is unmeasured; NFR-07 lacks a recorded teammate fresh-clone run; NFR-08 is only partially verified. NFR-03 has working bcrypt and public-field tests but no comprehensive stored-password/log audit. NFR-04 has real redeploy continuity evidence, with the separate full-history process-restart exercise still outstanding. These targets have not been weakened or waived.

@@ -11,7 +11,7 @@ User decisions received 24 November 2026 (not invented course approval):
 
 Complete contracts: [Sprint 2](../sprints/sprint-2/contracts.md), [Sprint 3](../sprints/sprint-3/contracts.md). Their review/merge occurred in #77 before implementation. Actual local RED/GREEN results: [F-06](evidence/F06/README.md), [F-07](evidence/F07/README.md), [F-08](evidence/F08/README.md), [F-10](evidence/F10/README.md). Sprint 2 evidence #84 was approved/merged and feature issues #69–#71 closed. Historical Sprint 1 contracts remain identifiable.
 
-F-10 #85/#86 were approved and merged on 25 November; main `0877808`, tag `f10-2026-11-25`, revision `approvals-r45637901908-1` is deployed. Main CI passed 27 API/regression +5 browser tests; independent live count reconciliation and 61 API calls passed, three existing resources/history arrays remained unchanged, and deployed UI counts/role checks passed. See [actual F-10 release evidence](evidence/F10-release/README.md). Evidence review, complete baseline/traceability and assessed PDF remain separate work.
+F-10 #85/#86 were approved and merged on 25 November; main `0877808`, tag `f10-2026-11-25`, revision `approvals-r45637901908-1` is deployed. Main CI passed 27 API/regression +5 browser tests; independent live count reconciliation and 61 API calls passed, three existing resources/history arrays remained unchanged, and deployed UI counts/role checks passed. See [actual F-10 release evidence](evidence/F10-release/README.md). Evidence #87 was approved/merged at `3c40565` and #73 closed. #74 refreshes the [complete baseline and source audit](baseline-audit.md), [SRS](../srs.md), [inventory](../features.md), [System SDS](../system-sds.md) and [all 40-requirement/every-AC result matrix](../traceability.md). That documentation requires its own review; assessed PDF and final candidate freeze remain separate.
 
 ## Scope and build order
 
@@ -39,7 +39,7 @@ The PDF must include all Sprint 2 and Sprint 3 contracts; complete current SRS/i
 
 ## Dependencies and truthful status
 
-- Group Work Specifications source document was not found locally in the first lookup. The retained SRS/theme/feature plan controls current preparation; obtain the course document to cross-check mandatory full theme scope before final acceptance.
+- Group Work Specifications was absent in the first local lookup; a partner-retained immutable copy was retrieved and Theme5 cross-checked on 25 Nov. [Source/provenance and conclusions](baseline-audit.md). This is not a new instructor approval; F-09 remains required/unimplemented.
 - Lab 6 #60 resolved; #64 contains OUTGOING findings on Macau678, not a confirmed bug in our own app. Pai responded; targeted retest report/evidence merged in #80: F-01/F-02 pass executed checks, F-03 original guide publication and exact live release metadata remain follow-ups. Human participation/review and final UAT remain tracked separately. See [retest report](../labs/lab-06/macau-retest-report.md).
 - Lab 7 handout/approved maintenance change not supplied. Do not relabel planned F-06/F-07/F-08 as an approved maintenance change or claim Lab 7 complete.
 - Owner/date plan is proposed for team review, not an agreement on behalf of Kittakorn.

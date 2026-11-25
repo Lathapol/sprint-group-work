@@ -1,263 +1,165 @@
 # System-Level Software Design Specification
 
-**Product:** Workflow and Approval System (university department)
-**Version:** 0.1 (draft) | **Date:** 5 November 2026
-**Related documents:** `docs/srs.md` (FR, BR, NFR, decisions), `docs/features.md`, `docs/traceability.md`
+**Product:** Workflow and Approval System (university department) | **Version:** 0.3 | **Date:** 25 November 2026 | **Issue:** #74
 
-## 1. Architecture and stack
+Implemented design at main `0877808fb5a8084e040974cb56b16648b274bb04`, tag `f10-2026-11-25`, revision `approvals-r45637901908-1`. [SRS](srs.md), [inventory](features.md), [result matrix](traceability.md). Planned F-09 is distinguished from actual behavior/schema. Prior v0.1 remains in Git.
 
-### 1.1 Stack and rationale
+## 1. Architecture and modules
 
-| Layer | Technology | Responsibility |
-|---|---|---|
-| UI | React, TypeScript, Vite, React Router, Bootstrap | Screens, navigation, form validation messages, calling the API. Contains no authoritative business rules. |
-| API / application | Node.js, Express, TypeScript | HTTP endpoints, authentication, authorization, business rules, transactions. |
-| Database | PostgreSQL with Prisma ORM | Durable storage, schema, constraints, migrations, seed data. |
-| Testing | Vitest, Supertest, Playwright | Unit tests, API/database integration tests, UI component tests, end-to-end journeys. |
-
-The product is a modular monolith: one Express application serves the API (and, once deployed, the built UI). This stack was chosen for continuity with the team's earlier coursework, which keeps setup short and lets the team spend time on rules, tests and delivery.
-
-### 1.2 Components and communication
+The modular monolith uses React/TypeScript, React Router and Bootstrap, built with Vite; Node.js 24/Express/TypeScript handles HTTP and transactions; Prisma 6.19.3 connects to PostgreSQL (verified environment 18.6). Node's built-in test runner and Supertest verify API/database behavior; Playwright verifies selected journeys. Vitest and a separate UI component-test suite are not installed.
 
 ```mermaid
 flowchart LR
-  Browser["React UI (Vite)"] -- "HTTPS, JSON, session cookie" --> API["Express API"]
-  subgraph API_internal["Express application"]
-    R["Routes"] --> M["Auth and role middleware"] --> S["Service layer (business rules)"] --> P["Prisma data access"]
-  end
-  API --- API_internal
-  P --> DB[("PostgreSQL")]
+  UI[React browser] -->|same-origin HTTPS JSON and cookie| API[Express routes and access middleware]
+  API -->|Prisma queries and transactions| DB[(PostgreSQL / Cloud SQL)]
+  API -->|one summary SQL statement| DB
+  CI[GitHub Actions] -->|WIF build and migrate| GCP[Artifact Registry / Cloud Run]
+  GCP --> API
 ```
 
-- The UI calls the API under `/api` with JSON. In development the Vite dev server proxies `/api` to the Express server so the session cookie is same-origin.
-- **Where rules are enforced:** all business rules (BR-01 to BR-14) and all authorization checks live in the service layer and middleware on the backend. The UI hides or disables controls for convenience only. Database constraints are a second line of defence (see 2.2).
-
-### 1.3 Backend layering
-
-| Layer | Responsibility |
+| Actual module | Responsibility |
 |---|---|
-| Routes | Parse the request, call one service function, map the result or error to a status code. |
-| Middleware | Read the session cookie, load the current user, reject unauthenticated (401) or wrong-role (403) requests. |
-| Services | Validate input, enforce state transitions and ownership, run each change in a database transaction, write history entries. |
-| Data access | Prisma queries only; no business rules. |
+| `web/main.tsx` | Auth state/routes, forms, authorized lists, detail/history, Returned editor, summary. UI authorization is navigation support, not the security boundary. |
+| `src/app.ts` | App factory, sessions, role middleware, JSON/errors, login/logout/me, public health/version. |
+| `src/requests.ts` | Ownership, validation, guarded transitions, owner-edit lock and atomic history. Business logic resides in route handlers; no separate service/repository classes exist. |
+| `src/request-filters.ts` | Strict query parsing, UTC boundaries and literal Prisma search. |
+| `src/reports.ts` | Reviewer-only aggregation from one SQL snapshot. |
+| `src/server.ts` | Configuration, Prisma lifetime, static UI/SPA fallback and signal shutdown. |
+| `prisma/schema.prisma`, `prisma/migrations/`, `prisma/seed.cjs` | Types/relations, constraints, migrations, synthetic seed. |
+| `deploy/release.sh`, `deploy/smoke_test.py`, `.github/workflows/` | Migration-before-rollout, immutable identity, smoke and CI. |
 
-## 2. Data model
+Local `vite.config.mts` proxies `/api` to `http://127.0.0.1:3000`. Production Express serves `web/dist` and an HTML SPA fallback for non-API paths. No CLIENT_ORIGIN setting or separate cross-origin production API is required.
 
-### 2.1 Entities
+## 2. Identity, session and permissions
 
-```mermaid
-erDiagram
-  USER ||--o{ SESSION : has
-  USER ||--o{ REQUEST : "submits (requester)"
-  USER ||--o{ REQUEST : "claims (reviewer)"
-  USER ||--o{ REQUEST_HISTORY : "acts in"
-  REQUEST ||--o{ REQUEST_HISTORY : logs
-```
+DD-01: opaque 256-bit random session ID (64 lowercase hex), persisted with user/expiry. DD-02: eight-hour default absolute expiry, no renewal; presented expired sessions are removed. DD-03: bcrypt, default cost12, allowed10..15; unknown user uses dummy hash. Login validates nonblank username <=255 and password UTF-8 length <=72 bytes. Wrong password/unknown user share generic401 and create no session.
 
-**User**
-
-| Field | Type | Notes |
-|---|---|---|
-| id | integer, primary key | |
-| username | text, unique, not null | |
-| passwordHash | text, not null | bcrypt hash (NFR-03) |
-| displayName | text, not null | |
-| role | enum REQUESTER, REVIEWER, not null | One role per account (BR-12) |
-| createdAt | timestamp | |
-
-**Session**
-
-| Field | Type | Notes |
-|---|---|---|
-| id | text, primary key | Random 256-bit value, also the cookie value |
-| userId | integer, foreign key to User, not null | |
-| createdAt | timestamp | |
-| expiresAt | timestamp, not null | createdAt + 8 hours |
-
-**Request**
-
-| Field | Type | Notes |
-|---|---|---|
-| id | integer, primary key | |
-| title | text, not null | |
-| category | enum FUNDING, PURCHASE, TRAVEL, REIMBURSEMENT, not null | Fixed list (D-02) |
-| amount | decimal(12,2), not null | THB |
-| justification | text, not null | |
-| state | enum PENDING, IN_REVIEW, APPROVED, REJECTED, not null | Default PENDING |
-| requesterId | integer, foreign key to User, not null | Ownership link |
-| reviewerId | integer, foreign key to User, null | Set on claim |
-| decisionReason | text, null | Required when REJECTED |
-| createdAt, updatedAt | timestamp | |
-| decidedAt | timestamp, null | Set on approve or reject |
-
-**RequestHistory** (append-only, BR-10)
-
-| Field | Type | Notes |
-|---|---|---|
-| id | integer, primary key | |
-| requestId | integer, foreign key to Request, not null | |
-| actorId | integer, foreign key to User, not null | |
-| fromState | enum, null | Null for the initial submission |
-| toState | enum, not null | |
-| reason | text, null | |
-| createdAt | timestamp, not null | |
-
-### 2.2 Database constraints (backstop for the service layer)
-
-| Constraint | Backs rule |
-|---|---|
-| `amount > 0` check | BR-01 |
-| `title`, `justification` not null and non-blank (check on trimmed length) | BR-01 |
-| `reviewerId IS NULL` when state is PENDING, `NOT NULL` otherwise | BR-02, BR-04 |
-| `reviewerId <> requesterId` check | BR-06 |
-| `decisionReason` non-blank when state is REJECTED | BR-07 |
-| Foreign keys from Request, Session and RequestHistory | ownership, BR-11 |
-| `username` unique | login identity |
-
-### 2.3 Setup, migrations and seed data
-
-- Schema changes are Prisma migrations committed to the repository; a fresh database is created with `npx prisma migrate dev` (development) or `npx prisma migrate deploy` (deployment).
-- `npx prisma db seed` creates two Requesters, two Reviewers and a small set of requests covering every state, so every demo and test starts from the same data. The seed password is read from the `SEED_PASSWORD` environment variable and is never committed. All names and data are synthetic.
-- Data is stored in PostgreSQL, so it survives an application restart (NFR-04).
-
-## 3. UI structure and conventions
-
-### 3.1 Screens and navigation
-
-| Screen | Role | Purpose |
-|---|---|---|
-| Login | anonymous | Username and password; redirects by role after login. |
-| My Requests | Requester | List of own requests with status. |
-| New Request | Requester | Form: title, category, amount, justification. |
-| Request Detail | Requester (own), Reviewer (any) | Fields, status, reviewer, decision and reason. |
-| All Requests | Reviewer | All requests, with a Queue tab for Pending ones and a Mine tab for claimed ones. |
-| Request Detail actions | Reviewer | Claim (Pending), Approve and Reject with reason (claimed by me, In Review). |
-
-A header shows the current user and a Logout button. Route guards redirect to Login when the API returns 401.
-
-### 3.2 Shared UI behavior
-
-- **Validation:** each invalid field shows its own message and keeps the entered values (NFR-08).
-- **Loading:** lists and detail views show a loading indicator while the API call is pending.
-- **Empty states:** an empty list shows a short message (for example "No requests yet").
-- **Errors:** API errors show a banner with the server's message; the UI never shows stack traces.
-- Buttons that the current user may not use are hidden or disabled; this is convenience only, the backend always enforces the rule.
-
-## 4. API conventions
-
-- Base path `/api`; JSON request and response bodies; state-changing endpoints require `Content-Type: application/json`.
-- Identity and role always come from the session, never from the request body, URL or a client-selected value.
-- Success responses return the resource (or a list) as JSON.
-- **Error shape:** `{ "error": { "code": "STRING_CODE", "message": "human readable" } }`, with field details in `error.fields` for validation errors.
-
-| Status | Meaning |
-|---|---|
-| 400 | Validation failure (BR-01, BR-07) |
-| 401 | Not logged in, session expired, or bad credentials |
-| 403 | Logged in but the role or ownership rule forbids the operation |
-| 404 | Resource does not exist, or belongs to another Requester (existence is not revealed) |
-| 409 | Invalid state transition, or lost the claim race (BR-03, BR-04, BR-09) |
-
-- **Safe error handling:** unexpected errors return 500 with a generic message and are logged on the server only. Responses never include passwords, hashes, session IDs or stack traces.
-- Login failures return the same 401 message for unknown user and wrong password.
-
-**Endpoint overview** (full request/response shapes are in the feature contracts):
-
-| Method and path | Purpose | Feature |
-|---|---|---|
-| POST `/api/auth/login` | Log in | F-01 |
-| POST `/api/auth/logout` | Log out | F-01 |
-| GET `/api/auth/me` | Current user | F-01 |
-| POST `/api/requests` | Submit a request | F-02 |
-| GET `/api/requests` | Requester: own list. Reviewer: all (`?state=PENDING` for the queue, `?mine=true` for claimed) | F-02, F-03 |
-| GET `/api/requests/:id` | Request detail | F-02, F-03 |
-| POST `/api/requests/:id/claim` | Claim a Pending request | F-03 |
-| POST `/api/requests/:id/approve` | Approve | F-04 |
-| POST `/api/requests/:id/reject` | Reject, body `{ "reason": "..." }` | F-04 |
-| GET `/api/health` | Health check for deployment | F-05 |
-
-## 5. Role and permission matrix
+Cookie `session`: HttpOnly, SameSite=Lax, Path=/, Secure in production. Logout deletes current session and clears cookie; replay fails. API has Cache-Control:no-store. Cloud Run terminates HTTPS. No rate limiter, MFA or separate CSRF token is claimed. Public projections exclude password hashes and session identifiers.
 
 | Operation | Anonymous | Requester | Reviewer |
 |---|---|---|---|
-| Log in | allowed | allowed | allowed |
-| Log out, current user | 401 | allowed | allowed |
-| Submit a request | 401 | allowed (becomes owner) | 403 |
-| List requests | 401 | own requests only | all requests, read-only |
-| View a request | 401 | own only (another Requester's: 404) | any request, read-only |
-| Claim a request | 401 | 403 | only a Pending request not submitted by self; otherwise 409 (not Pending or race lost) or 403 (own request) |
-| Approve a request | 401 | 403 | only the claiming Reviewer of an In Review request; other Reviewer 403; wrong state 409 |
-| Reject a request (reason required) | 401 | 403 | same as Approve, plus 400 if the reason is blank |
-| Edit a submitted request | 401 | not allowed in Sprint 1 | 403 |
-| Edit or delete history entries | not available | not available | not available |
+| Health/version/login | Allowed | Allowed | Allowed |
+| Identity/logout | 401 | Own session | Own session |
+| Create request | 401 | Owner from session | 403 |
+| List/detail/history | 401 | Own only; another owner's detail/history404 | All read-only |
+| Claim | 401 | 403 | Pending only, no self, conflict409 |
+| Approve/reject/return | 401 | 403 | Assigned actor, In Review, no self; unrelated403 |
+| Edit/resubmit | 401 | Own Returned; wrong owner404, wrong state409 | 403 |
+| Summary | 401 | 403 | Global; no client-selected scope |
 
-## 6. Authentication and session design
+Identity/role are derived from session, never request body/query. One enum role per account. Same-ID self-approval guards/DB constraints exist, but dedicated synthetic self-claim/self-decision tests are a verification gap.
 
-- **Credentials:** username and password. Passwords are hashed with bcrypt (cost factor set by `BCRYPT_ROUNDS`, 12 in normal use). Plaintext passwords are never stored or logged.
-- **Session creation:** on valid login the server creates a Session row (random 256-bit ID, `expiresAt` = now + 8 hours) and sets a cookie with that ID: `HttpOnly`, `SameSite=Lax`, `Secure` in production, path `/`.
-- **Expiry:** the 8 hour lifetime is fixed from login (no sliding renewal). An expired session is rejected with 401 and its row is deleted.
-- **Current user:** `GET /api/auth/me` and every protected endpoint read the cookie, load the session and its user, and reject with 401 if the session is missing or expired.
-- **Logout:** deletes the Session row and clears the cookie. A later request with the old cookie gets 401.
-- **Cross-site protection:** the `SameSite=Lax` cookie and the JSON-only requirement on state-changing endpoints.
-- Seeded accounts are enough for Sprint 1; there is no self-registration or password recovery.
+## 3. Current data model
 
-## 7. Business-rule enforcement and concurrency
+```mermaid
+erDiagram
+  User ||--o{ Session : owns
+  User ||--o{ Request : submits
+  User o|--o{ Request : reviews
+  Request ||--o{ RequestHistory : records
+  User ||--o{ RequestHistory : acts
+```
 
-State changes are single conditional updates inside a transaction that also inserts the history entry:
-
-| Operation | Conditional update | Result |
-|---|---|---|
-| Claim | set reviewer and state IN_REVIEW where id matches and state is PENDING | 1 row changed: success. 0 rows changed: 409. |
-| Approve or reject | set state and reason where id matches, state is IN_REVIEW and reviewerId is the caller | 1 row changed: success. 0 rows: look up the request to return 404, 403 or 409. |
-
-Because the database applies the condition atomically, two simultaneous claims cannot both succeed: exactly one updates a row and gets a history entry, the other gets 409 (BR-04, NFR-06). No priority or fairness rule is needed; whichever claim the database processes first wins.
-
-## 8. Configuration and secrets
-
-| Variable | Purpose | Example in `.env.example` |
-|---|---|---|
-| DATABASE_URL | PostgreSQL connection string | `postgresql://user:password@localhost:5432/approvals` |
-| PORT | API port | `3000` |
-| NODE_ENV | development, test or production | `development` |
-| SESSION_TTL_HOURS | Session lifetime | `8` |
-| BCRYPT_ROUNDS | bcrypt cost factor | `12` |
-| SEED_PASSWORD | Password for seeded demo accounts | `change-me-locally` |
-| CLIENT_ORIGIN | Allowed UI origin in development | `http://localhost:5173` |
-
-Real values live only in a local, git-ignored `.env` file or in the deployment secret store. `.env.example` contains placeholders only. No secret appears in client code.
-
-## 9. Planned deployment (GCP)
-
-This is a plan; the actual set-up happens in Lab 5 using the access details provided there.
-
-| Concern | Plan |
+| Entity | Fields (relations omitted) |
 |---|---|
-| Packaging | One Docker image built in two stages: build the React UI, then run Express serving the static UI and `/api`. Three logical layers do not need three containers. |
-| Hosting | Cloud Run runs the container. |
-| Database | Cloud SQL for PostgreSQL; durable storage, so data survives restarts and redeployments. |
-| Secrets | Secret Manager supplies `DATABASE_URL` and `SEED_PASSWORD` as environment variables. |
-| Migrations | `prisma migrate deploy` runs on release before the new version takes traffic. |
-| Delivery | A GitHub Actions pipeline builds and tests on pull requests, blocks merging on failure, and deploys accepted releases from `main`. |
-| Health | `/api/health` is used for deployment checks. |
+| User | id Int PK, username unique String, passwordHash String, role, createdAt |
+| Session | id String PK, userId FK, createdAt, expiresAt |
+| Request | id Int PK, title, category, amount Decimal(12,2), justification, state, requesterId FK, nullable reviewerId FK, nullable decisionReason, createdAt, updatedAt, nullable decidedAt |
+| RequestHistory | id Int PK, requestId FK, actorId FK, nullable fromState, toState, nullable reason, createdAt |
 
-## 10. Test approach
+No displayName or second-stage columns exist. Categories: FUNDING/PURCHASE/TRAVEL/REIMBURSEMENT. Current states: PENDING/IN_REVIEW/RETURNED/APPROVED/REJECTED. Times are returned as ISO timestamps. Request indexes: requesterId/reviewerId/state; history index: requestId. No pagination or measured1,000-row performance result yet.
 
-| Level | Tool | Used for |
+CHECK constraints enforce positive amount, nonblank title/justification, reviewer absent exactly when Pending, reviewer different from requester, and nonblank rejection/return reason. Foreign keys preserve references. Request/history writes commit atomically. History is immutable through the application (no mutation routes), not through an immutable-history database trigger.
+
+Migrations, in order:
+
+1. `20261106000100_initial`: baseline schema/constraints.
+2. `20261124000100_returned_state`: add enum value in separate committed migration.
+3. `20261124000200_returned_reason`: extend reason CHECK after enum is usable.
+
+These additive migrations preserve earlier rows and run via prisma migrate deploy. F-10 adds none. Production release never resets/reseeds. Synthetic seed supplies two Requesters/two Reviewers and four original-state fixtures, not every current state; it hashes an environment password and uses controlled upserts/fixture checks.
+
+## 4. Workflow and concurrency
+
+```mermaid
+stateDiagram-v2
+  [*] --> PENDING: owner submits
+  PENDING --> IN_REVIEW: Reviewer claims
+  IN_REVIEW --> RETURNED: assigned Reviewer returns with reason
+  RETURNED --> RETURNED: owner saves effective edit
+  RETURNED --> IN_REVIEW: owner resubmits to same Reviewer
+  IN_REVIEW --> APPROVED: assigned Reviewer approves
+  IN_REVIEW --> REJECTED: assigned Reviewer rejects with reason
+```
+
+Submit validates trimmed nonblank title/justification, fixed category and positive THB (<=10 integer/two fractional digits, Decimal12,2), sets owner from session and atomically creates Pending plus initial history fromState=null. Claim guarded by expected Pending assigns one Reviewer; two competing calls yield one200/one409 and one event. Decisions/return check assigned actor, In Review and no self, then guarded update plus event in one transaction. Reject/Return require trimmed reason; approval reason optional. Final decision sets decidedAt; Return clears it and retains reviewer.
+
+Returned edit/resubmit acquires an owner-scoped SELECT FOR UPDATE row lock inside its transaction before state/read/write. PATCH allows only title/category/amount/justification, rejects unknown/protected keys and arrays, validates values. Effective edit writes one RETURNED->RETURNED event (`Request details updated.`); no-op writes neither history nor updatedAt. Resubmit accepts `{}`, validates stored fields, keeps reviewerId, goes to IN_REVIEW and clears current reason/decidedAt; old reason stays in history. Duplicate resubmit gives one success/one409; edit/resubmit races serialize. Approved/Rejected reject later mutations.
+
+## 5. API contract and safe representations
+
+All paths use `/api`. Mutations require JSON. Success `{data:...}`; error `{error:{code,message,fields?}}`. Positive Int32 IDs only; invalid/missing/private records404. Statuses:201 create,200 read/update,400 validation/query,401 session,403 role/actor,404 private/missing,409 state/race,415 JSON required,413 parser-size limit,500 generic unexpected,503 database-unready health. Unexpected errors log the error name, not connection details.
+
+| Method/path | Input | Output |
 |---|---|---|
-| Unit | Vitest | Validation rules, the state-transition table. |
-| API and database integration | Supertest with a test database | Persistence, authentication, role and ownership checks, concurrent claims. |
-| UI component | Vitest | Form validation messages. |
-| End-to-end | Playwright | The submit, claim, approve and reject journeys and a forbidden-access case. |
+| GET `/version` | none | Public commit from RELEASE_COMMIT (local fallback), no DB |
+| GET `/health` | none | Database SELECT1, status ok or generic503 |
+| POST `/auth/login` | username,password | Public user + cookie |
+| GET `/auth/me` | none | Public session user |
+| POST `/auth/logout` | `{}` | Revoke current session, clear cookie |
+| POST `/requests` | title,category,amount,justification | Pending resource |
+| GET `/requests` | state,category,from,to,q; Reviewer-only mine | Authorized results, ID descending |
+| GET `/requests/:id` | none | Authorized detail |
+| GET `/requests/:id/history` | none | Authorized ordered event array |
+| POST `/requests/:id/claim` | `{}` | Assigned In Review resource |
+| POST `/requests/:id/approve` | optional reason | Approved resource |
+| POST `/requests/:id/reject` | reason | Rejected resource |
+| POST `/requests/:id/return` | reason | Returned resource |
+| PATCH `/requests/:id` | allowed editable fields | Validated Returned resource |
+| POST `/requests/:id/resubmit` | `{}` | Same-reviewer In Review resource |
+| GET `/reports/summary` | no query keys | Safe global aggregation |
 
-## 11. Design decisions
+Public auth user is `{id,username,role}`; nested request people `{id,username}`; history actor `{id,username,role}`. History orders createdAt then id ascending, reasons are text not HTML; empty legacy history is displayed honestly. No history mutation API exists.
 
-| ID | Decision | Resolves |
-|---|---|---|
-| DD-01 | Server-side session stored in PostgreSQL, ID in an HttpOnly cookie. | Q-03 |
-| DD-02 | Session lifetime 8 hours, absolute. | Q-03 |
-| DD-03 | bcrypt for password hashing. | Q-03 |
-| DD-04 | Business rules in a backend service layer; database constraints as a backstop. | BR-01 to BR-14 |
-| DD-05 | Claims and decisions use a conditional update, checked by affected row count. | BR-04, NFR-06 |
-| DD-06 | JSON REST under `/api` with a fixed error shape and status codes. | NFR-01, NFR-02 |
-| DD-07 | Another Requester's request returns 404; role violations return 403. | NFR-02 |
-| DD-08 | One container on Cloud Run with Cloud SQL and Secret Manager. | Deployment plan |
+## 6. Filtering and summary calculations
+
+F-08 accepts scalar allowed query keys; duplicate/nested/unknown/forged scope keys400. Ownership/Mine scope AND all user filters; state/category exact enums. Dates are real YYYY-MM-DD UTC creation days, lower midnight inclusive and upper following midnight exclusive; 9999-12-31 instead uses last representable millisecond (TIMESTAMP3), avoiding Prisma's unsupported following five-digit year. Invalid/reversed range400. q is trimmed, <=200 Unicode code points; case-insensitive literal title OR justification; escape backslash/percent/underscore before Prisma contains.
+
+F-10 shape: `{total,byState:[{state,count}],byCategory:[{category,count}],byReviewer:[{reviewer:{id,username},approved,rejected,total}],unattributedDecisions}`. Enum buckets include zeros. Reviewer rows include actors with attributed terminal decisions, ID order. A materialized current-request CTE plus lateral latest matching terminal event runs in ONE static parameterized SQL statement/one MVCC snapshot. Match current terminal state and actual state-changing transition, timestamp then ID descending. Actor must be Reviewer; missing/non-Reviewer legacy actor is unattributed. Never infer final actor from current assignment. Count each terminal request once. State/category sums equal total; Reviewer totals+unattributed equal Approved+Rejected. No amount sums/private request text; any query key400.
+
+## 7. UI behavior
+
+Login, list/new/detail and Reviewer `/summary` routes. Requester sees own list; Reviewer All/Queue/Mine compose with filters. Queue is fixed Pending; Clear retains current Queue/Mine scope; tab changes clear state/preserve other filters. Return uses shared inline reason panel with Reject (reviewed #79 clarification), not a modal. Returned editor must Save before Resubmit; dirty edits disable resubmit. History labels same-state edits as Edited. Summary shows counts, unattributed count, loading/empty/error/retry/refresh.
+
+Read hooks abort obsolete GETs. Handled form failures preserve inputs and busy controls prevent repeat actions where implemented;409 allows refresh without silent discard. Initial auth/me determines login routing; not every later401 automatically redirects. Requester has no Summary link and direct route shows Page unavailable; backend independently returns403. Browser presentation tests use controlled failures/empty data separately from actual API database tests. Exhaustive every-form field errors, busy permutations and UI409 combinations remain NFR-08/F-11 gaps.
+
+## 8. Configuration and reproduction
+
+| Variable | Purpose/default |
+|---|---|
+| DATABASE_URL | Private PostgreSQL connection |
+| TEST_DATABASE_URL | Dedicated migrated test DB, never production |
+| SEED_PASSWORD | Synthetic seed password supplied privately |
+| PORT | API3000 |
+| SESSION_TTL_HOURS | Positive number, default8 |
+| BCRYPT_ROUNDS | Integer10..15, default12 |
+| NODE_ENV | production enables Secure cookie |
+| RELEASE_COMMIT | Public source identity, local fallback |
+
+[README](../README.md) is the command source: npm ci, Prisma generate/migrate, local seed, build/start or Vite/API dev commands. npm test builds TypeScript/Vite then `node --test test/*.test.cjs`; Playwright uses the test configuration and synthetic seed. Keep real secrets out of Git/PDF. Teammate fresh-clone exercise is still unrecorded.
+
+## 9. CI/CD, persistence and rollback
+
+`.github/workflows/ci-docker.yml`: install/generate/migrate with PostgreSQL18, Node tests, seed, Playwright and Docker build for main/staging PRs. `.github/workflows/deploy.yml`: accepted main via Workload Identity Federation, Artifact Registry and Cloud Run, no committed service-account JSON key. Multi-stage Node24 Debian-slim Docker targets build UI/API/Prisma, create migration image, prune runtime dependencies and run as non-root node with OpenSSL.
+
+SHA-tagged app/migration images resolve to immutable digests; migration job completes before app rollout; RELEASE_COMMIT/commit label and UI/health/version smoke establish identity. Durable state resides in Cloud SQL, not container disk. Existing-image rollback skips migration and requires compatible schema. Do not roll back to pre-F-07 after Returned data exists; no automatic enum down-migration. Sprint 2 f9 is compatible with F-10's unchanged schema.
+
+Actual GCP project vertical-set-514506-g8, region asia-southeast1, service approvals, SQL approvals-pg. URL https://approvals-389973748230.asia-southeast1.run.app. Current main/tag/revision above; run 45637901908. Manifest list `sha256:7f70f868ccbd6c6788fd64f68db33840a809b3ed86b572211d011de10bc8abab`, resolved revision manifest `sha256:dbe993bedb54b17804aa031b0d8a1206cd765f272e925c64ea80deb1a1e3165f`; migration execution approvals-migrate-gz4xd completed. [Actual release evidence](deliverable-2/evidence/F10-release/README.md) retains list/child distinction and metadata.
+
+## 10. Verification, future design and revision
+
+Run45637901908 passed 27 Node/API/regression reported tests (including parents/subtests), five Playwright tests and Docker build. Live 61 calls independently reconciled counts and compared #13/#16/#17 resources/full histories across deployment. This is controlled redeploy continuity, not a whole-DB audit or full-history OS-process restart. Earlier Lab 5 separately records restart request continuity. No application tests are newly claimed for this documentation-only refresh.
+
+F-09 PLANNED: amount>=THB 50,000 first approval must await distinct second actor rather than finalize; new state/data/authorization/races/UI follow [Sprint 3 contract](sprints/sprint-3/contracts.md). Neither waiting state nor proposed columns exist now. It will require F-06/F-07/F-10 regression. F-11 must measure local 1,000-fixture p95<500ms, complete all-form UI, hash/log audit, same-ID/decision-race checks, full-history restart and teammate clean setup. Full independent UAT remains separate.
+
+v0.1 (5Nov) planned design is retained in Git. v0.3 (25Nov,#74) reconciles actual modules, Node runner, schema/five states, filters/summary, UI/config and deployed delivery, correcting obsolete displayName/service classes/Vitest/every-state seed claims. Contract/TDD history is unchanged. Teammate review remains required; this is not instructor scope approval.
