@@ -1,0 +1,676 @@
+{
+  "observedAt": "2026-11-25T14:52:54.814Z",
+  "kind": "AI-assisted developer live API verification; not independent manual UAT",
+  "base": "https://approvals-389973748230.asia-southeast1.run.app",
+  "source": "0877808fb5a8084e040974cb56b16648b274bb04",
+  "version": {
+    "data": {
+      "commit": "0877808fb5a8084e040974cb56b16648b274bb04"
+    }
+  },
+  "retainedIds": [
+    13,
+    16,
+    17
+  ],
+  "retainedRecordsAndHistoryUnchanged": true,
+  "retainedHash": "f0bb336f5917a929acbe6d0f48659ee9d3b885c4691bb6bf574b28743c1c17c2",
+  "syntheticId": 18,
+  "syntheticFinal": {
+    "id": 18,
+    "title": "F10 live summary 2026-11-25T14:52:51.948Z",
+    "category": "TRAVEL",
+    "amount": "18.75",
+    "justification": "Synthetic count verification only; retain as release evidence.",
+    "state": "APPROVED",
+    "requesterId": 1,
+    "reviewerId": 3,
+    "decisionReason": "Synthetic F10 final decision count verification.",
+    "createdAt": "2026-11-25T14:53:08.749Z",
+    "updatedAt": "2026-11-25T14:53:09.753Z",
+    "decidedAt": "2026-11-25T14:53:09.752Z",
+    "requester": {
+      "id": 1,
+      "username": "requester1"
+    },
+    "reviewer": {
+      "id": 3,
+      "username": "reviewer1"
+    }
+  },
+  "observations": [
+    {
+      "label": "before synthetic decision",
+      "observedAt": "2026-11-25T14:52:51.936Z",
+      "inventoryHash": "09ea3e36e288ee748af1f78e3be8808679392ff3d07db245212bab7eb911a4db",
+      "independent": {
+        "total": 17,
+        "state": {
+          "PENDING": 5,
+          "IN_REVIEW": 2,
+          "RETURNED": 0,
+          "APPROVED": 5,
+          "REJECTED": 5
+        },
+        "category": {
+          "FUNDING": 1,
+          "PURCHASE": 10,
+          "TRAVEL": 5,
+          "REIMBURSEMENT": 1
+        },
+        "byReviewer": [
+          {
+            "reviewer": {
+              "id": 3,
+              "username": "reviewer1"
+            },
+            "approved": 5,
+            "rejected": 5,
+            "total": 10
+          }
+        ],
+        "unattributed": 0
+      },
+      "summary": {
+        "total": 17,
+        "byState": [
+          {
+            "state": "PENDING",
+            "count": 5
+          },
+          {
+            "state": "IN_REVIEW",
+            "count": 2
+          },
+          {
+            "state": "APPROVED",
+            "count": 5
+          },
+          {
+            "state": "REJECTED",
+            "count": 5
+          },
+          {
+            "state": "RETURNED",
+            "count": 0
+          }
+        ],
+        "byCategory": [
+          {
+            "category": "FUNDING",
+            "count": 1
+          },
+          {
+            "category": "PURCHASE",
+            "count": 10
+          },
+          {
+            "category": "TRAVEL",
+            "count": 5
+          },
+          {
+            "category": "REIMBURSEMENT",
+            "count": 1
+          }
+        ],
+        "byReviewer": [
+          {
+            "reviewer": {
+              "id": 3,
+              "username": "reviewer1"
+            },
+            "approved": 5,
+            "rejected": 5,
+            "total": 10
+          }
+        ],
+        "unattributedDecisions": 0
+      }
+    },
+    {
+      "label": "new synthetic request Pending",
+      "observedAt": "2026-11-25T14:52:52.864Z",
+      "inventoryHash": "9761600df839803a31b3738aaea5609f0177944e66dfeab9904d28930e13f303",
+      "independent": {
+        "total": 18,
+        "state": {
+          "PENDING": 6,
+          "IN_REVIEW": 2,
+          "RETURNED": 0,
+          "APPROVED": 5,
+          "REJECTED": 5
+        },
+        "category": {
+          "FUNDING": 1,
+          "PURCHASE": 10,
+          "TRAVEL": 6,
+          "REIMBURSEMENT": 1
+        },
+        "byReviewer": [
+          {
+            "reviewer": {
+              "id": 3,
+              "username": "reviewer1"
+            },
+            "approved": 5,
+            "rejected": 5,
+            "total": 10
+          }
+        ],
+        "unattributed": 0
+      },
+      "summary": {
+        "total": 18,
+        "byState": [
+          {
+            "state": "PENDING",
+            "count": 6
+          },
+          {
+            "state": "IN_REVIEW",
+            "count": 2
+          },
+          {
+            "state": "APPROVED",
+            "count": 5
+          },
+          {
+            "state": "REJECTED",
+            "count": 5
+          },
+          {
+            "state": "RETURNED",
+            "count": 0
+          }
+        ],
+        "byCategory": [
+          {
+            "category": "FUNDING",
+            "count": 1
+          },
+          {
+            "category": "PURCHASE",
+            "count": 10
+          },
+          {
+            "category": "TRAVEL",
+            "count": 6
+          },
+          {
+            "category": "REIMBURSEMENT",
+            "count": 1
+          }
+        ],
+        "byReviewer": [
+          {
+            "reviewer": {
+              "id": 3,
+              "username": "reviewer1"
+            },
+            "approved": 5,
+            "rejected": 5,
+            "total": 10
+          }
+        ],
+        "unattributedDecisions": 0
+      }
+    },
+    {
+      "label": "after real synthetic approval",
+      "observedAt": "2026-11-25T14:52:53.896Z",
+      "inventoryHash": "d7db7e666eaec320aee1d7b0119a8dc75127720b8576e5b509e71b47856b7dec",
+      "independent": {
+        "total": 18,
+        "state": {
+          "PENDING": 5,
+          "IN_REVIEW": 2,
+          "RETURNED": 0,
+          "APPROVED": 6,
+          "REJECTED": 5
+        },
+        "category": {
+          "FUNDING": 1,
+          "PURCHASE": 10,
+          "TRAVEL": 6,
+          "REIMBURSEMENT": 1
+        },
+        "byReviewer": [
+          {
+            "reviewer": {
+              "id": 3,
+              "username": "reviewer1"
+            },
+            "approved": 6,
+            "rejected": 5,
+            "total": 11
+          }
+        ],
+        "unattributed": 0
+      },
+      "summary": {
+        "total": 18,
+        "byState": [
+          {
+            "state": "PENDING",
+            "count": 5
+          },
+          {
+            "state": "IN_REVIEW",
+            "count": 2
+          },
+          {
+            "state": "APPROVED",
+            "count": 6
+          },
+          {
+            "state": "REJECTED",
+            "count": 5
+          },
+          {
+            "state": "RETURNED",
+            "count": 0
+          }
+        ],
+        "byCategory": [
+          {
+            "category": "FUNDING",
+            "count": 1
+          },
+          {
+            "category": "PURCHASE",
+            "count": 10
+          },
+          {
+            "category": "TRAVEL",
+            "count": 6
+          },
+          {
+            "category": "REIMBURSEMENT",
+            "count": 1
+          }
+        ],
+        "byReviewer": [
+          {
+            "reviewer": {
+              "id": 3,
+              "username": "reviewer1"
+            },
+            "approved": 6,
+            "rejected": 5,
+            "total": 11
+          }
+        ],
+        "unattributedDecisions": 0
+      }
+    }
+  ],
+  "calls": [
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/13",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/13/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/16",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/16/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/17",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/17/history",
+      "status": 200
+    },
+    {
+      "actor": "anonymous",
+      "method": "GET",
+      "endpoint": "/api/reports/summary",
+      "status": 401
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/reports/summary",
+      "status": 403
+    },
+    {
+      "actor": "requester2",
+      "method": "GET",
+      "endpoint": "/api/reports/summary?role=REVIEWER",
+      "status": 403
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/reports/summary?reviewerId=1",
+      "status": 400
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/17/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/16/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/15/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/11/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/10/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/8/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/7/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/5/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/4/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/3/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/reports/summary",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "endpoint": "/api/requests",
+      "status": 201
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/17/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/16/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/15/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/11/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/10/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/8/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/7/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/5/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/4/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/3/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/reports/summary",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "endpoint": "/api/requests/18/claim",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "endpoint": "/api/requests/18/approve",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/18/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/17/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/16/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/15/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/11/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/10/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/8/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/7/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/5/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/4/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/3/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/reports/summary",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/reports/summary",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "endpoint": "/api/requests/18",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/13",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/13/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/16",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/16/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/17",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "endpoint": "/api/requests/17/history",
+      "status": 200
+    }
+  ],
+  "privacy": "Only aggregate oracle results/fingerprints, known synthetic fixture and HTTP status metadata retained; no full shared list/history payloads or authentication values"
+}

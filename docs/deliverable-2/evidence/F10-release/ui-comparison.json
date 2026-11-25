@@ -1,0 +1,81 @@
+{
+  "observedAt": "2026-11-25T14:54:53.267Z",
+  "matched": true,
+  "expected": {
+    "total": 18,
+    "byState": [
+      {
+        "state": "PENDING",
+        "count": 5
+      },
+      {
+        "state": "IN_REVIEW",
+        "count": 2
+      },
+      {
+        "state": "APPROVED",
+        "count": 6
+      },
+      {
+        "state": "REJECTED",
+        "count": 5
+      },
+      {
+        "state": "RETURNED",
+        "count": 0
+      }
+    ],
+    "byCategory": [
+      {
+        "category": "FUNDING",
+        "count": 1
+      },
+      {
+        "category": "PURCHASE",
+        "count": 10
+      },
+      {
+        "category": "TRAVEL",
+        "count": 6
+      },
+      {
+        "category": "REIMBURSEMENT",
+        "count": 1
+      }
+    ],
+    "byReviewer": [
+      {
+        "reviewer": {
+          "id": 3,
+          "username": "reviewer1"
+        },
+        "approved": 6,
+        "rejected": 5,
+        "total": 11
+      }
+    ],
+    "unattributedDecisions": 0
+  },
+  "actual": {
+    "total": 18,
+    "state": [
+      "StateCount",
+      "Pending5",
+      "In review2",
+      "Approved6",
+      "Rejected5",
+      "Returned0"
+    ],
+    "category": [
+      "CategoryCount",
+      "Funding1",
+      "Purchase10",
+      "Travel6",
+      "Reimbursement1"
+    ],
+    "reviewers": [
+      "ReviewerApprovedRejectedTotal",
+      "reviewer16511"
+    ]
+  }
+}

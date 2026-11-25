@@ -1,0 +1,37 @@
+[
+  {
+    "metadata": {
+      "name": "approvals-migrate-gz4xd"
+    },
+    "status": {
+      "completionTime": "2026-11-25T14:52:20.904708Z",
+      "conditions": [
+        {
+          "lastTransitionTime": "2026-11-25T14:52:20.904708Z",
+          "message": "Execution completed successfully in 17.85s.",
+          "status": "True",
+          "type": "Completed"
+        },
+        {
+          "lastTransitionTime": "2026-11-25T14:52:01.657960Z",
+          "message": "Provisioned imported containers.",
+          "status": "True",
+          "type": "ResourcesAvailable"
+        },
+        {
+          "lastTransitionTime": "2026-11-25T14:52:12.998022Z",
+          "message": "Started deployed execution in 11.34s.",
+          "status": "True",
+          "type": "Started"
+        },
+        {
+          "lastTransitionTime": "2026-11-25T14:52:01.533926Z",
+          "message": "Imported container image in 8.04s.",
+          "status": "True",
+          "type": "ContainerReady"
+        }
+      ],
+      "succeededCount": 1
+    }
+  }
+]

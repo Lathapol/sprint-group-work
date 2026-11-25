@@ -1,0 +1,102 @@
+Browser tab: 2, Title: "Department Requests", URL: "https://approvals-389973748230.asia-southeast1.run.app/".
+1 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/
+	2 container root
+		3 container
+			4 link Description: Department Requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			5 text Team approvals · Cloud release requester1
+			6 button Sign out
+		7 container
+			8 heading My requests, Value: 1
+				9 text My requests
+			10 link Description: New request, Value: approvals-389973748230.asia-southeast1.run.app/new
+			11 container Filter requests
+				12 text Filter state
+				13 pop up button (collapsed, settable) Filter state, Value: All states, ID: filter-state, Secondary Actions: Expand
+					14 menu
+						15 (selected) All states
+						16 Pending
+						17 In review
+						18 Returned
+						19 Approved
+						20 Rejected
+				21 text Filter category
+				22 pop up button (collapsed, settable) Filter category, Value: All categories, ID: filter-category, Secondary Actions: Expand
+					23 menu
+						24 (selected) All categories
+						25 Funding
+						26 Purchase
+						27 Travel
+						28 Reimbursement
+				29 text Search title or justification
+				30 text field (settable) Search title or justification, ID: filter-q
+				31 text Created from (UTC)
+				32 date field (settable) Created from (UTC), ID: filter-from
+					33 container
+						34 stepper
+						35 stepper
+						36 stepper
+					37 pop up button Show date picker Show date picker
+				38 text Created through (UTC)
+				39 date field (settable) Created through (UTC), ID: filter-to
+					40 container
+						41 stepper
+						42 stepper
+						43 stepper
+					44 pop up button Show date picker Show date picker
+				45 text Dates include the whole UTC day. Search matches literal text, ignoring case.
+				46 button Apply filters
+				47 button Clear filters
+			48 content list
+				49 container
+					50 link Description: F10 live summary 2026-11-25T14:52:51.948Z, Value: approvals-389973748230.asia-southeast1.run.app/requests/18
+					51 text Approved
+				52 container
+					53 link Description: Sprint2 release 2026-11-25T14:05:46.205Z returned cycle, Value: approvals-389973748230.asia-southeast1.run.app/requests/17
+					54 text Approved
+				55 container
+					56 link Description: Sprint2 release 2026-11-25T14:05:46.205Z original journey, Value: approvals-389973748230.asia-southeast1.run.app/requests/16
+					57 text Rejected
+				58 container
+					59 link Description: Test Retest, Value: approvals-389973748230.asia-southeast1.run.app/requests/15
+					60 text Rejected
+				61 container
+					62 link Description: UAT6-03 independent rerun fixture 2026-11-23T13:56:33.386Z, Value: approvals-389973748230.asia-southeast1.run.app/requests/13
+					63 text Pending
+				64 container
+					65 link Description: This will be test on requester2 after requester 1 click claim, Value: approvals-389973748230.asia-southeast1.run.app/requests/12
+					66 text In review
+				67 container
+					68 link Description: This on is for testing weather the promp api works or not, Value: approvals-389973748230.asia-southeast1.run.app/requests/11
+					69 text Approved
+				70 container
+					71 link Description: Create this new, Value: approvals-389973748230.asia-southeast1.run.app/requests/10
+					72 text Approved
+				73 container
+					74 link Description: Not Blank Title, Value: approvals-389973748230.asia-southeast1.run.app/requests/9
+					75 text Pending
+				76 container
+					77 link Description: This is a test for UAT6-01, Value: approvals-389973748230.asia-southeast1.run.app/requests/8
+					78 text Approved
+				79 container
+					80 link Description: Lab 5 final verification 2026-11-19T10:06:20.446Z, Value: approvals-389973748230.asia-southeast1.run.app/requests/7
+					81 text Rejected
+				82 container
+					83 link Description: Lab 5 persistence 2026-11-14T14:37:48.523Z, Value: approvals-389973748230.asia-southeast1.run.app/requests/6
+					84 text Pending
+				85 container
+					86 link Description: Lab 5 first-deployment verification, Value: approvals-389973748230.asia-southeast1.run.app/requests/5
+					87 text Rejected
+				88 container
+					89 link Description: Demo: taxi reimbursement, Value: approvals-389973748230.asia-southeast1.run.app/requests/4
+					90 text Rejected
+				91 container
+					92 link Description: Demo: student workshop, Value: approvals-389973748230.asia-southeast1.run.app/requests/3
+					93 text Approved
+				94 container
+					95 link Description: Demo: conference travel, Value: approvals-389973748230.asia-southeast1.run.app/requests/2
+					96 text In review
+				97 container
+					98 link Description: Demo: replace lab equipment, Value: approvals-389973748230.asia-southeast1.run.app/requests/1
+					99 text Pending
+
+The focused UI element is 1 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/

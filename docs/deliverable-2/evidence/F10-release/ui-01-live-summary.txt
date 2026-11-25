@@ -1,0 +1,104 @@
+Browser tab: 2, Title: "Department Requests", URL: "https://approvals-389973748230.asia-southeast1.run.app/summary".
+0 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/summary
+	1 container root
+		2 container
+			3 link Description: Department Requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			4 text Team approvals · Cloud release reviewer1
+			5 button Sign out
+		6 container
+			7 link Description: Back to requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			8 heading Decision summary, Value: 1
+				9 text Decision summary
+			10 text Current requests across all requesters. Reviewer totals follow final decision history.
+			11 container Summary totals
+				12 heading Total requests, Value: 2
+					13 text Total requests
+				14 text 18
+			15 heading Requests by state, Value: 2
+				16 text Requests by state
+			17 table Requests by state
+				18 row
+					19 cell
+						20 text State
+					21 cell
+						22 text Count
+				23 row
+					24 cell
+						25 text Pending
+					26 cell
+						27 text 5
+				28 row
+					29 cell
+						30 text In review
+					31 cell
+						32 text 2
+				33 row
+					34 cell
+						35 text Approved
+					36 cell
+						37 text 6
+				38 row
+					39 cell
+						40 text Rejected
+					41 cell
+						42 text 5
+				43 row
+					44 cell
+						45 text Returned
+					46 cell
+						47 text 0
+			48 heading Requests by category, Value: 2
+				49 text Requests by category
+			50 table Requests by category
+				51 row
+					52 cell
+						53 text Category
+					54 cell
+						55 text Count
+				56 row
+					57 cell
+						58 text Funding
+					59 cell
+						60 text 1
+				61 row
+					62 cell
+						63 text Purchase
+					64 cell
+						65 text 10
+				66 row
+					67 cell
+						68 text Travel
+					69 cell
+						70 text 6
+				71 row
+					72 cell
+						73 text Reimbursement
+					74 cell
+						75 text 1
+			76 heading Decisions by reviewer, Value: 2
+				77 text Decisions by reviewer
+			78 table Decisions by reviewer
+				79 row
+					80 cell
+						81 text Reviewer
+					82 cell
+						83 text Approved
+					84 cell
+						85 text Rejected
+					86 cell
+						87 text Total
+				88 row
+					89 cell
+						90 text reviewer1
+					91 cell
+						92 text 6
+					93 cell
+						94 text 5
+					95 cell
+						96 text 11
+			97 container
+				98 text Unattributed decisions:  0
+			99 text Terminal requests without an attributable Reviewer decision history remain in the totals above.
+			100 button Refresh summary
+
+The focused UI element is 0 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/summary
