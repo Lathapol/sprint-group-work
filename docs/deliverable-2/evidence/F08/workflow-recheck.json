@@ -1,0 +1,6 @@
+{
+  "sha": "519c4922c3931fd004560f3b9f7bbb42d82c230e",
+  "time": "2026-11-25T13:10:55.3408192Z",
+  "command": "playwright test test/browser/workflow.spec.ts --reporter=line --trace=retain-on-failure",
+  "exitCode": 0
+}

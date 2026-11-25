@@ -1,10 +1,10 @@
-import { Category, Prisma, PrismaClient, RequestState } from '@prisma/client';
+import { Category, Prisma, PrismaClient } from '@prisma/client';
 import { Router, RequestHandler, Response } from 'express';
+import { requestFilters } from './request-filters';
 
 const users = { select: { id: true, username: true } } as const;
 const people = { requester: users, reviewer: users } as const;
 const categories = Object.values(Category);
-const states = Object.values(RequestState);
 const maxId = 2147483647;
 
 function error(res: Response, status: number, code: string, message: string, fields?: Record<string, string>) {
@@ -62,17 +62,15 @@ export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, re
 
   router.get('/', async (req, res) => {
     const { id, role } = res.locals.user;
-    const where: Prisma.RequestWhereInput = {};
-    if (role === 'REQUESTER') where.requesterId = id;
-    if (role === 'REVIEWER') {
-      const state = req.query.state as RequestState | undefined;
-      if (state !== undefined && !states.includes(state)) {
-        error(res, 400, 'INVALID_INPUT', 'Choose a valid state.');
-        return;
-      }
-      where.state = state;
-      if (req.query.mine === 'true') where.reviewerId = id;
+    const { fields, where: filters, mine } = requestFilters(req.query, role);
+    if (Object.keys(fields).length) {
+      error(res, 400, 'INVALID_INPUT', 'Check the highlighted filters.', fields);
+      return;
     }
+    const where: Prisma.RequestWhereInput = { AND: [
+      role === 'REQUESTER' ? { requesterId: id } : mine ? { reviewerId: id } : {},
+      filters,
+    ] };
     const data = await db.request.findMany({ where, include: people, orderBy: { id: 'desc' } });
     res.json({ data });
   });

@@ -72,3 +72,10 @@ New API paths: POST /api/requests/:id/return, PATCH /api/requests/:id, POST /api
 Development: apply `npx prisma migrate deploy` to your isolated local DB, `npx prisma generate`, then `npm test` and the documented seeded Playwright checks. Cloud releases run the existing migration job before deployment; do not reset/reseed a shared production database. RETURNED enum addition is not safely undone by dropping the value. Once Returned data exists, roll back only to a compatible image or roll forward with a reviewed fix, not a pre-F-07 client unable to understand Returned records.
 
 Feature/test design: docs/sprints/sprint-2/contracts.md. Actual RED/GREEN and migration evidence: docs/deliverable-2/evidence/F07. A feature branch is not a claim the assessed main release has deployed it.
+# Sprint 2 filter and search candidate (F-08)
+
+`GET /api/requests` accepts `state`, `category`, `from`, `to`, `q` and Reviewer-only `mine=true|false`. Supplied conditions combine with AND within existing authorization. `q` searches title or justification as a trimmed case-insensitive literal substring, maximum 200 Unicode code points; `%`, `_` and backslash are literal characters. Empty text removes text filtering.
+
+Dates are calendar `YYYY-MM-DD`, include complete UTC days and filter creation time. Either bound is optional. Invalid dates/ranges/enum values, repeated or nested parameters and unsupported ownership selectors return 400 with field errors. Requester ownership and reviewer Mine remain mandatory server predicates. No new schema, migration or environment variable is required for F-08.
+
+List controls provide Apply/Clear and preserve values after errors. Clear retains the active All/Queue/Mine scope; Queue fixes state to Pending. Teammate review, main release and live acceptance remain pending. Actual test evidence and edge-date handling: [F-08 results](docs/deliverable-2/evidence/F08/README.md).

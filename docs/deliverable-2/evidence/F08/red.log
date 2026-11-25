@@ -1,0 +1,116 @@
+▶ F-08 filters preserve exact persisted matches and authorization
+  ✖ TEST-08-01: state category text AND combinations and literal wildcard characters (52.6851ms)
+  ✖ TEST-08-02: calendar dates and inclusive UTC days, one-sided and leap-day boundaries (15.8016ms)
+  ✖ TEST-08-03: ownership before filters; reviewer scopes AND filters; no forged owner selectors (18.7327ms)
+  ✔ TEST-08-04 persistence: reads do not mutate requests/history; fresh app returns same results (99.506ms)
+✖ F-08 filters preserve exact persisted matches and authorization (392.0362ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2722.6652
+
+✖ failing tests:
+
+test at test\filters.test.cjs:65:11
+✖ TEST-08-01: state category text AND combinations and literal wildcard characters (52.6851ms)
+  AssertionError [ERR_ASSERTION]: state=PENDING
+  + actual - expected
+  
+    [
+  +   49,
+  +   47,
+  +   46,
+  +   45,
+  +   44,
+      43,
+      42
+    ]
+  
+      at exact (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:61:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:67:7)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:65:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [
+      49, 47, 46, 45,
+      44, 43, 42
+    ],
+    expected: [ 43, 42 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\filters.test.cjs:82:11
+✖ TEST-08-02: calendar dates and inclusive UTC days, one-sided and leap-day boundaries (15.8016ms)
+  AssertionError [ERR_ASSERTION]: from=2026-02-28&to=2026-02-28
+  + actual - expected
+  
+    [
+      49,
+  +   47,
+  +   46,
+      45,
+      44,
+      43,
+  +   42
+    ]
+  
+      at exact (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:61:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:84:5)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:82:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [
+      49, 47, 46, 45,
+      44, 43, 42
+    ],
+    expected: [ 49, 45, 44, 43 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\filters.test.cjs:104:11
+✖ TEST-08-03: ownership before filters; reviewer scopes AND filters; no forged owner selectors (18.7327ms)
+  AssertionError [ERR_ASSERTION]: q=private&category=PURCHASE&from=2026-02-28
+  + actual - expected
+  
+  + [
+  +   49,
+  +   47,
+  +   46,
+  +   45,
+  +   44,
+  +   43,
+  +   42
+  + ]
+  - []
+  
+      at exact (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:61:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:106:5)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:104:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [
+      49, 47, 46, 45,
+      44, 43, 42
+    ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
