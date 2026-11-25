@@ -1,0 +1,22 @@
+
+[WebServer] (node:22696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:8612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 3 workers
+
+(node:20748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:27728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:4684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/3] test\browser\returns.spec.ts:5:1 › TEST-07-03 UI: returned edits resubmit to the same reviewer and retain history
+[2/3] test\browser\history.spec.ts:5:1 › TEST-06-03: history renders safe reasons and retries a failed read
+[3/3] test\browser\workflow.spec.ts:5:1 › requester submits and retrieves a reviewer rejection
+  3 passed (13.0s)

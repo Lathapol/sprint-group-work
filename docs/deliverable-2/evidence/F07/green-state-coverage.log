@@ -1,0 +1,15 @@
+▶ F-07 return edit and same-reviewer resubmission
+  ✔ TEST-07-01: assigned return persists reason and invalid returns change nothing (714.1915ms)
+  ✔ TEST-07-02: Returned edits are owner-only, validated and audited once (951.4627ms)
+  ✔ TEST-07-03: resubmit retains reviewer and reason history, and supports a final decision (560.8252ms)
+  ✔ TEST-07-04: duplicate resubmission and edit/resubmit races serialize (600.6231ms)
+  ✔ TEST-07-05: non-Returned states cannot be edited or resubmitted (910.3411ms)
+✔ F-07 return edit and same-reviewer resubmission (4056.0287ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5133.2983

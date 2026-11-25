@@ -1,0 +1,30 @@
+warn The configuration property `package.json#prisma` is deprecated and will be removed in Prisma 7. Please migrate to a Prisma config file (e.g., `prisma.config.ts`).
+For more information, see: https://pris.ly/prisma-config
+
+Prisma schema loaded from prisma\schema.prisma
+Datasource "db": PostgreSQL database "approvals_history_test", schema "public" at "127.0.0.1:62558"
+
+3 migrations found in prisma/migrations
+
+Applying migration `20261124000100_returned_state`
+Applying migration `20261124000200_returned_reason`
+
+┌─────────────────────────────────────────────────────────┐
+│  Update available 6.19.3 -> 8.0.0-rc.35                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20261124000100_returned_state/
+    └─ migration.sql
+  └─ 20261124000200_returned_reason/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
