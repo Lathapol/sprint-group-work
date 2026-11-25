@@ -1,0 +1,6 @@
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:00:45.4845786Z   ✔ TEST-08-01: state category text AND combinations and literal wildcard characters (355.301065ms)
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:00:45.7371070Z   ✔ TEST-07-03: resubmit retains reviewer and reason history, and supports a final decision (124.194228ms)
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:00:46.0887189Z ℹ tests 22
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:00:46.0887666Z ℹ pass 22
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:00:46.0887878Z ℹ fail 0
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:01:27.2683901Z   4 passed (6.8s)

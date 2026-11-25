@@ -1,0 +1,35 @@
+Browser tab: 2, Title: "Department Requests", URL: "https://approvals-389973748230.asia-southeast1.run.app/requests/13".
+1 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/requests/13
+	2 container root
+		3 container
+			4 link Description: Department Requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			5 text Team approvals · Cloud release requester1
+			6 button Sign out
+		7 container
+			8 link Description: Back to requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			9 heading UAT6-03 independent rerun fixture 2026-11-23T13:56:33.386Z, Value: 1
+				10 text UAT6-03 independent rerun fixture 2026-11-23T13:56:33.386Z
+			11 definition list
+				12 container Status
+					13 text Status
+				14 text Pending
+				15 container Category
+					16 text Category
+				17 text PURCHASE
+				18 container Amount (THB)
+					19 text Amount (THB)
+				20 text 25.5
+				21 container Justification
+					22 text Justification
+				23 text Synthetic fresh Pending fixture; retain for partner retest of issue 60.
+				24 container Reviewer
+					25 text Reviewer
+				26 text Unassigned
+			27 container Request history
+				28 heading History, Value: 2
+					29 text History
+				30 content list
+					31 container
+						32 text 1 . Created → Pending requester1  ( REQUESTER ) 11/23/2026, 1:56:43 PM  UTC
+
+The focused UI element is 1 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/requests/13

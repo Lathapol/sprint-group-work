@@ -1,0 +1,60 @@
+Browser tab: 2, Title: "Department Requests", URL: "https://approvals-389973748230.asia-southeast1.run.app/".
+1 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/
+	2 container root
+		3 container
+			4 link Description: Department Requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			5 text Team approvals · Cloud release reviewer1
+			6 button Sign out
+		7 container
+			8 heading Review requests, Value: 1
+				9 text Review requests
+			10 container Request filters
+				11 checkbox All, Value: 0
+				12 checkbox Queue, Value: 0
+				13 checkbox Mine, Value: 1
+			14 container Filter requests
+				15 text Filter state
+				16 pop up button (collapsed, settable) Filter state, Value: All states, ID: filter-state, Secondary Actions: Expand
+					17 menu
+						18 (selected) All states
+						19 Pending
+						20 In review
+						21 Returned
+						22 Approved
+						23 Rejected
+				24 text Filter category
+				25 pop up button (collapsed, settable) Filter category, Value: All categories, ID: filter-category, Secondary Actions: Expand
+					26 menu
+						27 (selected) All categories
+						28 Funding
+						29 Purchase
+						30 Travel
+						31 Reimbursement
+				32 text Search title or justification
+				33 text field (settable) Search title or justification, Value: Sprint2 release 2026-11-25T14:05:46.205Z, ID: filter-q
+				34 text Created from (UTC)
+				35 date field (settable) Created from (UTC), ID: filter-from
+					36 container
+						37 stepper
+						38 stepper
+						39 stepper
+					40 pop up button Show date picker Show date picker
+				41 text Created through (UTC)
+				42 date field (settable) Created through (UTC), ID: filter-to
+					43 container
+						44 stepper
+						45 stepper
+						46 stepper
+					47 pop up button Show date picker Show date picker
+				48 text Dates include the whole UTC day. Search matches literal text, ignoring case.
+				49 button Apply filters
+				50 button Clear filters
+			51 content list
+				52 container
+					53 link Description: Sprint2 release 2026-11-25T14:05:46.205Z returned cycle, Value: approvals-389973748230.asia-southeast1.run.app/requests/17
+					54 text Approved
+				55 container
+					56 link Description: Sprint2 release 2026-11-25T14:05:46.205Z original journey, Value: approvals-389973748230.asia-southeast1.run.app/requests/16
+					57 text Rejected
+
+The focused UI element is 13 checkbox Mine, Value: 1

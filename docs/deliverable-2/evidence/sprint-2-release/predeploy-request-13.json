@@ -1,0 +1,30 @@
+{
+  "observedAt": "2026-11-25T13:29:43.954Z",
+  "kind": "Pre-deployment API read of existing synthetic UAT fixture; no request mutation",
+  "base": "https://approvals-389973748230.asia-southeast1.run.app",
+  "version": {
+    "data": {
+      "commit": "3846a503893d6f5fc0fcfb602e79883fc7eab0d6"
+    }
+  },
+  "request": {
+    "id": 13,
+    "title": "UAT6-03 independent rerun fixture 2026-11-23T13:56:33.386Z",
+    "category": "PURCHASE",
+    "amount": "25.5",
+    "justification": "Synthetic fresh Pending fixture; retain for partner retest of issue 60.",
+    "state": "PENDING",
+    "requesterId": 1,
+    "reviewerId": null,
+    "decisionReason": null,
+    "createdAt": "2026-11-23T13:56:43.942Z",
+    "updatedAt": "2026-11-23T13:56:43.942Z",
+    "decidedAt": null,
+    "requester": {
+      "id": 1,
+      "username": "requester1"
+    },
+    "reviewer": null
+  },
+  "requestSha256": "d0be45c5fbe92c5c79544af75176b6e379716a861f9c95b9f653d7ac8c3a2738"
+}

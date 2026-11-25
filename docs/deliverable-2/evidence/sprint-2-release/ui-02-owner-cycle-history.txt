@@ -1,0 +1,48 @@
+Browser tab: 2, Title: "Department Requests", URL: "https://approvals-389973748230.asia-southeast1.run.app/requests/17".
+0 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/requests/17
+	1 container root
+		2 container
+			3 link Description: Department Requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			4 text Team approvals · Cloud release requester1
+			5 button Sign out
+		6 container
+			7 link Description: Back to requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			8 heading Sprint2 release 2026-11-25T14:05:46.205Z returned cycle, Value: 1
+				9 text Sprint2 release 2026-11-25T14:05:46.205Z returned cycle
+			10 definition list
+				11 container Status
+					12 text Status
+				13 text Approved
+				14 container Category
+					15 text Category
+				16 text PURCHASE
+				17 container Amount (THB)
+					18 text Amount (THB)
+				19 text 17.75
+				20 container Justification
+					21 text Justification
+				22 text Receipt 100%_\ verified; synthetic release only.
+				23 container Reviewer
+					24 text Reviewer
+				25 text reviewer1
+				26 container Decision reason
+					27 text Decision reason
+				28 text Synthetic revised estimate accepted.
+			29 container Request history
+				30 heading History, Value: 2
+					31 text History
+				32 content list
+					33 container
+						34 text 1 . Created → Pending requester1  ( REQUESTER ) 11/25/2026, 2:06:05 PM  UTC
+					35 container
+						36 text 2 . Pending → In review reviewer1  ( REVIEWER ) 11/25/2026, 2:06:05 PM  UTC
+					37 container
+						38 text 3 . In review → Returned reviewer1  ( REVIEWER ) 11/25/2026, 2:06:06 PM  UTC Reason: Revise the synthetic estimate.
+					39 container
+						40 text 4 . Edited requester1  ( REQUESTER ) 11/25/2026, 2:06:06 PM  UTC Reason: Request details updated.
+					41 container
+						42 text 5 . Returned → In review requester1  ( REQUESTER ) 11/25/2026, 2:06:06 PM  UTC
+					43 container
+						44 text 6 . In review → Approved reviewer1  ( REVIEWER ) 11/25/2026, 2:06:07 PM  UTC Reason: Synthetic revised estimate accepted.
+
+The focused UI element is 0 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/requests/17
