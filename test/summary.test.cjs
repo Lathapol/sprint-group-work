@@ -1,6 +1,7 @@
 const assert = require('node:assert/strict');
 const { randomUUID, randomBytes } = require('node:crypto');
 const { execFileSync } = require('node:child_process');
+const { once } = require('node:events');
 const { test } = require('node:test');
 const { PrismaClient, RequestState, Category } = require('@prisma/client');
 const request = require('supertest');
@@ -13,7 +14,9 @@ test('F-10 persisted global summary, final actors and snapshot reconciliation', 
   url.searchParams.set('schema', schema);
   const db = new PrismaClient({ datasourceUrl: url.toString() });
   const admin = new PrismaClient({ datasourceUrl: process.env.TEST_DATABASE_URL });
+  let server;
   t.after(async () => {
+    if (server?.listening) await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
     await db.$disconnect();
     try {
       // Only the uniquely generated schema owned by this test is disposable.
@@ -26,7 +29,11 @@ test('F-10 persisted global summary, final actors and snapshot reconciliation', 
   execFileSync(process.execPath, ['node_modules/prisma/build/index.js', 'migrate', 'deploy'], {
     env: { ...process.env, DATABASE_URL: url.toString() }, stdio: 'pipe',
   });
-  const app = request(createApp(db, 8, 10));
+  // Keep one listener open throughout concurrent requests; Supertest's lazy
+  // listen/close per request otherwise adds many transient server listeners.
+  server = createApp(db, 8, 10).listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const app = request(server);
   async function actor(role) {
     const user = await db.user.create({ data: { username: 'Summary-' + randomUUID(), role, passwordHash: 'private-never-returned' } });
     const token = randomBytes(32).toString('hex');
@@ -136,12 +143,13 @@ test('F-10 persisted global summary, final actors and snapshot reconciliation', 
       await app.post('/api/requests/' + row.id + '/claim').set('Cookie', first.cookie).send({}).expect(200);
       await app.post('/api/requests/' + row.id + '/approve').set('Cookie', first.cookie).send({}).expect(200);
     }));
-    for (let i = 0; i < 20; i++) {
-      const observed = await summary();
-      assert.equal(observed.total, 18);
-      invariants(observed);
-    }
-    await decisions;
+    try {
+      for (let i = 0; i < 20; i++) {
+        const observed = await summary();
+        assert.equal(observed.total, 18);
+        invariants(observed);
+      }
+    } finally { await decisions; }
     const after = await summary();
     assert.equal(after.byReviewer.find(r => r.reviewer.id === first.id).approved, 11);
     assert.equal(after.unattributedDecisions, 2);
