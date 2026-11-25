@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import express, { ErrorRequestHandler, RequestHandler, Response } from 'express';
 
 import { requestRoutes } from './requests';
+import { reportRoutes } from './reports';
 
 const cookieName = 'session';
 const publicUser = { id: true, username: true, role: true } as const;
@@ -120,6 +121,7 @@ export function createApp(db: PrismaClient, ttlHours = 8, bcryptRounds = 12) {
   });
 
   app.use('/api/requests', requestRoutes(db, authenticate, requireJson, requireRole('REQUESTER'), requireRole('REVIEWER')));
+  app.use('/api/reports', reportRoutes(db, authenticate, requireRole('REVIEWER')));
 
   const handleError: ErrorRequestHandler = (error, _req, res, next) => {
     if (res.headersSent) {
