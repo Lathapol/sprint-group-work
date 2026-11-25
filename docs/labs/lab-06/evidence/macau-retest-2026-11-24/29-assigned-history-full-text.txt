@@ -1,0 +1,7 @@
+Browser tab: 2, Title: "macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history", URL: "https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history".
+1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history
+	2 text {"error":"Access denied: draft requests are visible only to their requester","code":"ACCESS_DENIED"}
+	3 container
+		4 checkbox 0
+
+The focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/11/history

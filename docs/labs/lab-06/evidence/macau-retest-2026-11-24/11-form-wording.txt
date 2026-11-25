@@ -1,0 +1,12 @@
+Browser tab: 2, Title: "Purchase Approval System", URL: "https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/new".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~			16 text 39  / 150
+~			17 text field (settable) Request Title *, Value: UAT retest 2026-11-24 TC01 Office Chair, ID: request-title
+~			20 stepper (settable, integer) Estimated Amount ($) *, Value: 12500, ID: request-amount
+~			30 text 63  / 2000
+~			31 text entry area (settable) Description *, Value: Synthetic Office Chair. Quantity: 1. Retest TC01 direct submit., ID: request-description
+~			34 text 45  / 2000
+~			35 text entry area (settable) Business Justification *, Value: Synthetic ergonomic replacement for UAT only., ID: request-justification
+~			37 button Save as Draft
+~			38 button Submit for Review
+The focused UI element is 35 text entry area (settable) Business Justification *, Value: Synthetic ergonomic replacement for UAT only., ID: request-justification

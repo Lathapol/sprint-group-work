@@ -1,0 +1,7 @@
+Browser tab: 2, Title: "macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history", URL: "https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history".
+1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history
+	2 text {"history":[{"id":28,"requestId":13,"actorId":1,"action":"SUBMITTED","fromStatus":null,"toStatus":"PENDING_REVIEW","reason":"Purchase request submitted for review","createdAt":"2026-11-24T16:49:41.903Z","actor":{"id":1,"name":"Alice Requester","email":"requester1@macau678.com","role":"REQUESTER"}},{"id":30,"requestId":13,"actorId":2,"action":"RETURNED","fromStatus":"PENDING_REVIEW","toStatus":"RETURNED","reason":"Retest TC04: revise quantity and estimate; preserve each edit note.","createdAt":"2026-11-24T16:50:12.652Z","actor":{"id":2,"name":"Carol Reviewer","email":"reviewer1@macau678.com","role":"REVIEWER"}},{"id":34,"requestId":13,"actorId":1,"action":"RESUBMITTED","fromStatus":"RETURNED","toStatus":"PENDING_REVIEW","reason":"Requester changes since return: Retest edit A: quantity changed to 2. | Retest edit B: estimate changed to 18750. | Retest edit C: final specification confirmed.","createdAt":"2026-11-24T16:50:57.645Z","actor":{"id":1,"name":"Alice Requester","email":"requester1@macau678.com","role":"REQUESTER"}}]}
+	3 container
+		4 checkbox 0
+
+The focused UI element is 1 AXWebArea macau678-purchase-approval-gfn7poakkq-as.a.run.app/api/requests/13/history

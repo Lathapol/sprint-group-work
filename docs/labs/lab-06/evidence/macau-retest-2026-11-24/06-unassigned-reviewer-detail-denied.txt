@@ -1,0 +1,15 @@
+Browser tab: 2, Title: "Purchase Approval System", URL: "https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11".
+1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11
+	2 container root
+		3 container
+			4 link Description: Macau678, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/
+			5 link Description: Home, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/
+			6 link Description: Health, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/health
+			7 link Description: Review Queue, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue
+			8 link Description: Reports, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reports
+			9 text Dave Reviewer  ( REVIEWER )
+			10 button Sign Out
+		11 text Access denied: request is not assigned to you
+		12 button Go Back
+
+The focused UI element is 1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/requests/11
