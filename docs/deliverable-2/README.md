@@ -9,7 +9,9 @@ User decisions received 24 November 2026 (not invented course approval):
 - Q-02: amount **at or above THB 50,000.00** needs a second, different reviewer. Equality is included.
 - Q-03 was already resolved by System SDS DD-01/02/03: PostgreSQL session cookie, absolute 8-hour expiry and bcrypt.
 
-Complete contracts: [Sprint 2](../sprints/sprint-2/contracts.md), [Sprint 3](../sprints/sprint-3/contracts.md). Their review/merge occurred in #77 before implementation. Actual results: [F-06](evidence/F06/README.md), [F-07](evidence/F07/README.md), [F-08](evidence/F08/README.md), [F-10 candidate](evidence/F10/README.md). Sprint 2 evidence #84 was approved/merged and feature issues #69–#71 closed. F-10 now has real local API/UI implementation and RED/GREEN (27 API/regression tests and 5 browser tests pass); teammate review/integration/deployment are pending. Do not silently rewrite Sprint 1 contract history or claim local F-10 evidence is a deployed Sprint 3 release.
+Complete contracts: [Sprint 2](../sprints/sprint-2/contracts.md), [Sprint 3](../sprints/sprint-3/contracts.md). Their review/merge occurred in #77 before implementation. Actual local RED/GREEN results: [F-06](evidence/F06/README.md), [F-07](evidence/F07/README.md), [F-08](evidence/F08/README.md), [F-10](evidence/F10/README.md). Sprint 2 evidence #84 was approved/merged and feature issues #69–#71 closed. Historical Sprint 1 contracts remain identifiable.
+
+F-10 #85/#86 were approved and merged on 25 November; main `0877808`, tag `f10-2026-11-25`, revision `approvals-r45637901908-1` is deployed. Main CI passed 27 API/regression +5 browser tests; independent live count reconciliation and 61 API calls passed, three existing resources/history arrays remained unchanged, and deployed UI counts/role checks passed. See [actual F-10 release evidence](evidence/F10-release/README.md). Evidence review, complete baseline/traceability and assessed PDF remain separate work.
 
 ## Scope and build order
 

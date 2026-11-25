@@ -1,0 +1,209 @@
+{
+  "observedAt": "2026-11-25T14:38:19.084Z",
+  "kind": "Read-only Sprint 2 baseline before F-10 deployment",
+  "base": "https://approvals-389973748230.asia-southeast1.run.app",
+  "version": {
+    "data": {
+      "commit": "f9a0d2f704c868e4a0b2048f4cc85c2bf8949997"
+    }
+  },
+  "oldSummaryStatus": 404,
+  "records": [
+    {
+      "request": {
+        "id": 13,
+        "title": "UAT6-03 independent rerun fixture 2026-11-23T13:56:33.386Z",
+        "category": "PURCHASE",
+        "amount": "25.5",
+        "justification": "Synthetic fresh Pending fixture; retain for partner retest of issue 60.",
+        "state": "PENDING",
+        "requesterId": 1,
+        "reviewerId": null,
+        "decisionReason": null,
+        "createdAt": "2026-11-23T13:56:43.942Z",
+        "updatedAt": "2026-11-23T13:56:43.942Z",
+        "decidedAt": null,
+        "requester": {
+          "id": 1,
+          "username": "requester1"
+        },
+        "reviewer": null
+      },
+      "history": [
+        {
+          "id": 29,
+          "fromState": null,
+          "toState": "PENDING",
+          "reason": null,
+          "createdAt": "2026-11-23T13:56:43.942Z",
+          "actor": {
+            "id": 1,
+            "username": "requester1",
+            "role": "REQUESTER"
+          }
+        }
+      ]
+    },
+    {
+      "request": {
+        "id": 16,
+        "title": "Sprint2 release 2026-11-25T14:05:46.205Z original journey",
+        "category": "PURCHASE",
+        "amount": "10.25",
+        "justification": "Synthetic release regression only; retain for evidence.",
+        "state": "REJECTED",
+        "requesterId": 1,
+        "reviewerId": 3,
+        "decisionReason": "Synthetic release rejection; no real purchase.",
+        "createdAt": "2026-11-25T14:06:05.312Z",
+        "updatedAt": "2026-11-25T14:06:05.540Z",
+        "decidedAt": "2026-11-25T14:06:05.539Z",
+        "requester": {
+          "id": 1,
+          "username": "requester1"
+        },
+        "reviewer": {
+          "id": 3,
+          "username": "reviewer1"
+        }
+      },
+      "history": [
+        {
+          "id": 34,
+          "fromState": null,
+          "toState": "PENDING",
+          "reason": null,
+          "createdAt": "2026-11-25T14:06:05.312Z",
+          "actor": {
+            "id": 1,
+            "username": "requester1",
+            "role": "REQUESTER"
+          }
+        },
+        {
+          "id": 35,
+          "fromState": "PENDING",
+          "toState": "IN_REVIEW",
+          "reason": null,
+          "createdAt": "2026-11-25T14:06:05.409Z",
+          "actor": {
+            "id": 3,
+            "username": "reviewer1",
+            "role": "REVIEWER"
+          }
+        },
+        {
+          "id": 36,
+          "fromState": "IN_REVIEW",
+          "toState": "REJECTED",
+          "reason": "Synthetic release rejection; no real purchase.",
+          "createdAt": "2026-11-25T14:06:05.546Z",
+          "actor": {
+            "id": 3,
+            "username": "reviewer1",
+            "role": "REVIEWER"
+          }
+        }
+      ]
+    },
+    {
+      "request": {
+        "id": 17,
+        "title": "Sprint2 release 2026-11-25T14:05:46.205Z returned cycle",
+        "category": "PURCHASE",
+        "amount": "17.75",
+        "justification": "Receipt 100%_\\ verified; synthetic release only.",
+        "state": "APPROVED",
+        "requesterId": 1,
+        "reviewerId": 3,
+        "decisionReason": "Synthetic revised estimate accepted.",
+        "createdAt": "2026-11-25T14:06:05.813Z",
+        "updatedAt": "2026-11-25T14:06:07.135Z",
+        "decidedAt": "2026-11-25T14:06:07.135Z",
+        "requester": {
+          "id": 1,
+          "username": "requester1"
+        },
+        "reviewer": {
+          "id": 3,
+          "username": "reviewer1"
+        }
+      },
+      "history": [
+        {
+          "id": 37,
+          "fromState": null,
+          "toState": "PENDING",
+          "reason": null,
+          "createdAt": "2026-11-25T14:06:05.813Z",
+          "actor": {
+            "id": 1,
+            "username": "requester1",
+            "role": "REQUESTER"
+          }
+        },
+        {
+          "id": 38,
+          "fromState": "PENDING",
+          "toState": "IN_REVIEW",
+          "reason": null,
+          "createdAt": "2026-11-25T14:06:05.888Z",
+          "actor": {
+            "id": 3,
+            "username": "reviewer1",
+            "role": "REVIEWER"
+          }
+        },
+        {
+          "id": 39,
+          "fromState": "IN_REVIEW",
+          "toState": "RETURNED",
+          "reason": "Revise the synthetic estimate.",
+          "createdAt": "2026-11-25T14:06:06.009Z",
+          "actor": {
+            "id": 3,
+            "username": "reviewer1",
+            "role": "REVIEWER"
+          }
+        },
+        {
+          "id": 40,
+          "fromState": "RETURNED",
+          "toState": "RETURNED",
+          "reason": "Request details updated.",
+          "createdAt": "2026-11-25T14:06:06.475Z",
+          "actor": {
+            "id": 1,
+            "username": "requester1",
+            "role": "REQUESTER"
+          }
+        },
+        {
+          "id": 41,
+          "fromState": "RETURNED",
+          "toState": "IN_REVIEW",
+          "reason": null,
+          "createdAt": "2026-11-25T14:06:06.754Z",
+          "actor": {
+            "id": 1,
+            "username": "requester1",
+            "role": "REQUESTER"
+          }
+        },
+        {
+          "id": 42,
+          "fromState": "IN_REVIEW",
+          "toState": "APPROVED",
+          "reason": "Synthetic revised estimate accepted.",
+          "createdAt": "2026-11-25T14:06:07.139Z",
+          "actor": {
+            "id": 3,
+            "username": "reviewer1",
+            "role": "REVIEWER"
+          }
+        }
+      ]
+    }
+  ],
+  "recordsSha256": "f0bb336f5917a929acbe6d0f48659ee9d3b885c4691bb6bf574b28743c1c17c2"
+}

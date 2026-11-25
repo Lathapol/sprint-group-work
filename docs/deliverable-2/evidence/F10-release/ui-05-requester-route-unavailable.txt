@@ -1,0 +1,12 @@
+Browser tab: 2, Title: "Department Requests", URL: "https://approvals-389973748230.asia-southeast1.run.app/summary".
+1 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/summary
+	2 container root
+		3 container
+			4 link Description: Department Requests, Value: approvals-389973748230.asia-southeast1.run.app/
+			5 text Team approvals · Cloud release requester1
+			6 button Sign out
+		7 container
+			8 text Page unavailable. 
+			9 link Description: Back to requests, Value: approvals-389973748230.asia-southeast1.run.app/
+
+The focused UI element is 1 AXWebArea Department Requests, URL: approvals-389973748230.asia-southeast1.run.app/summary

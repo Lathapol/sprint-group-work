@@ -1,0 +1,24 @@
+{
+  "spec": {
+    "template": {
+      "spec": {
+        "containers": [
+          {
+            "image": "asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app@sha256:7f70f868ccbd6c6788fd64f68db33840a809b3ed86b572211d011de10bc8abab"
+          }
+        ]
+      }
+    }
+  },
+  "status": {
+    "latestReadyRevisionName": "approvals-r45637901908-1",
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100,
+        "revisionName": "approvals-r45637901908-1"
+      }
+    ],
+    "url": "https://approvals-ia5ybuqdoq-as.a.run.app"
+  }
+}
