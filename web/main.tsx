@@ -14,6 +14,12 @@ type HistoryRow = {
   id: number; actor: User; fromState: Row['state'] | null; toState: Row['state'];
   reason: string | null; createdAt: string;
 };
+type Summary = {
+  total: number; byState: { state: Row['state']; count: number }[];
+  byCategory: { category: string; count: number }[];
+  byReviewer: { reviewer: { id: number; username: string }; approved: number; rejected: number; total: number }[];
+  unattributedDecisions: number;
+};
 
 class ApiError extends Error {
   constructor(readonly status: number, message: string, readonly fields: Record<string, string> = {}) {
@@ -124,6 +130,7 @@ function RequestList({ reviewer }: { reviewer: boolean }) {
     <div className="d-flex justify-content-between align-items-center mb-3">
       <h1 className="h3 mb-0">{reviewer ? 'Review requests' : 'My requests'}</h1>
       {!reviewer && <Link className="btn btn-primary" to="/new">New request</Link>}
+      {reviewer && <Link className="btn btn-outline-primary" to="/summary">Decision summary</Link>}
     </div>
     {reviewer && <div className="btn-group mb-3" aria-label="Request filters">
       {['All', 'Queue', 'Mine'].map((name) => <button key={name} type="button"
@@ -161,6 +168,62 @@ function RequestList({ reviewer }: { reviewer: boolean }) {
         <Link to={'/requests/' + row.id}>{row.title}</Link><span className="badge text-bg-secondary">{labels[row.state]}</span>
       </li>)}
     </ul>
+  </>;
+}
+
+function DecisionSummary() {
+  const [attempt, setAttempt] = useState(0);
+  const result = useRead<Summary>('/reports/summary', attempt);
+  const data = result?.data;
+  const refresh = () => setAttempt(value => value + 1);
+  const categoryLabel = (value: string) => value.charAt(0) + value.slice(1).toLowerCase();
+  return <>
+    <Link to="/">Back to requests</Link>
+    <h1 className="h3 mt-3">Decision summary</h1>
+    <p className="text-body-secondary">Current requests across all requesters. Reviewer totals follow final decision history.</p>
+    {!result && <p role="status">Loading summary…</p>}
+    {result?.error ? <>
+      <ErrorMessage error={result.error} />
+      <button className="btn btn-outline-primary" type="button" onClick={refresh}>Retry summary</button>
+    </> : null}
+    {data && <>
+      <section className="card p-3 mb-3" aria-label="Summary totals">
+        <h2 className="h5">Total requests</h2>
+        <p className="display-6 mb-0" data-testid="summary-total">{data.total}</p>
+        {data.total === 0 && <p className="mb-0">No requests yet.</p>}
+      </section>
+      <div className="row g-3">
+        <section className="col-md-6">
+          <h2 className="h5">Requests by state</h2>
+          <table className="table table-striped" aria-label="Requests by state">
+            <thead><tr><th scope="col">State</th><th scope="col">Count</th></tr></thead>
+            <tbody>{data.byState.map(row => <tr key={row.state}><td>{labels[row.state]}</td><td>{row.count}</td></tr>)}</tbody>
+          </table>
+        </section>
+        <section className="col-md-6">
+          <h2 className="h5">Requests by category</h2>
+          <table className="table table-striped" aria-label="Requests by category">
+            <thead><tr><th scope="col">Category</th><th scope="col">Count</th></tr></thead>
+            <tbody>{data.byCategory.map(row => <tr key={row.category}><td>{categoryLabel(row.category)}</td><td>{row.count}</td></tr>)}</tbody>
+          </table>
+        </section>
+      </div>
+      <section className="mt-3">
+        <h2 className="h5">Decisions by reviewer</h2>
+        <div className="table-responsive">
+          <table className="table table-striped" aria-label="Decisions by reviewer">
+            <thead><tr><th scope="col">Reviewer</th><th scope="col">Approved</th><th scope="col">Rejected</th><th scope="col">Total</th></tr></thead>
+            <tbody>{data.byReviewer.map(row => <tr key={row.reviewer.id}>
+              <td>{row.reviewer.username}</td><td>{row.approved}</td><td>{row.rejected}</td><td>{row.total}</td>
+            </tr>)}</tbody>
+          </table>
+        </div>
+        {data.byReviewer.length === 0 && <p>No attributed decisions yet.</p>}
+        <p>Unattributed decisions: <strong>{data.unattributedDecisions}</strong></p>
+        <p className="text-body-secondary">Terminal requests without an attributable Reviewer decision history remain in the totals above.</p>
+      </section>
+      <button className="btn btn-outline-primary" type="button" onClick={refresh}>Refresh summary</button>
+    </>}
   </>;
 }
 
@@ -398,6 +461,7 @@ function App() {
         <Routes>
           <Route path="/" element={<RequestList reviewer={user.role === 'REVIEWER'} />} />
           {user.role === 'REQUESTER' && <Route path="/new" element={<NewRequest />} />}
+          {user.role === 'REVIEWER' && <Route path="/summary" element={<DecisionSummary />} />}
           <Route path="/requests/:id" element={<DetailRoute user={user} />} />
           <Route path="*" element={<p>Page unavailable. <Link to="/">Back to requests</Link></p>} />
         </Routes> : <>

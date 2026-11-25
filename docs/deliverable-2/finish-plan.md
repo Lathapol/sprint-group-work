@@ -4,11 +4,11 @@ Created 24 November 2026; achieved status updated 25 November. Proposed future o
 
 | Feature or work | Current achieved status | Next action and dependency | Proposed owner and target |
 |---|---|---|---|
-| F-06 / AC-06-01..04 | Implemented/tested, #78 reviewed/merged, deployed #82; live history/projection verified | Team evidence acceptance / any substantive walkthrough notes | Lathapol implementation; both evidence review |
-| F-07 / AC-07-01..05 | #79 reviewed/merged/deployed; additive migrations completed, same-reviewer cycle/concurrent resubmit/access verified live | Team evidence acceptance | Lathapol implementation; both evidence review |
-| F-08 / AC-08-01..04 | #81 reviewed/merged/deployed; 22 API +4 UI main CI passed; real filters/UTC validation/Queue/Mine verified live | Team evidence acceptance | Lathapol implementation; both evidence review |
+| F-06 / AC-06-01..04 | Implemented/tested, #78 reviewed/merged, deployed #82; live history/projection verified; evidence #84 approved/merged, issue #69 closed | Preserve baseline; cross-feature regression with Sprint 3 | Lathapol implementation; both evidence review |
+| F-07 / AC-07-01..05 | #79 reviewed/merged/deployed; additive migrations and live same-reviewer/concurrency/access verified; evidence #84 approved/merged, issue #70 closed | Preserve baseline; cross-feature regression with Sprint 3 | Lathapol implementation; both evidence review |
+| F-08 / AC-08-01..04 | #81 reviewed/merged/deployed; main CI and real filters/UTC/Queue/Mine verified; evidence #84 approved/merged, issue #71 closed | Preserve baseline; cross-feature regression with Sprint 3 | Lathapol implementation; both evidence review |
 | Sprint 2 release | Main f9a0d2f, tag sprint-2-2026-11-25, run45629268302/revision approvals-r45629268302-1; 43 live API calls pass and #13 unchanged | Preserve release evidence and human acknowledgement; use as Sprint 3 continuity baseline | Both, actual deployment 25 Nov |
-| F-10 / AC-10-01..04 | Sprint 3 contract draft only | Implement persisted counts/final actor rule/access and UI after Sprint 2 integration | Lathapol, 28 Nov |
+| F-10 / AC-10-01..04 | Implemented local candidate with actual RED/GREEN: 27 API/regression +5 browser tests pass; Reviewer-only snapshot counts and final-actor reporting | CI, teammate implementation/edge-clarification review, integration/release and live verification; see evidence/F10 | Lathapol implementation; Kittakorn review proposed, by 28 Nov |
 | Complete current SRS/SDS/inventory/result matrix | Stale v0.1 baseline; decisions being recorded | Update to actual product, all FR/BR/NFR rows with actual files/result/version or planned gap | Both, 28 Nov |
 | Integrated GCP candidate and D2 PDF | Not implemented/released | Review main candidate, regression counts, deploy, real continuity/new-workflow/negative proof, compile all assessed content | Both, 29 Nov before 23:59 |
 | F-09 / AC-09-01..04 | Q-02 resolved >=THB50,000; contract only | Implement distinct second actor and concurrency/boundaries, review/retest/release | Kittakorn (proposed), 30 Nov; bounded retest 12 Dec |

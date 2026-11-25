@@ -1,0 +1,6 @@
+{
+  "exitCode": 0,
+  "time": "2026-11-25T14:24:27.6721442Z",
+  "sha": "c2367f2c579fafb912cf120c118dae1483635e5e",
+  "command": "node --test test/summary.test.cjs"
+}

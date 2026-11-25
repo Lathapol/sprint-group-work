@@ -9,7 +9,7 @@ User decisions received 24 November 2026 (not invented course approval):
 - Q-02: amount **at or above THB 50,000.00** needs a second, different reviewer. Equality is included.
 - Q-03 was already resolved by System SDS DD-01/02/03: PostgreSQL session cookie, absolute 8-hour expiry and bcrypt.
 
-Complete contracts: [Sprint 2](../sprints/sprint-2/contracts.md), [Sprint 3](../sprints/sprint-3/contracts.md). Their review/merge occurred in #77 before implementation. Actual results: [F-06](evidence/F06/README.md), [F-07](evidence/F07/README.md), [F-08](evidence/F08/README.md). Feature review and accepted main release are separate steps. Do not silently rewrite Sprint 1 contract history.
+Complete contracts: [Sprint 2](../sprints/sprint-2/contracts.md), [Sprint 3](../sprints/sprint-3/contracts.md). Their review/merge occurred in #77 before implementation. Actual results: [F-06](evidence/F06/README.md), [F-07](evidence/F07/README.md), [F-08](evidence/F08/README.md), [F-10 candidate](evidence/F10/README.md). Sprint 2 evidence #84 was approved/merged and feature issues #69–#71 closed. F-10 now has real local API/UI implementation and RED/GREEN (27 API/regression tests and 5 browser tests pass); teammate review/integration/deployment are pending. Do not silently rewrite Sprint 1 contract history or claim local F-10 evidence is a deployed Sprint 3 release.
 
 ## Scope and build order
 

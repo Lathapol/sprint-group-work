@@ -1,0 +1,30 @@
+
+[WebServer] (node:18912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:24660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 5 workers
+
+(node:24824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:9352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:22564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:26588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:18884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/5] test\browser\history.spec.ts:5:1 › TEST-06-03: history renders safe reasons and retries a failed read
+[2/5] test\browser\workflow.spec.ts:5:1 › requester submits and retrieves a reviewer rejection
+[3/5] test\browser\summary.spec.ts:6:1 › TEST-10-04 UI: real decision counts, reload, loading empty and retry
+[4/5] test\browser\returns.spec.ts:5:1 › TEST-07-03 UI: returned edits resubmit to the same reviewer and retain history
+[5/5] test\browser\filters.spec.ts:5:1 › TEST-08-04 UI: filters and clear retain authorized All Queue Mine scopes
+  5 passed (20.9s)
