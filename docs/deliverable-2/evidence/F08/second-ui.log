@@ -1,0 +1,56 @@
+[WebServer] (node:14420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 4 workers
+
+(node:14700) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:7828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:8480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:9976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/4] test\browser\filters.spec.ts:5:1 › TEST-08-04 UI: filters and clear retain authorized All Queue Mine scopes
+[2/4] test\browser\workflow.spec.ts:5:1 › requester submits and retrieves a reviewer rejection
+[3/4] test\browser\history.spec.ts:5:1 › TEST-06-03: history renders safe reasons and retries a failed read
+[4/4] test\browser\returns.spec.ts:5:1 › TEST-07-03 UI: returned edits resubmit to the same reviewer and retain history
+  1) test\browser\workflow.spec.ts:5:1 › requester submits and retrieves a reviewer rejection ──────
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByLabel('Title')
+    Expected: "Browser request e74ad900-4055-4d0e-960a-8c68cb8d0418"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" getByLabel('Title') with timeout 5000ms
+      - waiting for getByLabel('Title')
+        14 × locator resolved to <input id="title" name="title" class="form-control"/>
+           - unexpected value ""
+
+
+      22 |     await page.getByRole('button', { name: 'Submit request' }).click();
+      23 |     await expect(page.getByText('Enter a positive THB amount', { exact: false })).toBeVisible();
+    > 24 |     await expect(page.getByLabel('Title')).toHaveValue(title);
+         |                                            ^
+      25 |     await page.getByLabel('Amount (THB)').fill('99.50');
+      26 |     await page.getByRole('button', { name: 'Submit request' }).click();
+      27 |     await expect(page.getByRole('heading', { name: title })).toBeVisible();
+        at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\browser\workflow.spec.ts:24:44
+
+    Error Context: test-results\workflow-requester-submits-15103-rieves-a-reviewer-rejection\error-context.md
+
+
+  1 failed
+    test\browser\workflow.spec.ts:5:1 › requester submits and retrieves a reviewer rejection ───────
+  3 passed (12.4s)

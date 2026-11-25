@@ -1,0 +1,97 @@
+
+> workflow-approval-system@1.0.0 test
+> npm run build && node --test test/*.test.cjs
+
+
+> workflow-approval-system@1.0.0 build
+> tsc && tsc -p tsconfig.web.json && vite build
+
+vite v8.3.6 building client environment for production...
+transforming...
+✓ 22 modules transformed.
+rendering chunks...
+computing gzip size...
+web/dist/index.html                   0.36 kB │ gzip:  0.27 kB
+web/dist/assets/index-CqLr8KVv.css  230.06 kB │ gzip: 30.68 kB
+web/dist/assets/index-8GP6O_R1.js   272.88 kB │ gzip: 86.02 kB
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "node_modules/react-router/dist/development/index.mjs" may not be preserved when bundling.
+    ╭─[ node_modules/react-router/dist/development/index.mjs:11:1 ]
+    │
+ 11 │ "use client";
+    │ ──────┬──────  
+    │       ╰──────── module level directive may not be preserved
+    │ 
+    │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+────╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "node_modules/react-router/dist/development/dom-export.mjs" may not be preserved when bundling.
+    ╭─[ node_modules/react-router/dist/development/dom-export.mjs:11:1 ]
+    │
+ 11 │ "use client";
+    │ ──────┬──────  
+    │       ╰──────── module level directive may not be preserved
+    │ 
+    │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+────╯
+
+✓ built in 331ms
+✔ public version reports the release commit without database access (185.9766ms)
+✔ login, current user, session expiry and logout against PostgreSQL (1161.869ms)
+✔ health reports database readiness without exposing database errors (192.0057ms)
+▶ F-08 filters preserve exact persisted matches and authorization
+  ✔ TEST-08-01: state category text AND combinations and literal wildcard characters (524.5903ms)
+Unexpected API error PrismaClientUnknownRequestError
+  ✖ TEST-08-02: calendar dates and inclusive UTC days, one-sided and leap-day boundaries (404.3215ms)
+  ✔ TEST-08-03: ownership before filters; reviewer scopes AND filters; no forged owner selectors (144.1062ms)
+  ✔ TEST-08-04 persistence: reads do not mutate requests/history; fresh app returns same results (111.1285ms)
+✖ F-08 filters preserve exact persisted matches and authorization (1461.5929ms)
+▶ F-06 persisted history chronology, safe actors and ownership
+  ✔ TEST-06-01: owner and both reviewers retrieve one ordered event per transition (90.5118ms)
+  ✔ TEST-06-02: protected history is private and read-only (204.0091ms)
+  ✔ TEST-06-04: a fresh app instance reads identical stored events without duplicates (207.352ms)
+✔ F-06 persisted history chronology, safe actors and ownership (962.2329ms)
+✔ new releases migrate before deploying an exact image digest (1000.9893ms)
+✔ existing-image rollback preserves the database schema and skips migration (510.6771ms)
+✔ invalid release tags are rejected before contacting GCP (79.2367ms)
+✔ request ownership, concurrent claim and final decision (727.0384ms)
+▶ F-07 return edit and same-reviewer resubmission
+  ✔ TEST-07-01: assigned return persists reason and invalid returns change nothing (645.1095ms)
+  ✔ TEST-07-02: Returned edits are owner-only, validated and audited once (476.2306ms)
+  ✔ TEST-07-03: resubmit retains reviewer and reason history, and supports a final decision (278.3356ms)
+  ✔ TEST-07-04: duplicate resubmission and edit/resubmit races serialize (175.1195ms)
+  ✔ TEST-07-05: non-Returned states cannot be edited or resubmitted (297.7923ms)
+✔ F-07 return edit and same-reviewer resubmission (2093.7556ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 20
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2815.3075
+
+✖ failing tests:
+
+test at test\filters.test.cjs:82:11
+✖ TEST-08-02: calendar dates and inclusive UTC days, one-sided and leap-day boundaries (404.3215ms)
+  Error: expected 200 "OK", got 500 "Internal Server Error"
+      at get (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:52:101)
+      at exact (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:60:26)
+      at TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:102:11)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async TestContext.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\filters.test.cjs:82:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ----
+      at Test._assertStatus (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:404:14)
+      at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:460:13
+      at Test._assertFunction (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:437:13)
+      at Test.assert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:302:23)
+      at localAssert (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:220:38)
+      at Server.<anonymous> (C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\node_modules\supertest\lib\test.js:227:13)
+      at Object.onceWrapper (node:events:622:28)
+      at Server.emit (node:events:508:28)
+      at emitCloseNT (node:net:2427:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:89:21)

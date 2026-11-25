@@ -1,0 +1,20 @@
+Browser tab: 2, Title: "Purchase Approval System", URL: "https://macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue".
+1 AXWebArea Purchase Approval System, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue
+	2 container root
+		3 container
+			4 link Description: Macau678, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/
+			5 link Description: Home, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/
+			6 link Description: Health, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/health
+			7 link Description: Review Queue, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue
+			8 link Description: Reports, Value: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reports
+			9 text Dave Reviewer  ( REVIEWER )
+			10 button Sign Out
+		11 heading Reviewer Queue, Value: 1
+			12 text Reviewer Queue
+		13 text Evaluate purchase requests assigned to your review portfolio
+		14 container
+			15 heading No requests assigned to your queue, Value: 3
+				16 text No requests assigned to your queue
+			17 text New purchase requests assigned to you will appear here for evaluation.
+
+The focused UI element is 7 link Description: Review Queue, URL: macau678-purchase-approval-gfn7poakkq-as.a.run.app/reviewer/queue

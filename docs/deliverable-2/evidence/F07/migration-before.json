@@ -1,0 +1,147 @@
+[
+  {
+    "id": 3,
+    "title": "Demo: replace lab equipment",
+    "category": "PURCHASE",
+    "amount": "1200",
+    "justification": "Synthetic request for the Sprint 1 demonstration.",
+    "state": "PENDING",
+    "requesterId": 9,
+    "reviewerId": null,
+    "decisionReason": null,
+    "createdAt": "2026-11-24T09:29:40.865Z",
+    "updatedAt": "2026-11-24T09:29:42.868Z",
+    "decidedAt": null,
+    "history": [
+      {
+        "id": 7,
+        "requestId": 3,
+        "actorId": 9,
+        "fromState": null,
+        "toState": "PENDING",
+        "reason": null,
+        "createdAt": "2026-11-24T09:29:40.865Z"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Demo: conference travel",
+    "category": "TRAVEL",
+    "amount": "1200",
+    "justification": "Synthetic request for the Sprint 1 demonstration.",
+    "state": "IN_REVIEW",
+    "requesterId": 9,
+    "reviewerId": 11,
+    "decisionReason": null,
+    "createdAt": "2026-11-24T09:29:40.900Z",
+    "updatedAt": "2026-11-24T09:29:42.901Z",
+    "decidedAt": null,
+    "history": [
+      {
+        "id": 8,
+        "requestId": 4,
+        "actorId": 9,
+        "fromState": null,
+        "toState": "PENDING",
+        "reason": null,
+        "createdAt": "2026-11-24T09:29:40.900Z"
+      },
+      {
+        "id": 9,
+        "requestId": 4,
+        "actorId": 11,
+        "fromState": "PENDING",
+        "toState": "IN_REVIEW",
+        "reason": null,
+        "createdAt": "2026-11-24T09:29:41.900Z"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Demo: student workshop",
+    "category": "FUNDING",
+    "amount": "1200",
+    "justification": "Synthetic request for the Sprint 1 demonstration.",
+    "state": "APPROVED",
+    "requesterId": 9,
+    "reviewerId": 11,
+    "decisionReason": "Within budget",
+    "createdAt": "2026-11-24T09:29:40.951Z",
+    "updatedAt": "2026-11-24T09:29:42.965Z",
+    "decidedAt": "2026-11-24T09:29:42.951Z",
+    "history": [
+      {
+        "id": 10,
+        "requestId": 5,
+        "actorId": 9,
+        "fromState": null,
+        "toState": "PENDING",
+        "reason": null,
+        "createdAt": "2026-11-24T09:29:40.951Z"
+      },
+      {
+        "id": 11,
+        "requestId": 5,
+        "actorId": 11,
+        "fromState": "PENDING",
+        "toState": "IN_REVIEW",
+        "reason": null,
+        "createdAt": "2026-11-24T09:29:41.951Z"
+      },
+      {
+        "id": 12,
+        "requestId": 5,
+        "actorId": 11,
+        "fromState": "IN_REVIEW",
+        "toState": "APPROVED",
+        "reason": "Within budget",
+        "createdAt": "2026-11-24T09:29:42.951Z"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Demo: taxi reimbursement",
+    "category": "REIMBURSEMENT",
+    "amount": "1200",
+    "justification": "Synthetic request for the Sprint 1 demonstration.",
+    "state": "REJECTED",
+    "requesterId": 9,
+    "reviewerId": 11,
+    "decisionReason": "Receipt missing",
+    "createdAt": "2026-11-24T09:29:41.027Z",
+    "updatedAt": "2026-11-24T09:29:43.032Z",
+    "decidedAt": "2026-11-24T09:29:43.027Z",
+    "history": [
+      {
+        "id": 13,
+        "requestId": 6,
+        "actorId": 9,
+        "fromState": null,
+        "toState": "PENDING",
+        "reason": null,
+        "createdAt": "2026-11-24T09:29:41.027Z"
+      },
+      {
+        "id": 14,
+        "requestId": 6,
+        "actorId": 11,
+        "fromState": "PENDING",
+        "toState": "IN_REVIEW",
+        "reason": null,
+        "createdAt": "2026-11-24T09:29:42.027Z"
+      },
+      {
+        "id": 15,
+        "requestId": 6,
+        "actorId": 11,
+        "fromState": "IN_REVIEW",
+        "toState": "REJECTED",
+        "reason": "Receipt missing",
+        "createdAt": "2026-11-24T09:29:43.027Z"
+      }
+    ]
+  }
+]

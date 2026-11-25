@@ -1,0 +1,6 @@
+{
+  "time": "2026-11-25T13:07:53.8809719Z",
+  "exitCode": 1,
+  "command": "node --test test/filters.test.cjs",
+  "sha": "d81325e202c478712dce5d020a1b53e9f36a5c0e"
+}

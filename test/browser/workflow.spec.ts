@@ -15,13 +15,16 @@ test('requester submits and retrieves a reviewer rejection', async ({ page }) =>
     await page.goto('/');
     await login('requester1');
     await page.getByRole('link', { name: 'New request' }).click();
-    await page.getByLabel('Title').fill(title);
-    await page.getByLabel('Category').selectOption('PURCHASE');
+    // Wait for the route: the list now also has a "Search title..." label.
+    // A partial Title locator can fill that old page before navigation renders.
+    await expect(page.getByRole('heading', { name: 'New request', exact: true })).toBeVisible();
+    await page.getByLabel('Title', { exact: true }).fill(title);
+    await page.getByLabel('Category', { exact: true }).selectOption('PURCHASE');
     await page.getByLabel('Amount (THB)').fill('0');
     await page.getByLabel('Justification').fill('Replace lab equipment');
     await page.getByRole('button', { name: 'Submit request' }).click();
     await expect(page.getByText('Enter a positive THB amount', { exact: false })).toBeVisible();
-    await expect(page.getByLabel('Title')).toHaveValue(title);
+    await expect(page.getByLabel('Title', { exact: true })).toHaveValue(title);
     await page.getByLabel('Amount (THB)').fill('99.50');
     await page.getByRole('button', { name: 'Submit request' }).click();
     await expect(page.getByRole('heading', { name: title })).toBeVisible();
@@ -33,11 +36,15 @@ test('requester submits and retrieves a reviewer rejection', async ({ page }) =>
     await page.getByRole('link', { name: title }).click();
     await page.getByRole('button', { name: 'Claim request' }).click();
     await expect(page.getByText('In review', { exact: true })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Request history', exact: true })
+      .getByText('Pending → In review', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Reject', exact: true }).click();
     await expect(page.getByRole('alert')).toHaveText('Enter a valid decision reason.');
-    await page.getByLabel('Decision reason (required for rejection)').fill('Budget limit');
+    await page.getByLabel('Decision reason (required for rejection or return)').fill('Budget limit');
     await page.getByRole('button', { name: 'Reject', exact: true }).click();
     await expect(page.getByText('Rejected', { exact: true })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Request history', exact: true })
+      .getByText('In review → Rejected', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Sign out' }).click();
 
     await login('requester1');

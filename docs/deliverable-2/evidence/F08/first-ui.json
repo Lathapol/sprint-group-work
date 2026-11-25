@@ -1,0 +1,6 @@
+{
+  "command": "playwright test --reporter=line",
+  "exitCode": 1,
+  "sha": "519c4922c3931fd004560f3b9f7bbb42d82c230e",
+  "time": "2026-11-25T13:10:10.8301049Z"
+}

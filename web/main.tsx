@@ -6,8 +6,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 type User = { id: number; username: string; role: 'REQUESTER' | 'REVIEWER' };
 type Row = {
   id: number; title: string; category: string; amount: string; justification: string;
-  state: 'PENDING' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED';
+  state: 'PENDING' | 'IN_REVIEW' | 'RETURNED' | 'APPROVED' | 'REJECTED';
   reviewerId: number | null; reviewer: { username: string } | null; decisionReason: string | null;
+  updatedAt: string;
+};
+type HistoryRow = {
+  id: number; actor: User; fromState: Row['state'] | null; toState: Row['state'];
+  reason: string | null; createdAt: string;
 };
 
 class ApiError extends Error {
@@ -16,9 +21,9 @@ class ApiError extends Error {
   }
 }
 
-async function api<T>(path: string, body?: object, signal?: AbortSignal): Promise<T> {
+async function api<T>(path: string, body?: object, signal?: AbortSignal, method = 'POST'): Promise<T> {
   const response = await fetch('/api' + path, {
-    method: body === undefined ? 'GET' : 'POST',
+    method: body === undefined ? 'GET' : method,
     headers: body === undefined ? {} : { 'Content-Type': 'application/json' },
     body: body === undefined ? undefined : JSON.stringify(body),
     signal,
@@ -28,17 +33,17 @@ async function api<T>(path: string, body?: object, signal?: AbortSignal): Promis
   return payload.data;
 }
 
-function useRead<T>(path: string) {
-  const [result, setResult] = useState<{ path: string; data?: T; error?: unknown }>();
+function useRead<T>(path: string, refresh = 0) {
+  const [result, setResult] = useState<{ path: string; refresh: number; data?: T; error?: unknown }>();
   useEffect(() => {
     const controller = new AbortController();
     api<T>(path, undefined, controller.signal).then(
-      (data) => { if (!controller.signal.aborted) setResult({ path, data }); },
-      (error: unknown) => { if (!controller.signal.aborted) setResult({ path, error }); },
+      (data) => { if (!controller.signal.aborted) setResult({ path, refresh, data }); },
+      (error: unknown) => { if (!controller.signal.aborted) setResult({ path, refresh, error }); },
     );
     return () => controller.abort();
-  }, [path]);
-  return result?.path === path ? result : undefined;
+  }, [path, refresh]);
+  return result?.path === path && result.refresh === refresh ? result : undefined;
 }
 
 function ErrorMessage({ error }: { error: unknown }) {
@@ -49,7 +54,7 @@ function ErrorMessage({ error }: { error: unknown }) {
 }
 
 const labels: Record<Row['state'], string> = {
-  PENDING: 'Pending', IN_REVIEW: 'In review', APPROVED: 'Approved', REJECTED: 'Rejected',
+  PENDING: 'Pending', IN_REVIEW: 'In review', RETURNED: 'Returned', APPROVED: 'Approved', REJECTED: 'Rejected',
 };
 
 function Login({ onLogin }: { onLogin: (user: User) => void }) {
@@ -82,8 +87,39 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
 
 function RequestList({ reviewer }: { reviewer: boolean }) {
   const [tab, setTab] = useState('all');
-  const filter = tab === 'queue' ? '?state=PENDING' : tab === 'mine' ? '?mine=true' : '';
-  const result = useRead<Row[]>('/requests' + filter);
+  const empty = { state: '', category: '', from: '', to: '', q: '' };
+  const [draft, setDraft] = useState(empty);
+  const [applied, setApplied] = useState(empty);
+  const [refresh, setRefresh] = useState(0);
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(applied)) if (value) params.set(key, value);
+  if (tab === 'queue') params.set('state', 'PENDING');
+  if (tab === 'mine') params.set('mine', 'true');
+  const query = params.toString();
+  const result = useRead<Row[]>('/requests' + (query ? '?' + query : ''), refresh);
+  const fields = result?.error instanceof ApiError ? result.error.fields : {};
+  function apply(event: FormEvent) {
+    event.preventDefault();
+    setApplied({ ...draft });
+    setRefresh(value => value + 1);
+  }
+  function chooseTab(next: string) {
+    setTab(next);
+    setDraft(value => ({ ...value, state: '' }));
+    setApplied(value => ({ ...value, state: '' }));
+    setRefresh(value => value + 1);
+  }
+  function control(name: keyof typeof draft, label: string, input: ReactNode) {
+    return <div className="col-sm-6 col-lg-4">
+      <label className="form-label" htmlFor={'filter-' + name}>{label}</label>
+      {input}{fields[name] && <div id={'filter-' + name + '-error'} className="text-danger">{fields[name]}</div>}
+    </div>;
+  }
+  function attributes(name: keyof typeof draft) {
+    return { id: 'filter-' + name, value: draft[name], 'aria-invalid': !!fields[name],
+      'aria-describedby': fields[name] ? 'filter-' + name + '-error' : undefined,
+      onChange: (event: { target: { value: string } }) => setDraft(value => ({ ...value, [name]: event.target.value })) };
+  }
   return <>
     <div className="d-flex justify-content-between align-items-center mb-3">
       <h1 className="h3 mb-0">{reviewer ? 'Review requests' : 'My requests'}</h1>
@@ -92,8 +128,31 @@ function RequestList({ reviewer }: { reviewer: boolean }) {
     {reviewer && <div className="btn-group mb-3" aria-label="Request filters">
       {['All', 'Queue', 'Mine'].map((name) => <button key={name} type="button"
         className={'btn ' + (tab === name.toLowerCase() ? 'btn-primary' : 'btn-outline-primary')}
-        aria-pressed={tab === name.toLowerCase()} onClick={() => setTab(name.toLowerCase())}>{name}</button>)}
+        aria-pressed={tab === name.toLowerCase()} onClick={() => chooseTab(name.toLowerCase())}>{name}</button>)}
     </div>}
+    <form className="card p-3 mb-3" onSubmit={apply} aria-label="Filter requests">
+      <div className="row g-3">
+        {control('state', 'Filter state', <select className="form-select" {...attributes('state')}
+          value={tab === 'queue' ? 'PENDING' : draft.state} disabled={tab === 'queue'}>
+          <option value="">All states</option>
+          {Object.entries(labels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+        </select>)}
+        {control('category', 'Filter category', <select className="form-select" {...attributes('category')}>
+          <option value="">All categories</option>
+          {['Funding', 'Purchase', 'Travel', 'Reimbursement'].map(name => <option key={name} value={name.toUpperCase()}>{name}</option>)}
+        </select>)}
+        {control('q', 'Search title or justification', <input className="form-control" {...attributes('q')} />)}
+        {control('from', 'Created from (UTC)', <input className="form-control" type="date" {...attributes('from')} />)}
+        {control('to', 'Created through (UTC)', <input className="form-control" type="date" {...attributes('to')} />)}
+      </div>
+      <p className="text-body-secondary mt-3 mb-2">Dates include the whole UTC day. Search matches literal text, ignoring case.</p>
+      <div className="d-flex gap-2">
+        <button className="btn btn-primary" disabled={!result}>Apply filters</button>
+        <button className="btn btn-outline-secondary" type="button" onClick={() => {
+          setDraft(empty); setApplied(empty); setRefresh(value => value + 1);
+        }}>Clear filters</button>
+      </div>
+    </form>
     {!result && <p role="status">Loading requests…</p>}
     <ErrorMessage error={result?.error} />
     {result?.data?.length === 0 && <p>No requests in this view.</p>}
@@ -145,6 +204,101 @@ function NewRequest() {
   </section>;
 }
 
+function HistoryContent({ id, retry }: { id: number; retry: () => void }) {
+  const history = useRead<HistoryRow[]>('/requests/' + id + '/history');
+  if (!history) return <p role="status">Loading history…</p>;
+  if (history.error) return <>
+    <ErrorMessage error={history.error} />
+    <button type="button" className="btn btn-outline-primary" onClick={retry}>Retry history</button>
+  </>;
+  if (!history.data?.length) return <p>No history recorded for this request.</p>;
+  return <ol className="list-group list-group-numbered">
+    {history.data.map((entry) => <li className="list-group-item" key={entry.id}>
+      <p className="fw-semibold mb-1">{entry.fromState === 'RETURNED' && entry.toState === 'RETURNED'
+        ? 'Edited' : `${entry.fromState ? labels[entry.fromState] : 'Created'} → ${labels[entry.toState]}`}</p>
+      <p className="mb-1">{entry.actor.username} ({entry.actor.role})</p>
+      <time className="text-body-secondary" dateTime={entry.createdAt}>
+        {new Date(entry.createdAt).toLocaleString(undefined, { timeZone: 'UTC' })} UTC
+      </time>
+      {entry.reason && <p className="mb-0 mt-1">{'Reason: ' + entry.reason}</p>}
+    </li>)}
+  </ol>;
+}
+
+function RequestHistory({ id }: { id: number }) {
+  const [attempt, setAttempt] = useState(0);
+  return <section className="card p-4 mt-3" aria-label="Request history">
+    <h2 className="h4">History</h2>
+    <HistoryContent key={attempt} id={id} retry={() => setAttempt(value => value + 1)} />
+  </section>;
+}
+
+function ReturnedEditor({ row, onSaved }: { row: Row; onSaved: (row: Row) => void }) {
+  const values = (record: Row) => ({ title: record.title, category: record.category, amount: record.amount, justification: record.justification });
+  const [draft, setDraft] = useState(() => values(row));
+  const [error, setError] = useState<unknown>();
+  const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [conflict, setConflict] = useState<Row>();
+  const dirty = Object.entries(draft).some(([name, value]) => value !== values(row)[name as keyof typeof draft]);
+  async function update(resubmit: boolean) {
+    setError(undefined); setSaved(false); setBusy(true);
+    try {
+      const next = await api<Row>('/requests/' + row.id + (resubmit ? '/resubmit' : ''),
+        resubmit ? {} : draft, undefined, resubmit ? 'POST' : 'PATCH');
+      setDraft(values(next)); setSaved(!resubmit); onSaved(next);
+    } catch (failure) {
+      setError(failure);
+      if (failure instanceof ApiError && failure.status === 409) {
+        try { setConflict(await api<Row>('/requests/' + row.id)); } catch { /* Keep original conflict and unsaved inputs. */ }
+      }
+    } finally { setBusy(false); }
+  }
+  function field(name: keyof typeof draft, label: string, multiline = false) {
+    const message = error instanceof ApiError ? error.fields[name] : undefined;
+    const props = { id: 'edit-' + name, className: 'form-control', value: draft[name],
+      onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setDraft(current => ({ ...current, [name]: event.target.value })); setSaved(false);
+      } };
+    return <div className="mb-3">
+      <label className="form-label" htmlFor={props.id}>{label}</label>
+      {multiline ? <textarea {...props} /> : <input {...props} inputMode={name === 'amount' ? 'decimal' : undefined} />}
+      {message && <div className="text-danger">{message}</div>}
+    </div>;
+  }
+  return <section className="card p-4 mt-3" aria-label="Returned request editor">
+    <h2 className="h4">Edit returned request</h2>
+    <p>Save any changes, then resubmit to the same reviewer.</p>
+    <ErrorMessage error={error} />
+    {conflict && <div role="status">
+      <p>Latest state: {labels[conflict.state]}. Your unsaved input is retained below.</p>
+      <button type="button" className="btn btn-outline-primary mb-3" onClick={() => onSaved(conflict)}>Refresh request</button>
+    </div>}
+    {saved && <p role="status">Changes saved. Resubmit when ready.</p>}
+    <form onSubmit={event => { event.preventDefault(); void update(false); }}>
+      <fieldset disabled={busy || Boolean(conflict)}>
+        {field('title', 'Title')}
+        <div className="mb-3">
+          <label className="form-label" htmlFor="edit-category">Category</label>
+          <select className="form-select" id="edit-category" value={draft.category}
+            onChange={event => { setDraft(current => ({ ...current, category: event.target.value })); setSaved(false); }}>
+            {['Funding', 'Purchase', 'Travel', 'Reimbursement'].map(name => <option key={name} value={name.toUpperCase()}>{name}</option>)}
+          </select>
+          {error instanceof ApiError && error.fields.category && <div className="text-danger">{error.fields.category}</div>}
+        </div>
+        {field('amount', 'Amount (THB)')}
+        {field('justification', 'Justification', true)}
+        <div className="d-flex gap-2">
+          <button className="btn btn-primary" disabled={!dirty}>Save changes</button>
+          <button type="button" className="btn btn-outline-primary" disabled={dirty}
+            onClick={() => void update(true)}>Resubmit request</button>
+        </div>
+        {dirty && <p className="mt-2 mb-0">Save your changes before resubmitting.</p>}
+      </fieldset>
+    </form>
+  </section>;
+}
+
 function RequestDetail({ user }: { user: User }) {
   const { id } = useParams();
   const path = '/requests/' + id;
@@ -155,7 +309,7 @@ function RequestDetail({ user }: { user: User }) {
   const [busy, setBusy] = useState(false);
   const row = updated ?? result?.data;
 
-  async function act(action: 'claim' | 'approve' | 'reject') {
+  async function act(action: 'claim' | 'approve' | 'reject' | 'return') {
     setError(undefined);
     setBusy(true);
     try {
@@ -187,14 +341,17 @@ function RequestDetail({ user }: { user: User }) {
       {user.role === 'REVIEWER' && row.state === 'PENDING' &&
         <button className="btn btn-primary align-self-start" disabled={busy} onClick={() => void act('claim')}>Claim request</button>}
       {user.role === 'REVIEWER' && row.state === 'IN_REVIEW' && row.reviewerId === user.id && <>
-        <label className="form-label" htmlFor="reason">Decision reason (required for rejection)</label>
+        <label className="form-label" htmlFor="reason">Decision reason (required for rejection or return)</label>
         <textarea className="form-control mb-3" id="reason" value={reason} onChange={(event) => setReason(event.target.value)} />
         <div className="d-flex gap-2">
           <button className="btn btn-success" disabled={busy} onClick={() => void act('approve')}>Approve</button>
           <button className="btn btn-outline-danger" disabled={busy} onClick={() => void act('reject')}>Reject</button>
+          <button className="btn btn-outline-warning" disabled={busy} onClick={() => void act('return')}>Return request</button>
         </div>
       </>}
     </section>}
+    {row?.state === 'RETURNED' && user.role === 'REQUESTER' && <ReturnedEditor row={row} onSaved={setUpdated} />}
+    {row && <RequestHistory key={row.id + ':' + row.updatedAt} id={row.id} />}
   </>;
 }
 

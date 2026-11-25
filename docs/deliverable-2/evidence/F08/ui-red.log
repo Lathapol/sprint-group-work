@@ -1,0 +1,36 @@
+
+[WebServer] (node:29092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:30452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] test\browser\filters.spec.ts:5:1 › TEST-08-04 UI: filters and clear retain authorized All Queue Mine scopes
+  1) test\browser\filters.spec.ts:5:1 › TEST-08-04 UI: filters and clear retain authorized All Queue Mine scopes 
+
+    Test timeout of 15000ms exceeded.
+
+    Error: locator.fill: Test timeout of 15000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Search title or justification', { exact: true })
+
+
+      29 |     await page.goto('/');
+      30 |     await login('requester1');
+    > 31 |     await page.getByLabel('Search title or justification', { exact: true }).fill(marker);
+         |                                                                             ^
+      32 |     await page.getByRole('button', { name: 'Apply filters', exact: true }).click();
+      33 |     await expect(links()).toHaveCount(4);
+      34 |     await page.getByLabel('Filter category', { exact: true }).selectOption('TRAVEL');
+        at C:\Users\User\Desktop\KmuttWork\cpe 334\sprint 1 group work\test\browser\filters.spec.ts:31:77
+
+    Error Context: test-results\filters-TEST-08-04-UI-filt-087d9-rized-All-Queue-Mine-scopes\error-context.md
+
+
+  1 failed
+    test\browser\filters.spec.ts:5:1 › TEST-08-04 UI: filters and clear retain authorized All Queue Mine scopes 

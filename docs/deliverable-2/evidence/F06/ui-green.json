@@ -1,0 +1,7 @@
+{
+  "phase": "UI GREEN and Sprint 1 regression",
+  "command": "node node_modules/@playwright/test/cli.js test --reporter=line",
+  "source": "972a578b9e4d3d31b5dd80c718eb8ac432a6a0d2",
+  "exitCode": 0,
+  "observedAt": "2026-11-24T09:31:33.2213290Z"
+}
