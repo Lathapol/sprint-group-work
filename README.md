@@ -79,4 +79,3 @@ Feature/test design: docs/sprints/sprint-2/contracts.md. Actual RED/GREEN and mi
 Dates are calendar `YYYY-MM-DD`, include complete UTC days and filter creation time. Either bound is optional. Invalid dates/ranges/enum values, repeated or nested parameters and unsupported ownership selectors return 400 with field errors. Requester ownership and reviewer Mine remain mandatory server predicates. No new schema, migration or environment variable is required for F-08.
 
 List controls provide Apply/Clear and preserve values after errors. Clear retains the active All/Queue/Mine scope; Queue fixes state to Pending. Teammate review, main release and live acceptance remain pending. Actual test evidence and edge-date handling: [F-08 results](docs/deliverable-2/evidence/F08/README.md).
-
