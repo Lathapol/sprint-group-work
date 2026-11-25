@@ -1,0 +1,7 @@
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:48:16.8834642Z   ✔ TEST-10-02: latest matching final actor, no duplicate count, explicit unattributed legacy (96.624931ms)
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:48:16.9243444Z   ✔ TEST-10-03: session role is authoritative; anonymous/expired/requester denied (40.921847ms)
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:48:17.1139007Z   ✔ TEST-10-04: real return/edit/resubmit/final decision and concurrent snapshots reconcile (189.657284ms)
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:48:17.1647386Z ℹ tests 27
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:48:17.1648390Z ℹ pass 27
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:48:17.1648764Z ℹ fail 0
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T14:48:49.1763381Z   5 passed (9.9s)

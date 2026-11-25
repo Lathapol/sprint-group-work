@@ -1,0 +1,5 @@
+deploy	Build and push commit images	2026-11-25T14:50:35.7411554Z #20 exporting manifest sha256:dbe993bedb54b17804aa031b0d8a1206cd765f272e925c64ea80deb1a1e3165f done
+deploy	Build and push commit images	2026-11-25T14:50:35.7414867Z #20 exporting manifest list sha256:7f70f868ccbd6c6788fd64f68db33840a809b3ed86b572211d011de10bc8abab done
+deploy	Build and push commit images	2026-11-25T14:51:15.1254668Z 0877808fb5a8084e040974cb56b16648b274bb04: digest: sha256:7f70f868ccbd6c6788fd64f68db33840a809b3ed86b572211d011de10bc8abab size: 856
+deploy	Read-only live smoke test	2026-11-25T14:52:49.0129363Z   APP_IMAGE: asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app@sha256:7f70f868ccbd6c6788fd64f68db33840a809b3ed86b572211d011de10bc8abab
+deploy	Record release	2026-11-25T14:52:50.3473218Z   APP_IMAGE: asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app@sha256:7f70f868ccbd6c6788fd64f68db33840a809b3ed86b572211d011de10bc8abab
