@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "name": "approvals-migrate-pxqbt"
+  },
+  "status": {
+    "completionTime": "2026-11-25T16:03:28.465677Z",
+    "conditions": [
+      {
+        "lastTransitionTime": "2026-11-25T16:03:28.465677Z",
+        "message": "Execution completed successfully in 11.71s.",
+        "status": "True",
+        "type": "Completed"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T16:03:16.251016Z",
+        "message": "Provisioned imported containers.",
+        "status": "True",
+        "type": "ResourcesAvailable"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T16:03:20.747733Z",
+        "message": "Started deployed execution in 4.49s.",
+        "status": "True",
+        "type": "Started"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T16:03:16.154066Z",
+        "message": "Imported container image in 14.17s.",
+        "status": "True",
+        "type": "ContainerReady"
+      }
+    ],
+    "succeededCount": 1
+  }
+}

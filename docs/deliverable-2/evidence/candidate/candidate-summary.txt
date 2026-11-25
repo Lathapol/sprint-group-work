@@ -1,0 +1,35 @@
+Department Requests
+Team approvals · Cloud release
+reviewer1
+Sign out
+Back to requests
+Decision summary
+
+Current requests across all requesters. Reviewer totals follow final decision history.
+
+Total requests
+
+20
+
+Requests by state
+State	Count
+Pending	5
+In review	2
+Approved	7
+Rejected	6
+Returned	0
+Requests by category
+Category	Count
+Funding	1
+Purchase	12
+Travel	6
+Reimbursement	1
+Decisions by reviewer
+Reviewer	Approved	Rejected	Total
+reviewer1	7	6	13
+
+Unattributed decisions: 0
+
+Terminal requests without an attributable Reviewer decision history remain in the totals above.
+
+Refresh summary

@@ -1,0 +1,653 @@
+{
+  "observedAt": "2026-11-25T16:04:24.800Z",
+  "kind": "Agent-executed developer checks, not independent UAT",
+  "source": "0334c966c396912dfaf2e309e044753f11d4e47c",
+  "base": "https://approvals-389973748230.asia-southeast1.run.app",
+  "calls": [
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/13",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/13/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/16",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/16/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/17",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/17/history",
+      "status": 200
+    },
+    {
+      "actor": "anonymous",
+      "method": "GET",
+      "path": "/api/requests",
+      "status": 401
+    },
+    {
+      "actor": "requester2",
+      "method": "GET",
+      "path": "/api/requests/13",
+      "status": 404
+    },
+    {
+      "actor": "requester2",
+      "method": "GET",
+      "path": "/api/requests/13/history",
+      "status": 404
+    },
+    {
+      "actor": "requester2",
+      "method": "POST",
+      "path": "/api/requests/13/claim",
+      "status": 403
+    },
+    {
+      "actor": "requester2",
+      "method": "GET",
+      "path": "/api/reports/summary",
+      "status": 403
+    },
+    {
+      "actor": "anonymous",
+      "method": "GET",
+      "path": "/api/reports/summary",
+      "status": 401
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/reports/summary",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "path": "/api/requests",
+      "status": 400
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "path": "/api/requests",
+      "status": 201
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "path": "/api/requests/19/claim",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "path": "/api/requests/19/reject",
+      "status": 400
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "path": "/api/requests/19/reject",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "path": "/api/requests/19",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "path": "/api/requests/19/history",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "path": "/api/requests",
+      "status": 201
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "path": "/api/requests/20/claim",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "path": "/api/requests/20/return",
+      "status": 400
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "path": "/api/requests/20/return",
+      "status": 200
+    },
+    {
+      "actor": "requester2",
+      "method": "PATCH",
+      "path": "/api/requests/20",
+      "status": 404
+    },
+    {
+      "actor": "requester1",
+      "method": "PATCH",
+      "path": "/api/requests/20",
+      "status": 400
+    },
+    {
+      "actor": "requester1",
+      "method": "PATCH",
+      "path": "/api/requests/20",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "path": "/api/requests/20/resubmit",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "POST",
+      "path": "/api/requests/20/resubmit",
+      "status": 409
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "path": "/api/requests/20",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/19",
+      "status": 200
+    },
+    {
+      "actor": "reviewer2",
+      "method": "POST",
+      "path": "/api/requests/20/approve",
+      "status": 403
+    },
+    {
+      "actor": "reviewer1",
+      "method": "POST",
+      "path": "/api/requests/20/approve",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "path": "/api/requests/20",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "path": "/api/requests/20/history",
+      "status": 200
+    },
+    {
+      "actor": "requester1",
+      "method": "GET",
+      "path": "/api/requests?state=APPROVED&category=PURCHASE&q=Candidate%20literal%20100%25_%5C",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/reports/summary",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/20/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/19/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/18/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/17/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/16/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/15/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/11/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/10/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/8/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/7/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/5/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/4/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/3/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/reports/summary",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/13",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/13/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/16",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/16/history",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/17",
+      "status": 200
+    },
+    {
+      "actor": "reviewer1",
+      "method": "GET",
+      "path": "/api/requests/17/history",
+      "status": 200
+    }
+  ],
+  "retainedIds": [
+    13,
+    16,
+    17
+  ],
+  "retainedHash": "f0bb336f5917a929acbe6d0f48659ee9d3b885c4691bb6bf574b28743c1c17c2",
+  "retainedResourcesAndHistoryUnchanged": true,
+  "original": {
+    "request": {
+      "id": 19,
+      "title": "D2 candidate original 2026-11-25T16:04:09.178Z",
+      "category": "PURCHASE",
+      "amount": "19.25",
+      "justification": "Synthetic candidate verification; no real spending.",
+      "state": "REJECTED",
+      "requesterId": 1,
+      "reviewerId": 3,
+      "decisionReason": "Synthetic budget rejection",
+      "createdAt": "2026-11-25T16:04:26.239Z",
+      "updatedAt": "2026-11-25T16:04:26.481Z",
+      "decidedAt": "2026-11-25T16:04:26.480Z",
+      "requester": {
+        "id": 1,
+        "username": "requester1"
+      },
+      "reviewer": {
+        "id": 3,
+        "username": "reviewer1"
+      }
+    },
+    "history": [
+      {
+        "id": 46,
+        "fromState": null,
+        "toState": "PENDING",
+        "reason": null,
+        "createdAt": "2026-11-25T16:04:26.239Z",
+        "actor": {
+          "id": 1,
+          "username": "requester1",
+          "role": "REQUESTER"
+        }
+      },
+      {
+        "id": 47,
+        "fromState": "PENDING",
+        "toState": "IN_REVIEW",
+        "reason": null,
+        "createdAt": "2026-11-25T16:04:26.352Z",
+        "actor": {
+          "id": 3,
+          "username": "reviewer1",
+          "role": "REVIEWER"
+        }
+      },
+      {
+        "id": 48,
+        "fromState": "IN_REVIEW",
+        "toState": "REJECTED",
+        "reason": "Synthetic budget rejection",
+        "createdAt": "2026-11-25T16:04:26.487Z",
+        "actor": {
+          "id": 3,
+          "username": "reviewer1",
+          "role": "REVIEWER"
+        }
+      }
+    ]
+  },
+  "returned": {
+    "request": {
+      "id": 20,
+      "title": "D2 candidate returned 2026-11-25T16:04:09.178Z",
+      "category": "PURCHASE",
+      "amount": "20.5",
+      "justification": "Candidate literal 100%_\\ evidence",
+      "state": "APPROVED",
+      "requesterId": 1,
+      "reviewerId": 3,
+      "decisionReason": null,
+      "createdAt": "2026-11-25T16:04:26.695Z",
+      "updatedAt": "2026-11-25T16:04:27.615Z",
+      "decidedAt": "2026-11-25T16:04:27.614Z",
+      "requester": {
+        "id": 1,
+        "username": "requester1"
+      },
+      "reviewer": {
+        "id": 3,
+        "username": "reviewer1"
+      }
+    },
+    "history": [
+      {
+        "id": 49,
+        "fromState": null,
+        "toState": "PENDING",
+        "reason": null,
+        "createdAt": "2026-11-25T16:04:26.695Z",
+        "actor": {
+          "id": 1,
+          "username": "requester1",
+          "role": "REQUESTER"
+        }
+      },
+      {
+        "id": 50,
+        "fromState": "PENDING",
+        "toState": "IN_REVIEW",
+        "reason": null,
+        "createdAt": "2026-11-25T16:04:26.772Z",
+        "actor": {
+          "id": 3,
+          "username": "reviewer1",
+          "role": "REVIEWER"
+        }
+      },
+      {
+        "id": 51,
+        "fromState": "IN_REVIEW",
+        "toState": "RETURNED",
+        "reason": "Synthetic receipt correction",
+        "createdAt": "2026-11-25T16:04:26.905Z",
+        "actor": {
+          "id": 3,
+          "username": "reviewer1",
+          "role": "REVIEWER"
+        }
+      },
+      {
+        "id": 52,
+        "fromState": "RETURNED",
+        "toState": "RETURNED",
+        "reason": "Request details updated.",
+        "createdAt": "2026-11-25T16:04:27.161Z",
+        "actor": {
+          "id": 1,
+          "username": "requester1",
+          "role": "REQUESTER"
+        }
+      },
+      {
+        "id": 53,
+        "fromState": "RETURNED",
+        "toState": "IN_REVIEW",
+        "reason": null,
+        "createdAt": "2026-11-25T16:04:27.263Z",
+        "actor": {
+          "id": 1,
+          "username": "requester1",
+          "role": "REQUESTER"
+        }
+      },
+      {
+        "id": 54,
+        "fromState": "IN_REVIEW",
+        "toState": "APPROVED",
+        "reason": null,
+        "createdAt": "2026-11-25T16:04:27.619Z",
+        "actor": {
+          "id": 3,
+          "username": "reviewer1",
+          "role": "REVIEWER"
+        }
+      }
+    ]
+  },
+  "summaryBefore": {
+    "total": 18,
+    "byState": [
+      {
+        "state": "PENDING",
+        "count": 5
+      },
+      {
+        "state": "IN_REVIEW",
+        "count": 2
+      },
+      {
+        "state": "APPROVED",
+        "count": 6
+      },
+      {
+        "state": "REJECTED",
+        "count": 5
+      },
+      {
+        "state": "RETURNED",
+        "count": 0
+      }
+    ],
+    "byCategory": [
+      {
+        "category": "FUNDING",
+        "count": 1
+      },
+      {
+        "category": "PURCHASE",
+        "count": 10
+      },
+      {
+        "category": "TRAVEL",
+        "count": 6
+      },
+      {
+        "category": "REIMBURSEMENT",
+        "count": 1
+      }
+    ],
+    "byReviewer": [
+      {
+        "reviewer": {
+          "id": 3,
+          "username": "reviewer1"
+        },
+        "approved": 6,
+        "rejected": 5,
+        "total": 11
+      }
+    ],
+    "unattributedDecisions": 0
+  },
+  "summaryAfter": {
+    "total": 20,
+    "byState": [
+      {
+        "state": "PENDING",
+        "count": 5
+      },
+      {
+        "state": "IN_REVIEW",
+        "count": 2
+      },
+      {
+        "state": "APPROVED",
+        "count": 7
+      },
+      {
+        "state": "REJECTED",
+        "count": 6
+      },
+      {
+        "state": "RETURNED",
+        "count": 0
+      }
+    ],
+    "byCategory": [
+      {
+        "category": "FUNDING",
+        "count": 1
+      },
+      {
+        "category": "PURCHASE",
+        "count": 12
+      },
+      {
+        "category": "TRAVEL",
+        "count": 6
+      },
+      {
+        "category": "REIMBURSEMENT",
+        "count": 1
+      }
+    ],
+    "byReviewer": [
+      {
+        "reviewer": {
+          "id": 3,
+          "username": "reviewer1"
+        },
+        "approved": 7,
+        "rejected": 6,
+        "total": 13
+      }
+    ],
+    "unattributedDecisions": 0
+  },
+  "independentOracleMatches": true,
+  "captures": [
+    {
+      "name": "candidate-returned-history",
+      "observedAt": "2026-11-25T16:04:22.843Z",
+      "url": "https://approvals-389973748230.asia-southeast1.run.app/requests/20"
+    },
+    {
+      "name": "candidate-summary",
+      "observedAt": "2026-11-25T16:04:24.452Z",
+      "url": "https://approvals-389973748230.asia-southeast1.run.app/summary"
+    }
+  ],
+  "noResetReseedOrDeletion": true
+}
