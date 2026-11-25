@@ -1,4 +1,4 @@
-import { Category, Prisma, PrismaClient, RequestState } from '@prisma/client';
+import { Category, Prisma, PrismaClient } from '@prisma/client';
 import { Router, RequestHandler, Response } from 'express';
 import { requestFilters } from './request-filters';
 

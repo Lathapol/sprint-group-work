@@ -40,7 +40,12 @@ export function requestFilters(query: Record<string, unknown>, role: 'REQUESTER'
   if (from && to && from > to) fields.to = 'End date must be on or after start date.';
   if (from || to) where.createdAt = {
     ...(from ? { gte: from } : {}),
-    ...(to ? { lt: new Date(to.getTime() + 86_400_000) } : {}),
+    // Prisma cannot encode the extended ISO year +010000. Request.createdAt
+    // is TIMESTAMP(3), so <= the final millisecond is exactly equivalent to
+    // < next-day midnight for the last representable four-digit calendar day.
+    ...(to ? values.to === '9999-12-31'
+      ? { lte: new Date('9999-12-31T23:59:59.999Z') }
+      : { lt: new Date(to.getTime() + 86_400_000) } : {}),
   };
   const q = values.q?.trim() ?? '';
   if ([...q].length > 200) fields.q = 'Use at most 200 Unicode characters.';

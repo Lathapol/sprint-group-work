@@ -47,6 +47,8 @@ test('F-08 filters preserve exact persisted matches and authorization', async t 
   await fixture('Rejected', 'REIMBURSEMENT', 'REJECTED', '2024-02-29T00:00:00Z', unrelated);
   await fixture('Office 100XXchair private', 'PURCHASE', 'PENDING', '2026-02-28T10:00:00Z', reviewer, other);
   await fixture('Office other reviewer', 'PURCHASE', 'IN_REVIEW', '2026-02-28T11:00:00Z', unrelated);
+  await fixture('last calendar day', 'FUNDING', 'APPROVED', '9999-12-31T23:59:59.999Z');
+  await fixture('first calendar day', 'FUNDING', 'PENDING', '0001-01-01T00:00:00Z');
   const before = await db.request.findMany({ where: { id: { in: rows.map(r => r.id) } }, orderBy: { id: 'asc' } });
   async function get(actor, query = '') {
     return (await app.get('/api/requests' + (query ? '?' + query : '')).set('Cookie', actor.cookie).expect(200)).body.data;
@@ -78,6 +80,21 @@ test('F-08 filters preserve exact persisted matches and authorization', async t 
       r => r.category === 'PURCHASE' && r.state === 'PENDING' && /office/i.test(r.title) && r.createdAt.toISOString().startsWith('2026-02-28'));
     await exact(owner, 'category=TRAVEL&q=office', r => r.category === 'TRAVEL' && /office/i.test(r.justification));
     await exact(owner, 'category=TRAVEL&q=does-not-exist', () => false);
+    const dimensions = [
+      ['state=IN_REVIEW', r => r.state === 'IN_REVIEW'],
+      ['category=TRAVEL', r => r.category === 'TRAVEL'],
+      ['from=2026-02-28', r => r.createdAt >= new Date('2026-02-28')],
+      ['to=2026-02-28', r => r.createdAt < new Date('2026-03-01')],
+      ['q=office', r => /office/i.test(r.title + ' ' + r.justification)],
+    ];
+    // Every subset of five filters, for owner and scoped reviewer (64 exact sets).
+    for (let mask = 0; mask < 32; mask++) {
+      const selected = dimensions.filter((_, index) => mask & (1 << index));
+      const query = selected.map(([param]) => param).join('&');
+      const matches = r => selected.every(([, predicate]) => predicate(r));
+      await exact(owner, query, matches);
+      await exact(reviewer, 'mine=true' + (query ? '&' + query : ''), r => r.reviewerId === reviewer.id && matches(r));
+    }
   });
   await t.test('TEST-08-02: calendar dates and inclusive UTC days, one-sided and leap-day boundaries', async () => {
     const day = '2026-02-28';
@@ -100,6 +117,8 @@ test('F-08 filters preserve exact persisted matches and authorization', async t 
     }
     await exact(owner, 'q=' + enc('🪑'.repeat(200)), () => false);
     await exact(owner, 'from=0001-01-01&to=9999-12-31', () => true);
+    await exact(owner, 'from=9999-12-31&to=9999-12-31', r => r.createdAt.toISOString().startsWith('9999-12-31'));
+    await exact(owner, 'from=0001-01-01&to=0001-01-01', r => r.createdAt.toISOString().startsWith('0001-01-01'));
   });
   await t.test('TEST-08-03: ownership before filters; reviewer scopes AND filters; no forged owner selectors', async () => {
     await app.get('/api/requests?q=office').expect(401);
