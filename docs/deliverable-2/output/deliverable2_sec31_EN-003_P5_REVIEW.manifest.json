@@ -1,0 +1,153 @@
+{
+  "candidateSource": "0334c966c396912dfaf2e309e044753f11d4e47c",
+  "candidateTag": "deliverable2-candidate-2026-11-25",
+  "revision": "approvals-r45650095303-1",
+  "reportStatus": "review copy, not submitted",
+  "pdf": "deliverable2_sec31_EN-003_P5_REVIEW.pdf",
+  "pdfSha256": "958dff7104d88e3294ddba6d4db920fd3d37eb6a96d74861f643bc063493c30e",
+  "sectionPages": {
+    "contents": 2,
+    "part-a": 4,
+    "a-register": 4,
+    "a-uat": 6,
+    "part-b": 8,
+    "b-contracts": 8,
+    "b-F06": 11,
+    "b-F07": 12,
+    "b-F08": 14,
+    "b-release": 15,
+    "part-c": 22,
+    "c-contracts": 22,
+    "c-tdd": 25,
+    "c-release": 26,
+    "c-plan": 30,
+    "part-d": 33,
+    "d-srs": 33,
+    "d-features": 39,
+    "d-sds": 42,
+    "d-matrix": 47,
+    "d-audit": 61,
+    "part-e": 63,
+    "e-candidate": 63,
+    "e-api": 64,
+    "e-ci": 68,
+    "e-excerpts": 69,
+    "e-reviews": 70,
+    "e-setup": 72,
+    "e-readme": 72,
+    "e-readiness": 74,
+    "e-ai": 74
+  },
+  "sourceHashEncoding": "UTF-8 text normalized to LF with BOM removed; binary bytes unchanged",
+  "sourceFiles": [
+    {
+      "path": "docs/ai_use.md",
+      "sha256": "8c8df102cc186a20f92e1e6e5c5d9811bf8578cde16d008bddffc8a8bfad38b3"
+    },
+    {
+      "path": "docs/deliverable-2/baseline-audit.md",
+      "sha256": "8f9b395003debaabf7e83473d2450ec7bda745fca3f03be31db7bf2041b74360"
+    },
+    {
+      "path": "docs/deliverable-2/continuity-register.md",
+      "sha256": "be8f9c73cfb324995cafdbe5ede75e65f3d9e990b386e1b24b88f652f8a2ec49"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/candidate/ci-deployment-excerpts.log",
+      "sha256": "4628d2f931fde9f4ac53e75d0c42e20216cc5d71a26be895d55f22730ff99550"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/candidate/filters-readable.png",
+      "sha256": "e22641a348f0060e4102a535f62338d0444fef892cf2b0e432e6ee2a029ade8e"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/candidate/live-verification.json",
+      "sha256": "f8074413a0d12de18f85e07176bde96b9b18eaa8b538854c0770f998a57ce91a"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/candidate/owner-readable-full.png",
+      "sha256": "df7f252b3c8ff0fc53eef84c1d1999719c614568c447d66bc9ff40173afca43d"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/candidate/README.md",
+      "sha256": "bac47363184f659dda60f33bb333e0ce68657d23c81f1cadbee21b428eba9fb8"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/candidate/review-chains.json",
+      "sha256": "f54985118fa4a24cd8ef70e32a89e7cc44dee323499a03fac502ac65dec129a9"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/candidate/summary-readable.png",
+      "sha256": "ce43b6edab15140fd2e904d79b4597cff0845a76064e652d11c3e2ef80a91796"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/F06/README.md",
+      "sha256": "71b8969c11c215b1ce3077907078277772a27b99d76c8771639e90b841fd6060"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/F07/README.md",
+      "sha256": "a6998f3dde2af1d03891aa559d7d6e9fe479d4653b0b7c65a057fde95434f51b"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/F08/README.md",
+      "sha256": "4605f9fc576f41da7a4153519887108ae2253f8237913349f465aa1459786bc9"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/F10/README.md",
+      "sha256": "298e15308a253d31d0ce049dd2ba6838751ce6b664f1e42c7c6113cd3f62e67f"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/F10-release/README.md",
+      "sha256": "bbb62f64b267f7732065f344ae55b1a8c53523514661eeb67b5d86c171f976cd"
+    },
+    {
+      "path": "docs/deliverable-2/evidence/sprint-2-release/README.md",
+      "sha256": "546628eb41e461f689bc799ae24d75134496fca190a3ad86fce2c1d1171cb32f"
+    },
+    {
+      "path": "docs/deliverable-2/finish-plan.md",
+      "sha256": "93abc290167afc879fbd512fd0a2230cc21bc25581669cfa934340c9e667284b"
+    },
+    {
+      "path": "docs/features.md",
+      "sha256": "9c5b923fb3a886ab42b0a04cda68f1d230df9b8f08506cc8cb0de599eb3b873c"
+    },
+    {
+      "path": "docs/labs/lab-06/retest-60.md",
+      "sha256": "8604d2dccf146f1e3a288a5c74a35e7226d6aa2bf81884203df93f0b72274045"
+    },
+    {
+      "path": "docs/sprints/sprint-2/contracts.md",
+      "sha256": "2556a80b48af5fbbbe1e99e1769d72524340c2205b605f550669f04271b10c0c"
+    },
+    {
+      "path": "docs/sprints/sprint-3/contracts.md",
+      "sha256": "5161908b468395eeba840003876ef3459be01a53e21f072bd2a8c58e49bcd093"
+    },
+    {
+      "path": "docs/srs.md",
+      "sha256": "2bc363a821f79b40422fafabcd8d462431db7af42dd2c0acc50dcbc31779429d"
+    },
+    {
+      "path": "docs/system-sds.md",
+      "sha256": "bb80be60284889fec0781a41c39f766e8b18e1e5e3cfc9fdbb7b9672bebb6e4b"
+    },
+    {
+      "path": "docs/traceability.md",
+      "sha256": "7c3bee3a860f4d198c1cfd9d56ebfc66ce39e321b475e6f83eca95f4c24ad898"
+    },
+    {
+      "path": "README.md",
+      "sha256": "860c7fd6a00c321eb59564283fec3f135719a21d82d149dbb3bd4be121567182"
+    },
+    {
+      "path": "test/returns.test.cjs",
+      "sha256": "f55bf35722130f37f5bd85d80790be9d12a9a739fb014c44b29af3c74fc56e7f"
+    },
+    {
+      "path": "test/summary.test.cjs",
+      "sha256": "0c7dc87313a79e537dfc149f25a194d8f9f0d4de106c1ad8f8d44791b54470c3"
+    }
+  ],
+  "generatorSha256": "3e16c83dba1502dc3e1e119685c28e7eb0eb470fd1b30dae43ab6aa7233bf17b"
+}

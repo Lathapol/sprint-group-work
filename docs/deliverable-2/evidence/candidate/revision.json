@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "labels": {
+      "cloud.googleapis.com/location": "asia-southeast1",
+      "commit-sha": "0334c966c396912dfaf2e309e044753f11d4e47c",
+      "run.googleapis.com/satisfiesPzs": "true",
+      "run.googleapis.com/startupProbeType": "Default",
+      "serving.knative.dev/configuration": "approvals",
+      "serving.knative.dev/configurationGeneration": "9",
+      "serving.knative.dev/route": "approvals",
+      "serving.knative.dev/service": "approvals",
+      "serving.knative.dev/serviceUid": "66ffaa5d-3570-445c-b385-d741309db05e"
+    },
+    "name": "approvals-r45650095303-1"
+  },
+  "status": {
+    "conditions": [
+      {
+        "lastTransitionTime": "2026-11-25T16:03:44.469949Z",
+        "message": "Deploying revision succeeded in 11.02s.",
+        "status": "True",
+        "type": "Ready"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T16:03:44.618654Z",
+        "severity": "Info",
+        "status": "True",
+        "type": "Active"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T16:03:44.400442Z",
+        "message": "Containers became healthy in 1.19s.",
+        "status": "True",
+        "type": "ContainerHealthy"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T16:03:39.968403Z",
+        "message": "Container image import completed in 6s.",
+        "status": "True",
+        "type": "ContainerReady"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T16:03:42.811308Z",
+        "message": "Provisioning imported containers completed in 2.84s. Checking container health. This will wait for up to 4m for the configured startup probe, including an initial delay of 0s.",
+        "status": "True",
+        "type": "ResourcesAvailable"
+      }
+    ],
+    "imageDigest": "asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app@sha256:14990b1fb63b7223e17553d887afa455e9a2228f1802587594b8da4c9718a0e3"
+  }
+}

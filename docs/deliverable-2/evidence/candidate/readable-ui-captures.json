@@ -1,0 +1,24 @@
+{
+  "source": "0334c966c396912dfaf2e309e044753f11d4e47c",
+  "captures": [
+    {
+      "name": "owner-readable-full",
+      "time": "2026-11-25T16:14:30.126Z",
+      "url": "https://approvals-389973748230.asia-southeast1.run.app/requests/20",
+      "width": 800
+    },
+    {
+      "name": "summary-readable",
+      "time": "2026-11-25T16:14:31.631Z",
+      "url": "https://approvals-389973748230.asia-southeast1.run.app/summary",
+      "width": 800
+    },
+    {
+      "name": "filters-readable",
+      "time": "2026-11-25T16:14:32.163Z",
+      "url": "https://approvals-389973748230.asia-southeast1.run.app/",
+      "width": 800
+    }
+  ],
+  "kind": "Real browser, no mocks, no business-data mutation"
+}
