@@ -377,7 +377,8 @@ function RequestDetail({ user }: { user: User }) {
     setError(undefined);
     setBusy(true);
     try {
-      setUpdated(await api<Row>(path + '/' + action, action === 'claim' ? {} : { reason }));
+      const body = action === 'claim' || action === 'withdraw' ? {} : { reason };
+      setUpdated(await api<Row>(path + '/' + action, body));
     } catch (failure) {
       setError(failure);
       if (failure instanceof ApiError && failure.status === 409) {
