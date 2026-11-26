@@ -120,24 +120,38 @@ def image(rel,caption,crop=None):
     return [KeepTogether([im,p(caption,'Caption')])]
 def part(title,key):return [PageBreak(),heading(title,key,0)]
 class Report(BaseDocTemplate):
-    def __init__(self,filename):
+    def __init__(self,filename,approved=False):
+        self.approved=approved
         super().__init__(filename,pagesize=A4,leftMargin=MARGIN,rightMargin=MARGIN,topMargin=46,bottomMargin=43,title='CPE334 Deliverable 2 - Cache Me if you can',author='Lathapol Srikhiao and Kittakorn Poungpien')
         frame=Frame(MARGIN,43,BODY,HEIGHT-89,leftPadding=0,rightPadding=0,topPadding=0,bottomPadding=0)
         self.addPageTemplates(PageTemplate('report',frames=[frame],onPage=self.footer));self.pages_by_key={}
     def footer(self,c,doc):
         c.saveState();c.setStrokeColor(colors.HexColor('#c8d4dd'));c.line(MARGIN,32,WIDTH-MARGIN,32);c.setFont('Body',7);c.setFillColor(colors.HexColor('#456276'))
-        c.drawString(MARGIN,22,'CPE334 / Section 31 / EN-003_P5 / Review copy - not submitted')
+        c.drawString(MARGIN,22,'CPE334 / Section 31 / EN-003_P5 / '+('Reviewed checkpoint - not submitted' if self.approved else 'Review copy - not submitted'))
         c.drawRightString(WIDTH-MARGIN,22,f'{doc.page}');c.restoreState()
     def afterFlowable(self,item):
         if hasattr(item,'_toc'):
             level,text,key=item._toc;self.canv.bookmarkPage(key);self.canv.addOutlineEntry(clean(text),key,level,False);self.notify('TOCEntry',(level,clean(text),self.page,key));self.pages_by_key[key]=self.page
 
-def build(output):
+def build(output,approved=False):
+    report_status='review copy, not submitted'
+    review_notice='**REVIEW COPY:** complete assessed documents and selected actual evidence are embedded. Team report review/approval and submission remain outstanding. This checkpoint is not full product completion or independent UAT acceptance. F-09, F-11 and verification gaps are disclosed.'
+    if approved:
+        approval=json.loads(read('docs/deliverable-2/evidence/candidate/report-approval.json'))
+        assert approval['number']==90 and approval['state']=='MERGED'
+        assert approval['headRefOid']=='094531dd820cff2c5b2676663584e6e30141991e'
+        reviewed=json.loads((HERE/'output/deliverable2_sec31_EN-003_P5_REVIEW.manifest.json').read_text(encoding='utf-8'))
+        for item in reviewed['sourceFiles']:
+            assert source_hash(ROOT/item['path'])==item['sha256'], 'Reviewed content changed: '+item['path']
+        review=next(r for r in approval['reviews'] if r['author']['login']=='Kittakorn-P' and r['state']=='APPROVED')
+        report_status='report content approved in PR90; not submitted'
+        review_notice='**REVIEWED CHECKPOINT REPORT:** report content approved by Kittakorn-P in PR #90 at '+review['submittedAt']+' (UTC), merged at '+approval['mergedAt']+'. This edition finalizes review labeling and includes that approval record; it retains all disclosed F-09/F-11/verification and human-review limitations. Not submitted to LEB2; no full product or independent UAT acceptance is claimed.'
+
     live=json.loads(read('docs/deliverable-2/evidence/candidate/live-verification.json'))
     reviews=json.loads(read('docs/deliverable-2/evidence/candidate/review-chains.json'))
     story=[Spacer(1,40),p('CPE 334<br/>Project Deliverable 2','Cover'),p('Sprint 2 completion and Sprint 3 progress','Section'),p('**Cache Me if you can - Theme 5: Workflow and Approval System**'),Spacer(1,15)]
     story+=table(['Student','Student ID'],[['Lathapol Srikhiao','67070503475'],['Kittakorn Poungpien','67070503401']])
-    story+=[p('**Section:** 31 | **Team:** EN-003_P5 | **Prepared:** 25 November 2026 (Asia/Bangkok)'),p('**Due:** 29 November 2026,23:59 | **Assessment:**70 points (Parts A-E)'),p('**Repository:** https://github.com/Lathapol/sprint-group-work'),p('**Immutable application candidate:** '+TAG+' at '+SHA),p('**App:** https://approvals-389973748230.asia-southeast1.run.app'),p('**Deployment:** run 45650095303 / approvals-r45650095303-1 /100% traffic'),Spacer(1,10),p('**REVIEW COPY:** complete assessed documents and selected actual evidence are embedded. Team report review/approval and submission remain outstanding. This checkpoint is not full product completion or independent UAT acceptance. F-09, F-11 and verification gaps are disclosed.','Caption'),p('Source/evidence provenance: app candidate above; report generation/source manifest accompanies this PDF in the repository. Later report-only commits do not replace the identified application source. No real credentials/tokens are included.','SmallText'),PageBreak(),heading('Contents and rubric navigation','contents',0)]
+    story+=[p('**Section:** 31 | **Team:** EN-003_P5 | **Prepared:** 25 November 2026 (Asia/Bangkok)'),p('**Due:** 29 November 2026,23:59 | **Assessment:**70 points (Parts A-E)'),p('**Repository:** https://github.com/Lathapol/sprint-group-work'),p('**Immutable application candidate:** '+TAG+' at '+SHA),p('**App:** https://approvals-389973748230.asia-southeast1.run.app'),p('**Deployment:** run 45650095303 / approvals-r45650095303-1 /100% traffic'),Spacer(1,10),p(review_notice,'Caption'),p('Source/evidence provenance: app candidate above; report generation/source manifest accompanies this PDF in the repository. Later report-only commits do not replace the identified application source. No real credentials/tokens are included.','SmallText'),PageBreak(),heading('Contents and rubric navigation','contents',0)]
     toc=TableOfContents();toc.levelStyles=[styles['TOCMain'],styles['TOCSub']];story+=[toc,Spacer(1,12),p('Rubric: A5 + B25 + C15 + D10 + E15 =70 points. Page numbers above are internal PDF navigation. Source files are reproduced below; repository links are supplementary. Historical source documents retain their original date/status wording; current completion tables supersede their then-planned status.','SmallText')]
     story+=part('Part A - Sprint 1 continuity and changes (5)','part-a')
     story+=markdown('docs/deliverable-2/continuity-register.md','A1. Complete continuity/change register','a-register')
@@ -185,11 +199,11 @@ def build(output):
     story+=[heading('E6. Safe setup and reproduction summary','e-setup')]
     story+=markdown('README.md','Complete repository setup and delivery guidance','e-readme','Current repository README is reproduced for self-contained setup. Its original project title refers to Sprint 1; appended sections document expanded behavior. Use only isolated local/test databases for seeds/tests. Never reset or seed deployed shared data.')
     story+=[p('Deployment summary: retain Node24/PostgreSQL18/Prisma dependencies, install/generate/build, migrate committed schema, synthetic seed locally, run app and tests. Docker multi-stage runtime is non-root; GitHub main pipeline uses WIF/Artifact Registry and migrate-before-Cloud Run. Managed private DATABASE_URL and synthetic SEED_PASSWORD are handed off privately or seeded locally. No real password/token/connection string is in this PDF. Keep deployment/repository available through grading and preserve submitted source identity.','Text')]
-    story+=[heading('E7. Readiness and submission decision','e-readiness'),p('Technical integrated candidate: READY as a tested checkpoint with explicit gaps, not fully complete product. All Sprint 2 features and meaningful F10 progress are implemented/reviewed/deployed. F09 is absent; F11/performance/comprehensive usability and several verification/human acceptance tasks remain. No Lab 7 approval/handout is supplied. Planned completion dates/owners/dependencies are embedded in C4.','Text'),p('Report status: REVIEW COPY, not submitted to LEB2. Both students must check the contents/IDs, real contributions and review evidence, confirm proposed ownership and ensure this accurately represents the checkpoint before submission. Full product, final video/release and remaining acceptance are planned by 13 Dec with exams 1-11 Dec accounted for. This report does not award points or declare course acceptance.','Text')]
+    story+=[heading('E7. Readiness and submission decision','e-readiness'),p('Technical integrated candidate: READY as a tested checkpoint with explicit gaps, not fully complete product. All Sprint 2 features and meaningful F10 progress are implemented/reviewed/deployed. F09 is absent; F11/performance/comprehensive usability and several verification/human acceptance tasks remain. No Lab 7 approval/handout is supplied. Planned completion dates/owners/dependencies are embedded in C4.','Text'),p(('Report content approved in PR #90; this submission-named edition is not submitted to LEB2. Disclosed verification/process gaps remain. ' if approved else 'Report status: REVIEW COPY, not submitted to LEB2. ')+ ' Both students must check the contents/IDs, real contributions and review evidence, confirm proposed ownership and ensure this accurately represents the checkpoint before submission. Full product, final video/release and remaining acceptance are planned by 13 Dec with exams 1-11 Dec accounted for. This report does not award points or declare course acceptance.','Text')]
     story+=markdown('docs/ai_use.md','E8. Complete AI-use and responsibility declaration','e-ai')
-    doc=Report(str(output));doc.multiBuild(story)
-    manifest={'candidateSource':SHA,'candidateTag':TAG,'revision':'approvals-r45650095303-1','reportStatus':'review copy, not submitted','pdf':output.name,'pdfSha256':hashlib.sha256(output.read_bytes()).hexdigest(),'sectionPages':doc.pages_by_key,'sourceHashEncoding':'UTF-8 text normalized to LF with BOM removed; binary bytes unchanged','sourceFiles':[{'path':str(x.relative_to(ROOT)).replace('\\','/'),'sha256':source_hash(x)} for x in sorted(INPUTS)],'generatorSha256':source_hash(Path(__file__))}
+    doc=Report(str(output),approved=approved);doc.multiBuild(story)
+    manifest={'candidateSource':SHA,'candidateTag':TAG,'revision':'approvals-r45650095303-1','reportStatus':report_status,'pdf':output.name,'pdfSha256':hashlib.sha256(output.read_bytes()).hexdigest(),'sectionPages':doc.pages_by_key,'sourceHashEncoding':'UTF-8 text normalized to LF with BOM removed; binary bytes unchanged','sourceFiles':[{'path':str(x.relative_to(ROOT)).replace('\\','/'),'sha256':source_hash(x)} for x in sorted(INPUTS)],'generatorSha256':source_hash(Path(__file__))}
     output.with_suffix('.manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
     return manifest
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,default=HERE/'output/deliverable2_sec31_EN-003_P5_REVIEW.pdf');args=parser.parse_args();args.output.parent.mkdir(parents=True,exist_ok=True);manifest=build(args.output);print(json.dumps({'pdf':str(args.output),'sectionPages':manifest['sectionPages'],'sha256':manifest['pdfSha256']},indent=2))
+    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,default=HERE/'output/deliverable2_sec31_EN-003_P5_REVIEW.pdf');parser.add_argument('--approved-review',action='store_true');args=parser.parse_args();args.output.parent.mkdir(parents=True,exist_ok=True);manifest=build(args.output,approved=args.approved_review);print(json.dumps({'pdf':str(args.output),'sectionPages':manifest['sectionPages'],'sha256':manifest['pdfSha256']},indent=2))

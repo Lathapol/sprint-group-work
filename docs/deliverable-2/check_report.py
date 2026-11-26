@@ -4,8 +4,8 @@ from pathlib import Path
 import pymupdf
 
 ROOT=Path(__file__).resolve().parents[2]
-parser=argparse.ArgumentParser();parser.add_argument('--render-dir',type=Path);args=parser.parse_args()
-pdf=ROOT/'docs/deliverable-2/output/deliverable2_sec31_EN-003_P5_REVIEW.pdf'
+parser=argparse.ArgumentParser();parser.add_argument('--render-dir',type=Path);parser.add_argument('--pdf',type=Path);args=parser.parse_args()
+pdf=args.pdf or ROOT/'docs/deliverable-2/output/deliverable2_sec31_EN-003_P5_REVIEW.pdf'
 manifest=json.loads(pdf.with_suffix('.manifest.json').read_text(encoding='utf-8'))
 doc=pymupdf.open(pdf);text='\n'.join(page.get_text() for page in doc)
 requirements={f'{p}-{i:02}' for p,n in [('FR',18),('BR',14),('NFR',8)]for i in range(1,n+1)}
@@ -30,5 +30,5 @@ for i,page in enumerate(doc):
     x0,y0,x1,y1=span['bbox']
     if x0<35 or x1>page.rect.width-35 or y0<20 or y1>page.rect.height-15:bounds.append([i+1,span['text'][:60]])
 assert not bounds,bounds
-result={'pdfPages':len(doc),'requirementsPresent':len(requirements),'acceptanceCriteriaPresent':len(acs),'outlineEntries':len(doc.get_toc()),'allSourceHashesMatch':True,'pdfSha256':manifest['pdfSha256'],'textBoundsIssues':bounds,'renderedAllPages':bool(args.render_dir),'reviewStatus':'not submitted; peer review pending'}
-(pdf.parent/'review-qa.json').write_text(json.dumps(result,indent=2),encoding='utf-8');print(json.dumps(result,indent=2))
+result={'pdfPages':len(doc),'requirementsPresent':len(requirements),'acceptanceCriteriaPresent':len(acs),'outlineEntries':len(doc.get_toc()),'allSourceHashesMatch':True,'pdfSha256':manifest['pdfSha256'],'textBoundsIssues':bounds,'renderedAllPages':bool(args.render_dir),'reviewStatus':manifest['reportStatus']}
+(pdf.with_suffix('.qa.json')).write_text(json.dumps(result,indent=2),encoding='utf-8');print(json.dumps(result,indent=2))
