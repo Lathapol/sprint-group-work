@@ -67,7 +67,7 @@ test('CR-L7-01 owner withdrawal is atomic, retained, scoped, and counted separat
     assert.equal(reviewerHistory.length, 2);
   });
 
-  await t.test('TEST-12-02/03: role, owner, state and body guards do not mutate', async () => {
+  await t.test('TEST-12-02/03: role, owner, claimed, returned, final-state and body guards do not mutate', async () => {
     const another = await app.post('/api/requests').set('Cookie', owner.cookie).send({ ...body, title: 'Second synthetic request' }).expect(201);
     const otherPath = '/api/requests/' + another.body.data.id;
     await app.post(otherPath + '/withdraw').send({}).expect(401);
@@ -79,6 +79,36 @@ test('CR-L7-01 owner withdrawal is atomic, retained, scoped, and counted separat
     await app.post(otherPath + '/withdraw').set('Cookie', owner.cookie).send({}).expect(409);
     assert.equal(await db.requestHistory.count({ where: { requestId: another.body.data.id } }), before);
     assert.equal((await db.request.findUnique({ where: { id: another.body.data.id } })).state, 'IN_REVIEW');
+
+    const returned = await app.post('/api/requests').set('Cookie', owner.cookie)
+      .send({ ...body, title: 'Returned request cannot be withdrawn' }).expect(201);
+    const returnedPath = '/api/requests/' + returned.body.data.id;
+    await app.post(returnedPath + '/claim').set('Cookie', reviewer.cookie).send({}).expect(200);
+    await app.post(returnedPath + '/return').set('Cookie', reviewer.cookie).send({ reason: 'Revise estimate' }).expect(200);
+    const returnedBefore = {
+      request: await db.request.findUnique({ where: { id: returned.body.data.id } }),
+      history: await db.requestHistory.findMany({ where: { requestId: returned.body.data.id }, orderBy: { id: 'asc' } }),
+    };
+    await app.post(returnedPath + '/withdraw').set('Cookie', owner.cookie).send({}).expect(409);
+    assert.deepEqual({
+      request: await db.request.findUnique({ where: { id: returned.body.data.id } }),
+      history: await db.requestHistory.findMany({ where: { requestId: returned.body.data.id }, orderBy: { id: 'asc' } }),
+    }, returnedBefore);
+
+    const final = await app.post('/api/requests').set('Cookie', owner.cookie)
+      .send({ ...body, title: 'Final request cannot be withdrawn' }).expect(201);
+    const finalPath = '/api/requests/' + final.body.data.id;
+    await app.post(finalPath + '/claim').set('Cookie', reviewer.cookie).send({}).expect(200);
+    await app.post(finalPath + '/approve').set('Cookie', reviewer.cookie).send({}).expect(200);
+    const finalBefore = {
+      request: await db.request.findUnique({ where: { id: final.body.data.id } }),
+      history: await db.requestHistory.findMany({ where: { requestId: final.body.data.id }, orderBy: { id: 'asc' } }),
+    };
+    await app.post(finalPath + '/withdraw').set('Cookie', owner.cookie).send({}).expect(409);
+    assert.deepEqual({
+      request: await db.request.findUnique({ where: { id: final.body.data.id } }),
+      history: await db.requestHistory.findMany({ where: { requestId: final.body.data.id }, orderBy: { id: 'asc' } }),
+    }, finalBefore);
   });
 
   await t.test('TEST-12-04: concurrent claim and withdrawal produce one transition and one event', async () => {
@@ -106,7 +136,8 @@ test('CR-L7-01 owner withdrawal is atomic, retained, scoped, and counted separat
     const summary = (await app.get('/api/reports/summary').set('Cookie', reviewer.cookie).expect(200)).body.data;
     const withdrawnCount = summary.byState.find(row => row.state === 'WITHDRAWN').count;
     assert.equal(withdrawnCount, reviewerList.body.data.length);
-    assert.equal(summary.total, 3);
-    assert.equal(summary.byReviewer.reduce((total, row) => total + row.total, 0) + summary.unattributedDecisions, 0);
+    assert.equal(summary.total, 5);
+    assert.equal(summary.byReviewer.reduce((total, row) => total + row.total, 0), 1);
+    assert.equal(summary.unattributedDecisions, 0);
   });
 });
