@@ -110,6 +110,33 @@ export function requestRoutes(db: PrismaClient, authenticate: RequestHandler, re
     res.json({ data });
   });
 
+  router.post('/:id/withdraw', requesterOnly, requireJson, async (req, res) => {
+    if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body) || Object.keys(req.body).length) {
+      error(res, 400, 'INVALID_INPUT', 'Withdrawal does not accept input fields.');
+      return;
+    }
+    const id: number = res.locals.requestId;
+    const ownerId: number = res.locals.user.id;
+    const result = await db.$transaction(async tx => {
+      const update = await tx.request.updateMany({
+        where: { id, requesterId: ownerId, state: 'PENDING', reviewerId: null },
+        data: { state: 'WITHDRAWN' },
+      });
+      if (update.count === 1) {
+        await tx.requestHistory.create({ data: {
+          requestId: id, actorId: ownerId, fromState: 'PENDING', toState: 'WITHDRAWN',
+          reason: 'Requester withdrew the request.',
+        } });
+        return { data: await tx.request.findUniqueOrThrow({ where: { id }, include: people }) };
+      }
+      const current = await tx.request.findFirst({ where: { id, requesterId: ownerId } });
+      if (!current) return { status: 404, code: 'NOT_FOUND', message: 'Request not found.' } as const;
+      return { status: 409, code: 'INVALID_TRANSITION', message: 'Only an unclaimed pending request can be withdrawn.' } as const;
+    });
+    if (result.data) res.json({ data: result.data });
+    else error(res, result.status, result.code, result.message);
+  });
+
   function transition(target: 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'RETURNED'): RequestHandler {
     return async (req, res) => {
       const id: number = res.locals.requestId;

@@ -2,7 +2,15 @@
 
 Sprint 2 completion and Sprint 3 progress. Due **29 November 2026 23:59 Asia/Bangkok**, 70 points; final product completion target 13 December. Same team, Workflow and Approval System, same repository. Status updated 25 November: contracts #77 and F-06/F-07/F-08 #78/#79/#81 merged; release #82 is deployed at main `f9a0d2f`, tag `sprint-2-2026-11-25`, revision `approvals-r45629268302-1`. Main CI passes 22 API tests and 4 UI tests; 43 live API calls and deployed UI checks passed, including retained-data comparison. See [actual release evidence](evidence/sprint-2-release/README.md). Human evidence acceptance and the remaining Deliverable 2 work are separate.
 
-## Recorded decisions
+## Current integrated candidate and review report
+
+Report/evidence PR #90 was approved by Kittakorn-P and merged at `37e9133c38afef5560c8a661143ff7781e38a78f` on25Nov2026. The original review PDF remains unchanged. The [submission-named checkpoint PDF](output/deliverable2_sec31_EN-003_P5.pdf) records that actual approval and preserves the reviewed source content; it is not a claim of LEB2 submission, substantive review discussion or full product acceptance. The app candidate remains frozen at0334. Rebuild this edition with `python docs/deliverable-2/build_report.py --approved-review --output docs/deliverable-2/output/deliverable2_sec31_EN-003_P5.pdf`; the generator rejects changes to the original reviewed source documents. Validate with `python docs/deliverable-2/check_report.py --pdf docs/deliverable-2/output/deliverable2_sec31_EN-003_P5.pdf`.
+
+Release #89 approved/merged at `0334c966c396912dfaf2e309e044753f11d4e47c`; tag `deliverable2-candidate-2026-11-25`; successful run 45650095303 and revision `approvals-r45650095303-1`,100% traffic. Main 27 Node/API tests + 5 browser tests and Docker pass. [Actual candidate evidence](evidence/candidate/README.md):59 live API checks, original/returned synthetic #19/#20, unchanged controlled full histories, independent summary reconciliation and actual UI captures. #74 baseline is approved/merged and closed. The app candidate stays frozen separately from later report/evidence commits.
+
+Self-contained [review PDF](output/deliverable2_sec31_EN-003_P5_REVIEW.pdf) and [source/page manifest](output/deliverable2_sec31_EN-003_P5_REVIEW.manifest.json) include PartsA-E, all assessed documents/contracts, all 40 requirement/AC statuses, real selected code/output/screenshots/review chains and the finish plan. Rebuild with `python docs/deliverable-2/build_report.py` (reportlab, Pillow; pypdf/PyMuPDF used for QA). This is a review artifact, not a submitted or independently accepted final product. Actual brief PR approvals and missing substantive review/remaining course evidence are disclosed rather than invented.
+
+## Recorded decisions (unchanged)
 
 User decisions received 24 November 2026 (not invented course approval):
 - Q-01: a Returned request resubmits to the **same reviewer**, directly to IN_REVIEW; it does not enter the unassigned Pending queue.
@@ -11,7 +19,7 @@ User decisions received 24 November 2026 (not invented course approval):
 
 Complete contracts: [Sprint 2](../sprints/sprint-2/contracts.md), [Sprint 3](../sprints/sprint-3/contracts.md). Their review/merge occurred in #77 before implementation. Actual local RED/GREEN results: [F-06](evidence/F06/README.md), [F-07](evidence/F07/README.md), [F-08](evidence/F08/README.md), [F-10](evidence/F10/README.md). Sprint 2 evidence #84 was approved/merged and feature issues #69–#71 closed. Historical Sprint 1 contracts remain identifiable.
 
-F-10 #85/#86 were approved and merged on 25 November; main `0877808`, tag `f10-2026-11-25`, revision `approvals-r45637901908-1` is deployed. Main CI passed 27 API/regression +5 browser tests; independent live count reconciliation and 61 API calls passed, three existing resources/history arrays remained unchanged, and deployed UI counts/role checks passed. See [actual F-10 release evidence](evidence/F10-release/README.md). Evidence #87 was approved/merged at `3c40565` and #73 closed. #74 refreshes the [complete baseline and source audit](baseline-audit.md), [SRS](../srs.md), [inventory](../features.md), [System SDS](../system-sds.md) and [all 40-requirement/every-AC result matrix](../traceability.md). That documentation requires its own review; assessed PDF and final candidate freeze remain separate.
+Earlier F-10 #85/#86 were approved and merged on 25 November at main `0877808`, tag `f10-2026-11-25`, revision `approvals-r45637901908-1`. Its main CI passed 27 API/regression + 5 browser tests; independent live count reconciliation and 61 API calls passed with retained histories/UI checks. See [preserved F-10 release evidence](evidence/F10-release/README.md). Evidence #87 merged at `3c40565` and #73 closed. #74's complete baseline was approved in #88, integrated in #89 and closed. The newer frozen candidate/report status is above.
 
 ## Scope and build order
 

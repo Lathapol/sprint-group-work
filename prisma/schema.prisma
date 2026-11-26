@@ -25,6 +25,7 @@ enum RequestState {
   RETURNED
   APPROVED
   REJECTED
+  WITHDRAWN
 }
 
 model User {

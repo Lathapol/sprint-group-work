@@ -1,0 +1,20 @@
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T15:59:21.1785807Z   ✔ TEST-07-04: duplicate resubmission and edit/resubmit races serialize (104.548062ms)
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T15:59:22.0290851Z   ✔ TEST-10-03: session role is authoritative; anonymous/expired/requester denied (29.343747ms)
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T15:59:22.1842747Z   ✔ TEST-10-04: real return/edit/resubmit/final decision and concurrent snapshots reconcile (155.158057ms)
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T15:59:22.2237920Z ℹ tests 27
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T15:59:22.2238390Z ℹ pass 27
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T15:59:22.2238568Z ℹ fail 0
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T15:59:22.2239163Z ℹ skipped 0
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T15:59:51.0983384Z   5 passed (8.5s)
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T16:00:36.3195238Z #20 exporting manifest sha256:44658bf46492b0935182e2c03796e5b90ae5225e6e1527ca28c6d6487a703f3f done
+quality / test-and-docker	UNKNOWN STEP	2026-11-25T16:00:36.3197478Z #20 exporting manifest list sha256:23ab471bd9d751fc2c5d4c4dd75b0051758d3c6d86439ca42d09bd9a4b56845a done
+deploy	Build and push commit images	2026-11-25T16:01:40.8052495Z #20 exporting manifest sha256:14990b1fb63b7223e17553d887afa455e9a2228f1802587594b8da4c9718a0e3 done
+deploy	Build and push commit images	2026-11-25T16:01:40.8055260Z #20 exporting manifest list sha256:bc40afef3db76abf9ef12cad2ad260b06a7693a817c42d67937ba62232b3a8f3 done
+deploy	Build and push commit images	2026-11-25T16:01:59.7805340Z #15 exporting manifest sha256:0fd4a9ff53e82e1a50191259fce0834978638c634b670d5a04a95bf212a023df done
+deploy	Build and push commit images	2026-11-25T16:01:59.7807380Z #15 exporting manifest list sha256:2038f4931b85d21adcda57f4f1f56f0fbdf41c8dab24d2181ae48c2ac622829f 0.0s done
+deploy	Build and push commit images	2026-11-25T16:02:22.4500952Z 0334c966c396912dfaf2e309e044753f11d4e47c: digest: sha256:bc40afef3db76abf9ef12cad2ad260b06a7693a817c42d67937ba62232b3a8f3 size: 856
+deploy	Build and push commit images	2026-11-25T16:02:49.4163228Z 0334c966c396912dfaf2e309e044753f11d4e47c: digest: sha256:2038f4931b85d21adcda57f4f1f56f0fbdf41c8dab24d2181ae48c2ac622829f size: 856
+deploy	Migrate and release by digest	2026-11-25T16:03:29.3472150Z Execution [approvals-migrate-pxqbt] has successfully completed.
+deploy	Migrate and release by digest	2026-11-25T16:03:29.3473130Z gcloud run jobs executions describe approvals-migrate-pxqbt
+deploy	Migrate and release by digest	2026-11-25T16:03:29.3473996Z Or visit https://console.cloud.google.com/run/jobs/executions/details/asia-southeast1/approvals-migrate-pxqbt?project=389973748230
+deploy	Read-only live smoke test	2026-11-25T16:03:56.4625719Z Live UI, database and release commit checks passed.

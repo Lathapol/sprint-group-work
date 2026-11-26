@@ -64,7 +64,7 @@ test('F-10 persisted global summary, final actors and snapshot reconciliation', 
   });
   async function fixture(state, category = 'PURCHASE', reviewer = first) {
     return db.request.create({ data: { title: 'Private summary title ' + randomUUID(), justification: 'private business text', amount: '25.50',
-      state, category, requesterId: owner.id, reviewerId: state === 'PENDING' ? null : reviewer.id,
+      state, category, requesterId: owner.id, reviewerId: ['PENDING', 'WITHDRAWN'].includes(state) ? null : reviewer.id,
       decisionReason: ['RETURNED', 'REJECTED'].includes(state) ? 'Synthetic reason' : null } });
   }
   await fixture('PENDING');
@@ -72,6 +72,7 @@ test('F-10 persisted global summary, final actors and snapshot reconciliation', 
   await fixture('RETURNED');
   const approved = await fixture('APPROVED', 'FUNDING');
   const rejected = await fixture('REJECTED', 'REIMBURSEMENT', final);
+  await fixture('WITHDRAWN');
   await fixture('APPROVED'); // Legacy terminal record with no decision history.
   const malformed = await fixture('REJECTED', 'PURCHASE', final);
   async function event(row, actor, toState, createdAt, fromState = 'IN_REVIEW') {
@@ -88,9 +89,9 @@ test('F-10 persisted global summary, final actors and snapshot reconciliation', 
     const before = await db.request.findMany({ orderBy: { id: 'asc' } });
     const histories = await db.requestHistory.findMany({ orderBy: { id: 'asc' } });
     const data = await summary();
-    assert.equal(data.total, 7);
-    assert.deepEqual(counts(data.byState, 'state'), { PENDING: 1, IN_REVIEW: 1, RETURNED: 1, APPROVED: 2, REJECTED: 2 });
-    assert.deepEqual(counts(data.byCategory, 'category'), { FUNDING: 1, PURCHASE: 4, TRAVEL: 1, REIMBURSEMENT: 1 });
+    assert.equal(data.total, 8);
+    assert.deepEqual(counts(data.byState, 'state'), { PENDING: 1, IN_REVIEW: 1, RETURNED: 1, APPROVED: 2, REJECTED: 2, WITHDRAWN: 1 });
+    assert.deepEqual(counts(data.byCategory, 'category'), { FUNDING: 1, PURCHASE: 5, TRAVEL: 1, REIMBURSEMENT: 1 });
     assert.deepEqual(data.byReviewer, [
       { reviewer: { id: first.id, username: first.username }, approved: 0, rejected: 1, total: 1 },
       { reviewer: { id: final.id, username: final.username }, approved: 1, rejected: 0, total: 1 },
@@ -136,7 +137,7 @@ test('F-10 persisted global summary, final actors and snapshot reconciliation', 
     await app.post(target + '/approve').set('Cookie', first.cookie).send({}).expect(200);
     const decided = await summary();
     assert.equal(decided.byReviewer.find(r => r.reviewer.id === first.id).approved, 1);
-    assert.equal(decided.total, 8);
+    assert.equal(decided.total, 9);
     invariants(decided);
     const competing = await Promise.all(Array.from({ length: 10 }, () => fixture('PENDING')));
     const decisions = Promise.all(competing.map(async row => {
@@ -146,7 +147,7 @@ test('F-10 persisted global summary, final actors and snapshot reconciliation', 
     try {
       for (let i = 0; i < 20; i++) {
         const observed = await summary();
-        assert.equal(observed.total, 18);
+        assert.equal(observed.total, 19);
         invariants(observed);
       }
     } finally { await decisions; }

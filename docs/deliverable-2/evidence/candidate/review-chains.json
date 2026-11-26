@@ -1,0 +1,290 @@
+[
+  {
+    "author": {
+      "id": "U_kgDOCxvbXw",
+      "is_bot": false,
+      "login": "Lathapol",
+      "name": ""
+    },
+    "baseRefName": "sprint-1-staging",
+    "createdAt": "2026-11-24T08:58:15Z",
+    "headRefName": "codex/deliverable2-contracts",
+    "headRefOid": "0df55ad9cb8bcc281cb4000d826cffa608f4ac5b",
+    "mergeCommit": {
+      "oid": "90285f8a3c44a6d16f1540b04f8e61fd36525dae"
+    },
+    "mergedAt": "2026-11-24T09:25:17Z",
+    "number": 77,
+    "reviews": [
+      {
+        "id": "PRR_kwDOVji-gc8AAAABZ8_pew",
+        "author": {
+          "login": "Kittakorn-P"
+        },
+        "authorAssociation": "COLLABORATOR",
+        "body": "Reasonable baseline. Approve",
+        "submittedAt": "2026-11-24T09:25:04Z",
+        "includesCreatedEdit": false,
+        "reactionGroups": [],
+        "state": "APPROVED",
+        "commit": {
+          "oid": "0df55ad9cb8bcc281cb4000d826cffa608f4ac5b"
+        }
+      }
+    ],
+    "title": "Deliverable 2 - Specify Sprint 2 and Sprint 3 contracts before implementation",
+    "url": "https://github.com/Lathapol/sprint-group-work/pull/77"
+  },
+  {
+    "author": {
+      "id": "U_kgDOCxvbXw",
+      "is_bot": false,
+      "login": "Lathapol",
+      "name": ""
+    },
+    "baseRefName": "sprint-1-staging",
+    "createdAt": "2026-11-24T09:33:55Z",
+    "headRefName": "codex/sprint2-69-history",
+    "headRefOid": "c30f3be09ca9040ac523cd00cc2aee239c2e42cc",
+    "mergeCommit": {
+      "oid": "ad7f6fa458cffad67525edea20f479a78eaf9638"
+    },
+    "mergedAt": "2026-11-24T09:47:44Z",
+    "number": 78,
+    "reviews": [
+      {
+        "id": "PRR_kwDOVji-gc8AAAABZ9SrAA",
+        "author": {
+          "login": "Kittakorn-P"
+        },
+        "authorAssociation": "COLLABORATOR",
+        "body": "Approve",
+        "submittedAt": "2026-11-24T09:47:31Z",
+        "includesCreatedEdit": false,
+        "reactionGroups": [],
+        "state": "APPROVED",
+        "commit": {
+          "oid": "c30f3be09ca9040ac523cd00cc2aee239c2e42cc"
+        }
+      }
+    ],
+    "title": "Sprint 2 F-06 - Show authorized immutable request history",
+    "url": "https://github.com/Lathapol/sprint-group-work/pull/78"
+  },
+  {
+    "author": {
+      "id": "U_kgDOCxvbXw",
+      "is_bot": false,
+      "login": "Lathapol",
+      "name": ""
+    },
+    "baseRefName": "sprint-1-staging",
+    "createdAt": "2026-11-24T10:06:26Z",
+    "headRefName": "codex/sprint2-70-returns",
+    "headRefOid": "8c57c4d2ba64bf241c31920d6da6f985e79fe6f3",
+    "mergeCommit": {
+      "oid": "95786a83bd15a9929d92e6d983a75e5c27a99ed2"
+    },
+    "mergedAt": "2026-11-25T07:17:34Z",
+    "number": 79,
+    "reviews": [
+      {
+        "id": "PRR_kwDOVji-gc8AAAABaM7Hpg",
+        "author": {
+          "login": "Kittakorn-P"
+        },
+        "authorAssociation": "COLLABORATOR",
+        "body": "Approve\n",
+        "submittedAt": "2026-11-25T07:17:26Z",
+        "includesCreatedEdit": false,
+        "reactionGroups": [],
+        "state": "APPROVED",
+        "commit": {
+          "oid": "8c57c4d2ba64bf241c31920d6da6f985e79fe6f3"
+        }
+      }
+    ],
+    "title": "Sprint 2 F-07 - Return edit and resubmit to the same reviewer",
+    "url": "https://github.com/Lathapol/sprint-group-work/pull/79"
+  },
+  {
+    "author": {
+      "id": "U_kgDOCxvbXw",
+      "is_bot": false,
+      "login": "Lathapol",
+      "name": ""
+    },
+    "baseRefName": "sprint-1-staging",
+    "createdAt": "2026-11-25T13:15:16Z",
+    "headRefName": "codex/sprint2-71-filters",
+    "headRefOid": "e14119af7079f09ad30b79f9221b03666171ca29",
+    "mergeCommit": {
+      "oid": "54dec9ab52ad79953cc1d09056f17510eb193ef2"
+    },
+    "mergedAt": "2026-11-25T13:21:42Z",
+    "number": 81,
+    "reviews": [
+      {
+        "id": "PRR_kwDOVji-gc8AAAABaRuM7A",
+        "author": {
+          "login": "Kittakorn-P"
+        },
+        "authorAssociation": "COLLABORATOR",
+        "body": "Approve",
+        "submittedAt": "2026-11-25T13:21:33Z",
+        "includesCreatedEdit": false,
+        "reactionGroups": [],
+        "state": "APPROVED",
+        "commit": {
+          "oid": "e14119af7079f09ad30b79f9221b03666171ca29"
+        }
+      }
+    ],
+    "title": "Sprint 2 F-08 - Filter and search authorized request lists",
+    "url": "https://github.com/Lathapol/sprint-group-work/pull/81"
+  },
+  {
+    "author": {
+      "id": "U_kgDOCxvbXw",
+      "is_bot": false,
+      "login": "Lathapol",
+      "name": ""
+    },
+    "baseRefName": "sprint-1-staging",
+    "createdAt": "2026-11-25T14:31:03Z",
+    "headRefName": "codex/sprint3-73-summary",
+    "headRefOid": "3377c3460721994ac872aafa3e2a8c0306b85b7b",
+    "mergeCommit": {
+      "oid": "59990d95dd58037f8eaae6ac8fb96a9a8076e9d8"
+    },
+    "mergedAt": "2026-11-25T14:36:42Z",
+    "number": 85,
+    "reviews": [
+      {
+        "id": "PRR_kwDOVji-gc8AAAABaS8F5A",
+        "author": {
+          "login": "Kittakorn-P"
+        },
+        "authorAssociation": "COLLABORATOR",
+        "body": "Approve",
+        "submittedAt": "2026-11-25T14:36:35Z",
+        "includesCreatedEdit": false,
+        "reactionGroups": [],
+        "state": "APPROVED",
+        "commit": {
+          "oid": "3377c3460721994ac872aafa3e2a8c0306b85b7b"
+        }
+      }
+    ],
+    "title": "Sprint 3 F-10 - Report persisted counts and final reviewer decisions",
+    "url": "https://github.com/Lathapol/sprint-group-work/pull/85"
+  },
+  {
+    "author": {
+      "id": "U_kgDOCxvbXw",
+      "is_bot": false,
+      "login": "Lathapol",
+      "name": ""
+    },
+    "baseRefName": "main",
+    "createdAt": "2026-11-25T14:39:49Z",
+    "headRefName": "sprint-1-staging",
+    "headRefOid": "59990d95dd58037f8eaae6ac8fb96a9a8076e9d8",
+    "mergeCommit": {
+      "oid": "0877808fb5a8084e040974cb56b16648b274bb04"
+    },
+    "mergedAt": "2026-11-25T14:47:23Z",
+    "number": 86,
+    "reviews": [
+      {
+        "id": "PRR_kwDOVji-gc8AAAABaTGgFQ",
+        "author": {
+          "login": "Kittakorn-P"
+        },
+        "authorAssociation": "COLLABORATOR",
+        "body": "Lets go with the decision",
+        "submittedAt": "2026-11-25T14:47:16Z",
+        "includesCreatedEdit": false,
+        "reactionGroups": [],
+        "state": "APPROVED",
+        "commit": {
+          "oid": "59990d95dd58037f8eaae6ac8fb96a9a8076e9d8"
+        }
+      }
+    ],
+    "title": "Release F-10 - Reviewer decision summary on the Sprint 2 baseline",
+    "url": "https://github.com/Lathapol/sprint-group-work/pull/86"
+  },
+  {
+    "author": {
+      "id": "U_kgDOCxvbXw",
+      "is_bot": false,
+      "login": "Lathapol",
+      "name": ""
+    },
+    "baseRefName": "sprint-1-staging",
+    "createdAt": "2026-11-25T15:37:46Z",
+    "headRefName": "codex/deliverable2-74-baseline",
+    "headRefOid": "a4372224c52e3937d20993f1428938df203da197",
+    "mergeCommit": {
+      "oid": "4e471006767c9819a1ee5cba833455ce5177bba6"
+    },
+    "mergedAt": "2026-11-25T15:45:37Z",
+    "number": 88,
+    "reviews": [
+      {
+        "id": "PRR_kwDOVji-gc8AAAABaT9zDw",
+        "author": {
+          "login": "Kittakorn-P"
+        },
+        "authorAssociation": "COLLABORATOR",
+        "body": "Acceptable for baseline. Approve",
+        "submittedAt": "2026-11-25T15:43:22Z",
+        "includesCreatedEdit": false,
+        "reactionGroups": [],
+        "state": "APPROVED",
+        "commit": {
+          "oid": "a4372224c52e3937d20993f1428938df203da197"
+        }
+      }
+    ],
+    "title": "Deliverable 2 - Refresh complete baseline and actual test traceability",
+    "url": "https://github.com/Lathapol/sprint-group-work/pull/88"
+  },
+  {
+    "author": {
+      "id": "U_kgDOCxvbXw",
+      "is_bot": false,
+      "login": "Lathapol",
+      "name": ""
+    },
+    "baseRefName": "main",
+    "createdAt": "2026-11-25T15:54:54Z",
+    "headRefName": "sprint-1-staging",
+    "headRefOid": "4e471006767c9819a1ee5cba833455ce5177bba6",
+    "mergeCommit": {
+      "oid": "0334c966c396912dfaf2e309e044753f11d4e47c"
+    },
+    "mergedAt": "2026-11-25T15:58:31Z",
+    "number": 89,
+    "reviews": [
+      {
+        "id": "PRR_kwDOVji-gc8AAAABaUFbLA",
+        "author": {
+          "login": "Kittakorn-P"
+        },
+        "authorAssociation": "COLLABORATOR",
+        "body": "Approve",
+        "submittedAt": "2026-11-25T15:58:18Z",
+        "includesCreatedEdit": false,
+        "reactionGroups": [],
+        "state": "APPROVED",
+        "commit": {
+          "oid": "4e471006767c9819a1ee5cba833455ce5177bba6"
+        }
+      }
+    ],
+    "title": "Deliverable 2 - Integrate reviewed baseline and release evidence",
+    "url": "https://github.com/Lathapol/sprint-group-work/pull/89"
+  }
+]

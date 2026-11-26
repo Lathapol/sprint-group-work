@@ -1,0 +1,39 @@
+{
+  "spec": {
+    "template": {
+      "metadata": {
+        "labels": {
+          "commit-sha": "0334c966c396912dfaf2e309e044753f11d4e47c",
+          "run.googleapis.com/startupProbeType": "Default"
+        }
+      }
+    }
+  },
+  "status": {
+    "conditions": [
+      {
+        "lastTransitionTime": "2026-11-25T16:03:45.908682Z",
+        "status": "True",
+        "type": "Ready"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T16:03:40.067659Z",
+        "status": "True",
+        "type": "ConfigurationsReady"
+      },
+      {
+        "lastTransitionTime": "2026-11-25T16:03:45.858513Z",
+        "status": "True",
+        "type": "RoutesReady"
+      }
+    ],
+    "latestReadyRevisionName": "approvals-r45650095303-1",
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100,
+        "revisionName": "approvals-r45650095303-1"
+      }
+    ]
+  }
+}

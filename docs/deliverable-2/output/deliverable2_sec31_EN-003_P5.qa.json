@@ -1,0 +1,11 @@
+{
+  "pdfPages": 76,
+  "requirementsPresent": 40,
+  "acceptanceCriteriaPresent": 40,
+  "outlineEntries": 31,
+  "allSourceHashesMatch": true,
+  "pdfSha256": "f0ddee1051eaca2bd07b4e316b443bb0f9e9fdf592c384d6b6fd938b9fe6f827",
+  "textBoundsIssues": [],
+  "renderedAllPages": true,
+  "reviewStatus": "report content approved in PR90; not submitted"
+}

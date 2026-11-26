@@ -1,0 +1,57 @@
+Department Requests
+Team approvals · Cloud release
+requester1
+Sign out
+Back to requests
+D2 candidate returned 2026-11-25T16:04:09.178Z
+Status
+Approved
+Category
+PURCHASE
+Amount (THB)
+20.5
+Justification
+Candidate literal 100%_\ evidence
+Reviewer
+reviewer1
+History
+
+Created → Pending
+
+requester1 (REQUESTER)
+
+11/25/2026, 4:04:26 PM UTC
+
+Pending → In review
+
+reviewer1 (REVIEWER)
+
+11/25/2026, 4:04:26 PM UTC
+
+In review → Returned
+
+reviewer1 (REVIEWER)
+
+11/25/2026, 4:04:26 PM UTC
+
+Reason: Synthetic receipt correction
+
+Edited
+
+requester1 (REQUESTER)
+
+11/25/2026, 4:04:27 PM UTC
+
+Reason: Request details updated.
+
+Returned → In review
+
+requester1 (REQUESTER)
+
+11/25/2026, 4:04:27 PM UTC
+
+In review → Approved
+
+reviewer1 (REVIEWER)
+
+11/25/2026, 4:04:27 PM UTC
