@@ -32,7 +32,7 @@ test('F-08 filters preserve exact persisted matches and authorization', async t 
     const row = await db.request.create({ data: {
       title: marker + ' ' + title, category, state, createdAt: new Date(createdAt),
       amount: '10.25', requesterId: who.id,
-      reviewerId: state === 'PENDING' ? null : assigned.id,
+      reviewerId: ['PENDING', 'WITHDRAWN'].includes(state) ? null : assigned.id,
       decisionReason: ['RETURNED', 'REJECTED'].includes(state) ? 'Synthetic reason' : null,
       justification,
     } });
@@ -45,6 +45,7 @@ test('F-08 filters preserve exact persisted matches and authorization', async t 
   await fixture('Returned', 'PURCHASE', 'RETURNED', '2026-02-28T23:59:59.999Z');
   await fixture('after', 'FUNDING', 'APPROVED', '2026-03-01T00:00:00Z');
   await fixture('Rejected', 'REIMBURSEMENT', 'REJECTED', '2024-02-29T00:00:00Z', unrelated);
+  await fixture('Withdrawn', 'PURCHASE', 'WITHDRAWN', '2026-02-28T13:00:00Z');
   await fixture('Office 100XXchair private', 'PURCHASE', 'PENDING', '2026-02-28T10:00:00Z', reviewer, other);
   await fixture('Office other reviewer', 'PURCHASE', 'IN_REVIEW', '2026-02-28T11:00:00Z', unrelated);
   await fixture('last calendar day', 'FUNDING', 'APPROVED', '9999-12-31T23:59:59.999Z');
@@ -65,7 +66,7 @@ test('F-08 filters preserve exact persisted matches and authorization', async t 
   }
   const enc = encodeURIComponent;
   await t.test('TEST-08-01: state category text AND combinations and literal wildcard characters', async () => {
-    for (const state of ['PENDING', 'IN_REVIEW', 'RETURNED', 'APPROVED', 'REJECTED']) {
+    for (const state of ['PENDING', 'IN_REVIEW', 'RETURNED', 'APPROVED', 'REJECTED', 'WITHDRAWN']) {
       await exact(owner, 'state=' + state, r => r.state === state);
     }
     for (const category of ['PURCHASE', 'TRAVEL', 'FUNDING', 'REIMBURSEMENT']) {

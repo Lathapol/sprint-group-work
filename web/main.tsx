@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 type User = { id: number; username: string; role: 'REQUESTER' | 'REVIEWER' };
 type Row = {
   id: number; title: string; category: string; amount: string; justification: string;
-  state: 'PENDING' | 'IN_REVIEW' | 'RETURNED' | 'APPROVED' | 'REJECTED';
+  state: 'PENDING' | 'IN_REVIEW' | 'RETURNED' | 'APPROVED' | 'REJECTED' | 'WITHDRAWN';
   reviewerId: number | null; reviewer: { username: string } | null; decisionReason: string | null;
   updatedAt: string;
 };
@@ -60,7 +60,7 @@ function ErrorMessage({ error }: { error: unknown }) {
 }
 
 const labels: Record<Row['state'], string> = {
-  PENDING: 'Pending', IN_REVIEW: 'In review', RETURNED: 'Returned', APPROVED: 'Approved', REJECTED: 'Rejected',
+  PENDING: 'Pending', IN_REVIEW: 'In review', RETURNED: 'Returned', APPROVED: 'Approved', REJECTED: 'Rejected', WITHDRAWN: 'Withdrawn',
 };
 
 function Login({ onLogin }: { onLogin: (user: User) => void }) {
@@ -372,7 +372,8 @@ function RequestDetail({ user }: { user: User }) {
   const [busy, setBusy] = useState(false);
   const row = updated ?? result?.data;
 
-  async function act(action: 'claim' | 'approve' | 'reject' | 'return') {
+  async function act(action: 'claim' | 'approve' | 'reject' | 'return' | 'withdraw') {
+    if (action === 'withdraw' && !window.confirm('Withdraw this request? This action cannot be undone.')) return;
     setError(undefined);
     setBusy(true);
     try {
@@ -403,6 +404,8 @@ function RequestDetail({ user }: { user: User }) {
       </dl>
       {user.role === 'REVIEWER' && row.state === 'PENDING' &&
         <button className="btn btn-primary align-self-start" disabled={busy} onClick={() => void act('claim')}>Claim request</button>}
+      {user.role === 'REQUESTER' && row.state === 'PENDING' &&
+        <button className="btn btn-outline-danger align-self-start" disabled={busy} onClick={() => void act('withdraw')}>Withdraw request</button>}
       {user.role === 'REVIEWER' && row.state === 'IN_REVIEW' && row.reviewerId === user.id && <>
         <label className="form-label" htmlFor="reason">Decision reason (required for rejection or return)</label>
         <textarea className="form-control mb-3" id="reason" value={reason} onChange={(event) => setReason(event.target.value)} />

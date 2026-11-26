@@ -16,7 +16,7 @@ test('TEST-10-04 UI: real decision counts, reload, loading empty and retry', asy
       return;
     }
     if (mode === 'empty') {
-      actual = { total: 0, byState: ['PENDING', 'IN_REVIEW', 'RETURNED', 'APPROVED', 'REJECTED'].map(state => ({ state, count: 0 })),
+      actual = { total: 0, byState: ['PENDING', 'IN_REVIEW', 'RETURNED', 'APPROVED', 'REJECTED', 'WITHDRAWN'].map(state => ({ state, count: 0 })),
         byCategory: ['FUNDING', 'PURCHASE', 'TRAVEL', 'REIMBURSEMENT'].map(category => ({ category, count: 0 })), byReviewer: [], unattributedDecisions: 0 };
       await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ data: actual }) });
       return;
@@ -36,7 +36,7 @@ test('TEST-10-04 UI: real decision counts, reload, loading empty and retry', asy
   async function matchesActual() {
     await expect.poll(() => actual !== undefined).toBe(true);
     await expect(page.getByTestId('summary-total')).toHaveText(String(actual.total));
-    const states: Record<string, string> = { PENDING: 'Pending', IN_REVIEW: 'In review', RETURNED: 'Returned', APPROVED: 'Approved', REJECTED: 'Rejected' };
+    const states: Record<string, string> = { PENDING: 'Pending', IN_REVIEW: 'In review', RETURNED: 'Returned', APPROVED: 'Approved', REJECTED: 'Rejected', WITHDRAWN: 'Withdrawn' };
     for (const row of actual.byState) {
       const tableRow = page.getByRole('table', { name: 'Requests by state', exact: true }).getByRole('row')
         .filter({ has: page.getByRole('cell', { name: states[row.state], exact: true }) });
