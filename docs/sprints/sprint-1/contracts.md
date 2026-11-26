@@ -65,6 +65,42 @@ NFR-04, NFR-07. PostgreSQL migrations provision User, Session, Request and Reque
 | AC-05-01 Data survives restart | TEST-05-01 API/DB | Save a request and decisions, stop and restart the backend with the same database, then retrieve it. | Request, reviewer, decision and history persist. |
 | AC-05-02 Fresh setup is reproducible | TEST-05-02 manual | Teammate follows README from a fresh clone against a clean local database. | Migrations, seed, app, health check, build and test commands work. No real credentials enter Git. |
 
+## Lab 7 CR-L7-01 impact analysis (proposed, not implemented)
+
+Issue #94 proposes an owner-only withdrawal transition for an unclaimed Pending request. This contract revision records the old/new rule and test design before code changes. The proposed behavior is not present in the referenced implementation; the actual pre-change main/live version and revision must be refreshed and recorded before the future RED run and release.
+
+| Original requirement/rule | Feature and affected contract | New acceptance criteria / STS | Code/data impact to inspect | Unchanged boundary / reason |
+| --- | --- | --- | --- | --- |
+| FR-04, FR-05, BR-02; Pending starts unassigned and only the owner lists their records | F-02/F-12; SRS sections 4–5; SDS workflow and permissions | AC-12-01, 02; TEST-12-01, 02 | `src/requests.ts`, `web/main.tsx`, `prisma/schema.prisma`, additive RequestState migration | Submission fields, ownership scope and initial state stay unchanged. |
+| FR-07, FR-08, BR-03–04; Reviewer queue and atomic claim | F-03/F-12; SRS BR-03/04/15; SDS transition and race | AC-12-03, 04; TEST-12-03, 04 | claim/withdraw guarded update in `src/requests.ts`; RequestHistory transaction | Existing claim behavior remains unchanged; one winner in claim/withdraw race avoids an orphaned assignment or double transition. |
+| FR-11, FR-13, BR-10; state changes are append-only and visible | F-05/F-06/F-12; SRS FR-11/19, BR-10/15; SDS history/API projection | AC-12-01, 05; TEST-12-01, 05 | RequestState enum, migration, detail/history projection, `web/main.tsx` | Preserve original request fields and all prior history; no deletion, rewriting or user-provided withdrawal reason. |
+| FR-16, BR-11; authorized lists keep scope | F-08/F-12; SRS FR-16; SDS filters, queue and role table | AC-12-05; TEST-12-05 | `src/request-filters.ts` state enum validation, owner/reviewer list rendering and filtering | Queue remains Pending only; requesters remain owner-scoped; reviewers remain read-only. |
+| FR-18; counts by state and terminal reviewer decisions | F-10/F-12; SRS FR-18/19; SDS summary | AC-12-06; TEST-12-06 | `src/reports.ts` and summary UI | Withdrawn contributes to state/category totals but not Approved/Rejected reviewer decision totals. No private request text is added. |
+| BR-09/15; terminal-state immutability | F-04/F-07/F-12; SRS BR-09/15; SDS transition constraints | AC-12-03; TEST-12-03 | transition guards and final-state UI | Withdrawn cannot be edited, resubmitted, claimed or decided. Existing terminal outcomes remain unchanged. |
+
+The additive database change needs a new enum value and updated state/reviewer constraint. No historical row rewrite or backfill is needed. Before rollout, confirm the migration and old-image compatibility plan: a pre-change binary may not understand a newly stored enum value, so rollout/rollback must not send Withdrawn rows to an incompatible revision. There is no migration in this contract PR.
+
+## F-12 Requester withdrawal of an unclaimed Pending request (CR-L7-01)
+
+**Status:** Proposed contract revision for Lab 7; implementation and deployment are pending. Original behavior is FR-04/FR-05 and BR-02/BR-03: a valid requester submission creates an unassigned Pending request, which has no owner withdrawal action or route. The system retains it in Pending until a Reviewer claims it. The proposed new rule is FR-19/BR-15 in `docs/srs.md`.
+
+**API:** `POST /api/requests/:id/withdraw` with `{}`. Session identity supplies the requester. Success is `200 {data: request}` with state `WITHDRAWN`; no input reason is accepted or needed. Use an atomic conditional update requiring matching `id`, `requesterId`, state `PENDING`, and `reviewerId IS NULL`; in the same database transaction append one history row (`fromState=PENDING`, `toState=WITHDRAWN`, actor=requester, fixed reason `Requester withdrew the request.`). Return 404 for missing/private-to-another-requester records, 403 for a Reviewer role, and 409 for an owned request not eligible for withdrawal. All failures write nothing. Do not reveal whether another requester's ID exists.
+
+**Persistence and behavior:** add `WITHDRAWN` as a RequestState enum value through a forward-only additive migration; update the existing reviewer/state CHECK so both `PENDING` and `WITHDRAWN` require `reviewerId IS NULL` and all other states require an assigned reviewer; do not change `decidedAt` or `decisionReason` as withdrawal is not a Reviewer decision. Retain request fields and all prior history. The new event is append-only. Withdrawn is final. Requesters see it only in their own list/detail/history; Reviewers see it read-only. State filters and the all-state summary include the new enum. Reviewer decision totals remain Approved/Rejected only; withdrawal is not a decision attributed to a Reviewer.
+
+**UI:** show a Withdraw action only to the owning Requester while the visible state is Pending; require an explicit confirmation, disable repeated submission while busy, refresh the detail/list after success, and preserve the current view with a clear message on 409/network failure. Display a Withdrawn status and the history entry. Reviewers receive no withdrawal control. UI visibility is convenience only; server authorization is authoritative.
+
+| Acceptance criterion | Test ID and level | Preconditions and action | Expected result |
+| --- | --- | --- | --- |
+| AC-12-01 Eligible owner can withdraw once | TEST-12-01 API/DB | Owner submits Pending request; POST withdraw `{}`; fetch detail and history. | 200, state WITHDRAWN, reviewer null, request fields and original event retained, exactly one PENDING->WITHDRAWN event with owner and fixed reason. |
+| AC-12-02 Authentication, role and ownership are enforced | TEST-12-02 API/DB | Call without session; call as Reviewer; call as a different Requester. | 401, 403, and non-disclosing 404 respectively; no state/history mutation or private data. |
+| AC-12-03 Only unclaimed Pending is eligible; withdrawn is final | TEST-12-03 API/DB | Try owned requests in IN_REVIEW, RETURNED, APPROVED, REJECTED and WITHDRAWN; retry after success. | 409 each time; no state/history change; all existing owner edit, decision and final-state rules remain intact. |
+| AC-12-04 Withdraw/claim race is atomic | TEST-12-04 concurrent API/DB | Send owner withdraw and Reviewer claim concurrently for the same eligible request. | Exactly one 200 and one 409. Winner state and actor assignment agree; exactly one corresponding history event; loser creates none. |
+| AC-12-05 UI, history and list scope are consistent | TEST-12-05 UI/API | Withdraw as owner, reload; inspect owner list/detail/history and Reviewer All/Queue. | Owner sees Withdrawn and one event after reload; other requester sees no record; Reviewer can read it, Queue omits it, no Reviewer action is shown. |
+| AC-12-06 Summary counts state without calling it a decision | TEST-12-06 API/UI | Create a Withdrawn fixture and query Reviewer summary. | WITHDRAWN state/category totals include one; total reconciles; Approved/Rejected reviewer totals and unattributed decisions are unchanged. |
+
+The affected modules and dependencies are listed in the impact matrix above. Existing auth, submission, claim, decision, return/resubmit, filter, history, persistence and summary contracts remain regression scope. Test IDs above are planned; no implementation or test result is claimed by this documentation revision.
+
 ## Product Definition of Done
 
 Each contract and test design is versioned before implementation. Requirements trace to acceptance criteria and test IDs. Each completed feature is linked to its Issue and reviewed PR into sprint-1-staging. Record failing-before/passing-after evidence for a meaningful rule test, then verify the integrated release. Record test commands, files, outcomes and exact tested commit. Keep setup reproducible and report incomplete, failed or skipped work. The release PR receives teammate review before merging to main.
