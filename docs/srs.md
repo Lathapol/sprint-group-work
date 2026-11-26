@@ -1,7 +1,7 @@
 # Software Requirements Specification
 
 **Product:** Workflow and Approval System (university department)
-**Version:** 0.3 (current product baseline; review in #74) | **Date:** 25 November 2026 | **Theme:** 5. Workflow and Approval System
+**Version:** 0.4 (CR-L7-01 contract update; proposed change not implemented) | **Date:** 26 November 2026 | **Theme:** 5. Workflow and Approval System
 
 Current implementation reference: main `0877808fb5a8084e040974cb56b16648b274bb04`, tag `f10-2026-11-25`, revision `approvals-r45637901908-1`. This specification includes the whole product, including unimplemented requirements. Implementation is not equivalent to complete verification or independent UAT acceptance; see the [complete result matrix](traceability.md) and [baseline audit](deliverable-2/baseline-audit.md).
 
@@ -15,7 +15,7 @@ The product is a web application in which staff submit requests, reviewers pick 
 
 | Actor | Responsibilities |
 |---|---|
-| Requester | Logs in, submits requests, views and filters their own requests and history, edits Returned requests and resubmits to the same Reviewer. |
+| Requester | Logs in, submits requests, views and filters their own requests and history, may withdraw an unclaimed Pending request under proposed CR-L7-01, edits Returned requests and resubmits to the same Reviewer. |
 | Reviewer | Logs in, reads all requests and history, filters All/Queue/Mine, claims Pending requests, approves/rejects/returns assigned requests, and views the global summary. Distinct second approval remains planned. |
 
 Each account has exactly one role. There is no administrator role in this product.
@@ -48,6 +48,7 @@ Each account has exactly one role. There is no administrator role in this produc
 | FR-16 | Authorized request lists can be filtered by current state, category and inclusive UTC creation dates and searched by literal case-insensitive title/justification text; all supplied filters combine with AND and cannot widen ownership. |
 | FR-17 | Requests at or above THB 50,000.00 require a second approval from a different Reviewer. This requirement is planned and is NOT enforced by the current release. |
 | FR-18 | A Reviewer can view global counts by current state and category and terminal decisions attributed to the final decision's Reviewer. One request contributes once; unmatched legacy terminal decisions are explicitly unattributed. All totals come from one database snapshot. |
+| FR-19 (CR-L7-01, proposed) | A Requester can withdraw their own unclaimed Pending request. The request remains stored and auditable in a final Withdrawn state. |
 
 ## 5. Business rules
 
@@ -55,18 +56,19 @@ Each account has exactly one role. There is no administrator role in this produc
 |---|---|
 | BR-01 | A request must have a non-empty title, a category from the fixed list (Funding, Purchase, Travel, Reimbursement), an amount greater than 0 (in THB) and a non-empty justification; otherwise it is rejected and nothing is stored. |
 | BR-02 | A newly submitted request has state Pending and no reviewer. |
-| BR-03 | Current transitions: Pending -> In Review; In Review -> Approved, Rejected or Returned; Returned -> In Review on owner resubmission. A valid owner edit keeps Returned and is audited. Other transitions fail without mutation. The future second-approval transition in FR-17 is not implemented. |
+| BR-03 | Implemented transitions: Pending -> In Review; In Review -> Approved, Rejected or Returned; Returned -> In Review on owner resubmission. A valid owner edit keeps Returned and is audited. Other transitions fail without mutation. The future second-approval transition in FR-17 is not implemented. Proposed CR-L7-01 adds only Pending -> Withdrawn for its owner while unclaimed; it is not implemented in the referenced baseline. |
 | BR-04 | Pending is unassigned. Claim assigns exactly one first Reviewer, retained through return/resubmission. Two simultaneous claims yield one success and one conflict. A future second decision actor under BR-14 will be separate from this first assignment. |
 | BR-05 | Only the assigned first Reviewer may currently approve, reject or return an In Review request. An unrelated Reviewer is denied without mutation. Future second-stage authority follows BR-14. |
 | BR-06 | A Reviewer cannot claim or decide a request whose Requester is that same user (self-approval is blocked even if roles were ever combined). |
 | BR-07 | Rejecting or returning requires a trimmed non-empty reason. A reason is optional when approving. |
 | BR-08 | A submitted request cannot be edited by anyone, except that a Returned request can be edited by its Requester (see BR-13). |
-| BR-09 | Approved and Rejected are final states. |
+| BR-09 | Approved and Rejected are final states. Under proposed CR-L7-01, Withdrawn is also final; that extension is not implemented in the referenced baseline. |
 | BR-10 | History entries are append-only: they cannot be edited or deleted through the application. |
 | BR-11 | A Requester can see only their own requests. A Reviewer can view all requests read-only, but can claim only Pending requests and can decide only requests they claimed (BR-05). |
 | BR-12 | Every account has exactly one role. |
 | BR-13 | Only a Returned request may be edited or resubmitted, only by its owner. Resubmit retains the first Reviewer, clears the current reason and returns to In Review, never to the unassigned queue. A no-op edit writes no history. |
 | BR-14 | At amount >= THB 50,000.00, the second approval must come from a Reviewer different from the first Reviewer and from the Requester. Planned F-09; current release still finalizes after one approval. |
+| BR-15 (CR-L7-01, proposed) | Only the authenticated owner may withdraw their own PENDING request when reviewerId is null. Withdrawal is an atomic PENDING -> WITHDRAWN transition with exactly one append-only history event, is final, and does not delete or rewrite request data. Other states/actors fail without mutation. A concurrent claim and withdrawal permit exactly one transition. |
 
 ## 6. Non-functional requirements
 
@@ -133,4 +135,4 @@ Each account has exactly one role. There is no administrator role in this produc
 
 ## 11. Verification and outstanding scope
 
-All 18 FR, 14 BR and 8 NFR remain in scope. The [matrix](traceability.md) records actual tests, evidence/version and gaps, rather than treating planned tests as executed. In particular FR-17/BR-14 are unimplemented; NFR-05 is unmeasured; NFR-07 lacks a recorded teammate fresh-clone run; NFR-08 is only partially verified. NFR-03 has working bcrypt and public-field tests but no comprehensive stored-password/log audit. NFR-04 has real redeploy continuity evidence, with the separate full-history process-restart exercise still outstanding. These targets have not been weakened or waived.
+The assessed baseline remains 40 requirements (18 FR, 14 BR, 8 NFR). CR-L7-01 adds one proposed FR and one proposed BR, bringing the draft contract to 42 requirement entries; these additions are not implemented. The [matrix](traceability.md) records actual tests, evidence/version and gaps, rather than treating planned tests as executed. TEST-12 mappings remain design-only until reviewed implementation and release. In particular FR-17/BR-14 are unimplemented; NFR-05 is unmeasured; NFR-07 lacks a recorded teammate fresh-clone run; NFR-08 is only partially verified. NFR-03 has working bcrypt and public-field tests but no comprehensive stored-password/log audit. NFR-04 has real redeploy continuity evidence, with the separate full-history process-restart exercise still outstanding. These targets have not been weakened or waived.

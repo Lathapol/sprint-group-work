@@ -1,8 +1,8 @@
 # Requirements and Actual-Result Traceability
 
-**Version:** 0.3 | **Date:** 25 November 2026 | **Issue:** #74
+**Version:** 0.4 | **Date:** 26 November 2026 | **Issue:** #74; Lab 7 CR-L7-01 proposed contract
 
-One complete matrix below covers all **40 baseline requirements: 18 FR, 14 BR, 8 NFR**. Requirement IDs and targets are retained, including unimplemented/unverified work. Actual test keys resolve to exact files and test names in section2. AC/TEST IDs refer to the preserved [Sprint 1](sprints/sprint-1/contracts.md), [Sprint 2](sprints/sprint-2/contracts.md) and [Sprint 3](sprints/sprint-3/contracts.md) contracts; ranges are inclusive. Section3 separately states implementation and executed verification for every AC. A green unrelated test is not coverage.
+One complete matrix below covers all **40 baseline requirements: 18 FR, 14 BR, 8 NFR**. Requirement IDs and targets are retained, including unimplemented/unverified work. Actual test keys resolve to exact files and test names in section2. AC/TEST IDs refer to the preserved [Sprint 1](sprints/sprint-1/contracts.md), [Sprint 2](sprints/sprint-2/contracts.md) and [Sprint 3](sprints/sprint-3/contracts.md) contracts; ranges are inclusive. Section3 separately states implementation and executed verification for every AC. A green unrelated test is not coverage. The Lab 7 addition below is proposed only; TEST-12-01..06 have no implementation or execution result yet.
 
 ## 1. Complete requirement matrix
 
@@ -28,6 +28,7 @@ R = main `0877808fb5a8084e040974cb56b16648b274bb04`, tag `f10-2026-11-25`, [run 
 | FR-16 | F-08 | 2 | AC-08-01..04 | TEST-08-01..04 filters | F,FU | PASS R exact scope/filter sets, literal text/UTC bounds/retry; L2 |
 | FR-17 | F-09 | 3 | AC-09-01..04 | TEST-09-01..04 >=THB 50,000 second stage | No implementation/test file | NOT IMPLEMENTED / NOT RUN; current R still one-stage at high amounts |
 | FR-18 | F-10 | 3 | AC-10-01..04 | TEST-10-01..04 summary | S,SU | PASS R real zero/count/final-actor/concurrency/access assertions; L3 independent live reconciliation; future F-09 fixture unrun |
+| FR-19 (proposed CR-L7-01) | F-12 | Lab 7 | AC-12-01..06 | TEST-12-01..06 withdrawal and regression | Planned only | NOT IMPLEMENTED / NOT RUN; docs-only contract pending teammate review |
 | BR-01 | F-02,F-07 | 1,2 | AC-02-02,AC-07-02 | TEST-02-02,07-02 validation/no write | D,W,T/TEST-07-02 | PASS tested R cases; partial exhaustive original create-field/decimal boundary coverage |
 | BR-02 | F-02 | 1 | AC-02-01 | TEST-02-01 Pending/unassigned | D,H/TEST-06-01 | PASS R initial state/reviewer/event; L3 saved initial record |
 | BR-03 | F-03,F-04,F-07,F-09 | 1,2,3 | AC-03-01,AC-04-01..03,AC-07-01..05,AC-09-01 | TEST-03-01,04-01..03,07-01..05,09-01 | D,T,TU | PASS R implemented five-state transitions/invalid states; planned F-09 transition absent |
@@ -42,6 +43,7 @@ R = main `0877808fb5a8084e040974cb56b16648b274bb04`, tag `f10-2026-11-25`, [run 
 | BR-12 | F-01,F-10 | 1,3 | AC-01-02,04,AC-10-03 | TEST-01-02,04,10-03 role authority | A,S/TEST-10-03 | PASS R single database role, forged role cannot elevate; no combined-role feature |
 | BR-13 | F-07 | 2 | AC-07-02..04 | TEST-07-02..04 owner Returned only | T,TU | PASS R ownership, allowed fields, no-op, row-lock race, same-reviewer resubmit |
 | BR-14 | F-09 | 3 | AC-09-01..04 | TEST-09-01..04 distinct second actor | No implementation/test file | NOT IMPLEMENTED / NOT RUN, equality at50,000 remains mandatory |
+| BR-15 (proposed CR-L7-01) | F-12 | Lab 7 | AC-12-01..06 | TEST-12-01..06 owner withdrawal, races, scope, summary | Planned only | NOT IMPLEMENTED / NOT RUN; docs-only contract pending teammate review |
 | NFR-01 | F-01..04,F-06..10 | 1,2,3 | AC-01-02,AC-06-02,AC-07-01..02,AC-08-03,AC-10-03 | Anonymous/expired endpoint API checks | A,D,H,T,F,S | PASS R covered routes; L2/L3 direct API401. Future F-09 endpoints must join matrix |
 | NFR-02 | F-01..04,F-06..10 | 1,2,3 | AC-01-04,AC-06-02,AC-07-01..04,AC-08-03,AC-10-03 | Wrong role/owner/no private fields | D,H,T,F,S | PASS R tested roles/ownership/forged inputs; self-ID verification gap under BR-06; L2/L3 |
 | NFR-03 | F-01,F-05,F-11 | 1,3 | AC-01-01; complete hash/database/log audit | TEST-01-01 + final audit | A tests bcrypt login and exact public fields; seed hashes password | PARTIAL R: no comprehensive stored-seed-hash/salt/no-plaintext-log audit; not inferred from green login |
@@ -52,6 +54,8 @@ R = main `0877808fb5a8084e040974cb56b16648b274bb04`, tag `f10-2026-11-25`, [run 
 | NFR-08 | F-02,F-07,F-08,F-11 | 1,2,3 | AC-02-02,AC-07-02,AC-08-04,AC-11-02 | TEST-02-02,07-02,08-04,11-02 every-form UI | W,TU,FU; no separate component suite | PARTIAL R selected amount/date/input-retention/retry checks pass. Every invalid field/form, busy/409 permutations and component-level coverage not complete |
 
 ## 2. Actual-test and evidence index
+
+TEST-12-01..06 are design IDs in the Lab 7 contract, not actual test files/results. They are intentionally absent from the actual-test index until implemented.
 
 Each key is an actual file/test name at R, not a fabricated TEST-ID implementation. Sprint 1 planned IDs are mapped onto the existing broader tests rather than renamed retrospectively.
 

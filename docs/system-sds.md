@@ -1,6 +1,6 @@
 # System-Level Software Design Specification
 
-**Product:** Workflow and Approval System (university department) | **Version:** 0.3 | **Date:** 25 November 2026 | **Issue:** #74
+**Product:** Workflow and Approval System (university department) | **Version:** 0.4 | **Date:** 26 November 2026 | **Issue:** #74; Lab 7 CR-L7-01 proposed update
 
 Implemented design at main `0877808fb5a8084e040974cb56b16648b274bb04`, tag `f10-2026-11-25`, revision `approvals-r45637901908-1`. [SRS](srs.md), [inventory](features.md), [result matrix](traceability.md). Planned F-09 is distinguished from actual behavior/schema. Prior v0.1 remains in Git.
 
@@ -46,6 +46,7 @@ Cookie `session`: HttpOnly, SameSite=Lax, Path=/, Secure in production. Logout d
 | Approve/reject/return | 401 | 403 | Assigned actor, In Review, no self; unrelated403 |
 | Edit/resubmit | 401 | Own Returned; wrong owner404, wrong state409 | 403 |
 | Summary | 401 | 403 | Global; no client-selected scope |
+| Withdraw | 401 | Own Pending/unassigned only; Reviewer 403; another owner 404 | 409 outside eligible state |
 
 Identity/role are derived from session, never request body/query. One enum role per account. Same-ID self-approval guards/DB constraints exist, but dedicated synthetic self-claim/self-decision tests are a verification gap.
 
@@ -67,9 +68,9 @@ erDiagram
 | Request | id Int PK, title, category, amount Decimal(12,2), justification, state, requesterId FK, nullable reviewerId FK, nullable decisionReason, createdAt, updatedAt, nullable decidedAt |
 | RequestHistory | id Int PK, requestId FK, actorId FK, nullable fromState, toState, nullable reason, createdAt |
 
-No displayName or second-stage columns exist. Categories: FUNDING/PURCHASE/TRAVEL/REIMBURSEMENT. Current states: PENDING/IN_REVIEW/RETURNED/APPROVED/REJECTED. Times are returned as ISO timestamps. Request indexes: requesterId/reviewerId/state; history index: requestId. No pagination or measured1,000-row performance result yet.
+No displayName or second-stage columns exist. Categories: FUNDING/PURCHASE/TRAVEL/REIMBURSEMENT. Implemented baseline states: PENDING/IN_REVIEW/RETURNED/APPROVED/REJECTED. Proposed CR-L7-01 adds WITHDRAWN but this value is not in the referenced deployed schema. Times are returned as ISO timestamps. Request indexes: requesterId/reviewerId/state; history index: requestId. No pagination or measured1,000-row performance result yet.
 
-CHECK constraints enforce positive amount, nonblank title/justification, reviewer absent exactly when Pending, reviewer different from requester, and nonblank rejection/return reason. Foreign keys preserve references. Request/history writes commit atomically. History is immutable through the application (no mutation routes), not through an immutable-history database trigger.
+Current CHECK constraints enforce positive amount, nonblank title/justification, reviewer absent exactly when Pending, reviewer different from requester, and nonblank rejection/return reason. Proposed CR-L7-01 changes the reviewer/state invariant to allow a null reviewer in Pending or Withdrawn and requires a future migration to update the constraint. Foreign keys preserve references. Request/history writes commit atomically. History is immutable through the application (no mutation routes), not through an immutable-history database trigger.
 
 Migrations, in order:
 
@@ -77,7 +78,7 @@ Migrations, in order:
 2. `20261124000100_returned_state`: add enum value in separate committed migration.
 3. `20261124000200_returned_reason`: extend reason CHECK after enum is usable.
 
-These additive migrations preserve earlier rows and run via prisma migrate deploy. F-10 adds none. Production release never resets/reseeds. Synthetic seed supplies two Requesters/two Reviewers and four original-state fixtures, not every current state; it hashes an environment password and uses controlled upserts/fixture checks.
+These additive migrations preserve earlier rows and run via prisma migrate deploy. F-10 adds none. Production release never resets/reseeds. CR-L7-01 proposes a further additive RequestState enum value and reviewer/state constraint update; no such migration is included or deployed in this contract revision. A future rollout must avoid routing new WITHDRAWN rows to a pre-change app revision. Synthetic seed supplies two Requesters/two Reviewers and four original-state fixtures, not every current state; it hashes an environment password and uses controlled upserts/fixture checks.
 
 ## 4. Workflow and concurrency
 
@@ -85,14 +86,16 @@ These additive migrations preserve earlier rows and run via prisma migrate deplo
 stateDiagram-v2
   [*] --> PENDING: owner submits
   PENDING --> IN_REVIEW: Reviewer claims
+  PENDING --> WITHDRAWN: owner withdraws before claim (proposed CR-L7-01)
   IN_REVIEW --> RETURNED: assigned Reviewer returns with reason
   RETURNED --> RETURNED: owner saves effective edit
   RETURNED --> IN_REVIEW: owner resubmits to same Reviewer
   IN_REVIEW --> APPROVED: assigned Reviewer approves
   IN_REVIEW --> REJECTED: assigned Reviewer rejects with reason
+  WITHDRAWN --> [*]: terminal; no further actions (proposed CR-L7-01)
 ```
 
-Submit validates trimmed nonblank title/justification, fixed category and positive THB (<=10 integer/two fractional digits, Decimal12,2), sets owner from session and atomically creates Pending plus initial history fromState=null. Claim guarded by expected Pending assigns one Reviewer; two competing calls yield one200/one409 and one event. Decisions/return check assigned actor, In Review and no self, then guarded update plus event in one transaction. Reject/Return require trimmed reason; approval reason optional. Final decision sets decidedAt; Return clears it and retains reviewer.
+Submit validates trimmed nonblank title/justification, fixed category and positive THB (<=10 integer/two fractional digits, Decimal12,2), sets owner from session and atomically creates Pending plus initial history fromState=null. Proposed CR-L7-01 adds `POST /api/requests/:id/withdraw` with a guarded `PENDING` + `reviewerId IS NULL` + owner update and history append in the same transaction. Concurrent claim/withdraw is resolved by the conditional update: one succeeds and one conflicts. This route and state are not implemented in the referenced baseline. Claim guarded by expected Pending assigns one Reviewer; two competing calls yield one200/one409 and one event. Decisions/return check assigned actor, In Review and no self, then guarded update plus event in one transaction. Reject/Return require trimmed reason; approval reason optional. Final decision sets decidedAt; Return clears it and retains reviewer.
 
 Returned edit/resubmit acquires an owner-scoped SELECT FOR UPDATE row lock inside its transaction before state/read/write. PATCH allows only title/category/amount/justification, rejects unknown/protected keys and arrays, validates values. Effective edit writes one RETURNED->RETURNED event (`Request details updated.`); no-op writes neither history nor updatedAt. Resubmit accepts `{}`, validates stored fields, keeps reviewerId, goes to IN_REVIEW and clears current reason/decidedAt; old reason stays in history. Duplicate resubmit gives one success/one409; edit/resubmit races serialize. Approved/Rejected reject later mutations.
 
@@ -103,6 +106,7 @@ All paths use `/api`. Mutations require JSON. Success `{data:...}`; error `{erro
 | Method/path | Input | Output |
 |---|---|---|
 | GET `/version` | none | Public commit from RELEASE_COMMIT (local fallback), no DB |
+| POST `/requests/:id/withdraw` (proposed CR-L7-01) | `{}` | 200 updated request; eligible owner only; 401/403/404/409 on failures, with no failed mutation |
 | GET `/health` | none | Database SELECT1, status ok or generic503 |
 | POST `/auth/login` | username,password | Public user + cookie |
 | GET `/auth/me` | none | Public session user |
@@ -125,7 +129,7 @@ Public auth user is `{id,username,role}`; nested request people `{id,username}`;
 
 F-08 accepts scalar allowed query keys; duplicate/nested/unknown/forged scope keys400. Ownership/Mine scope AND all user filters; state/category exact enums. Dates are real YYYY-MM-DD UTC creation days, lower midnight inclusive and upper following midnight exclusive; 9999-12-31 instead uses last representable millisecond (TIMESTAMP3), avoiding Prisma's unsupported following five-digit year. Invalid/reversed range400. q is trimmed, <=200 Unicode code points; case-insensitive literal title OR justification; escape backslash/percent/underscore before Prisma contains.
 
-F-10 shape: `{total,byState:[{state,count}],byCategory:[{category,count}],byReviewer:[{reviewer:{id,username},approved,rejected,total}],unattributedDecisions}`. Enum buckets include zeros. Reviewer rows include actors with attributed terminal decisions, ID order. A materialized current-request CTE plus lateral latest matching terminal event runs in ONE static parameterized SQL statement/one MVCC snapshot. Match current terminal state and actual state-changing transition, timestamp then ID descending. Actor must be Reviewer; missing/non-Reviewer legacy actor is unattributed. Never infer final actor from current assignment. Count each terminal request once. State/category sums equal total; Reviewer totals+unattributed equal Approved+Rejected. No amount sums/private request text; any query key400.
+F-10 shape: `{total,byState:[{state,count}],byCategory:[{category,count}],byReviewer:[{reviewer:{id,username},approved,rejected,total}],unattributedDecisions}`. Enum buckets include zeros. Reviewer rows include actors with attributed terminal decisions, ID order. Proposed CR-L7-01 adds WITHDRAWN to byState/byCategory through the RequestState enum but leaves approved/rejected reviewer-decision totals unchanged. A materialized current-request CTE plus lateral latest matching terminal event runs in ONE static parameterized SQL statement/one MVCC snapshot. Match current terminal state and actual state-changing transition, timestamp then ID descending. Actor must be Reviewer; missing/non-Reviewer legacy actor is unattributed. Never infer final actor from current assignment. Count each terminal request once. State/category sums equal total; Reviewer totals+unattributed equal Approved+Rejected. No amount sums/private request text; any query key400.
 
 ## 7. UI behavior
 
