@@ -137,6 +137,7 @@ test('CR-L7-01 owner withdrawal is atomic, retained, scoped, and counted separat
     const withdrawnCount = summary.byState.find(row => row.state === 'WITHDRAWN').count;
     assert.equal(withdrawnCount, reviewerList.body.data.length);
     assert.equal(summary.total, 5);
-    assert.equal(summary.byReviewer.reduce((total, row) => total + row.total, 0) + summary.unattributedDecisions, 0);
+    assert.equal(summary.byReviewer.reduce((total, row) => total + row.total, 0), 1);
+    assert.equal(summary.unattributedDecisions, 0);
   });
 });
