@@ -31,9 +31,11 @@ The follow-up commit [`38e08dc`](https://github.com/Lathapol/sprint-group-work/c
 
 CI used Node.js 24.22.3 / npm 11.19.1 and PostgreSQL 18.7. The `npm test` run covered auth/session, health, F-04 ownership/concurrent claim/decision, F-06 history, F-07 return/edit/resubmit, F-08 filters, F-10 summary, release workflow checks, and CR-L7-01 withdrawal. The withdrawal integration test reported TEST-12-01 through TEST-12-06 passing, covering eligible owner withdrawal, role/owner/body guards, the claim race, list filters, state counts, and decision totals. The browser suite exercised the confirmation flow and reviewer queue using synthetic seeded accounts; this is automated Playwright validation, not a manual human demonstration.
 
-## Test-first evidence limitation
+## Test-first RED evidence
 
-The test-only commit `2361637` precedes the implementation commit in PR #101 history, but no CI run exists for `2361637`. No captured local command/output currently proves the withdrawal assertion failing against the pre-change source at `ab21f35`. Run #47 is not a substitute: the implementation was already present, the API suite passed, and the failure was a UI request-body bug. Do not describe this as a recorded RED phase until the same assertion is executed against the baseline and its actual output is retained.
+The pre-change RED result is recorded by workflow run [#1](https://github.com/Lathapol/sprint-group-work/actions/runs/45943255486), triggered on 2026-11-27 with `workflow_dispatch`. The workflow checked out the preserved test-only commit [`2361637`](https://github.com/Lathapol/sprint-group-work/commit/236163715d7b3979be7d2d1a2a2f99180ff0da95) against its pre-change source and migrations in an isolated CI PostgreSQL database. The run's `lab7-red-2361637` artifact contains the raw output and is available from the run page through 2027-02-25.
+
+The workflow completed successfully because it verified and retained the expected failing test result. Within that workflow, `npm test` built successfully and exited 1: TAP reported 32 tests total, 27 passed, 5 failed, and 0 skipped. The failures were the withdrawal contract assertions against the pre-change source: TEST-12-01 got HTTP 404 instead of 200; TEST-12-02/03 got 404 instead of 403; TEST-12-04 observed race outcomes `[200, 404]` instead of `[200, 409]`; and TEST-12-05/06 got HTTP 400 instead of 200 because the old filter rejected `WITHDRAWN`. These failures demonstrate the missing withdrawal endpoint, guards, conflict behavior, and filter before implementation; they were not caused by setup or build failure.
 
 ## Follow-up coverage and PR #102 CI
 
