@@ -1,0 +1,94 @@
+name: Lab 7 pre-change RED evidence
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pre-change-red:
+    name: Run test-only commit against pre-change source
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: approvals_test
+          POSTGRES_USER: approvals
+          POSTGRES_PASSWORD: ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U approvals -d approvals_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 15
+    env:
+      DATABASE_URL: postgresql://approvals:ci-only@127.0.0.1:5432/approvals_test
+      TEST_DATABASE_URL: postgresql://approvals:ci-only@127.0.0.1:5432/approvals_test
+      SEED_PASSWORD: ci-fixtures-only
+      BCRYPT_ROUNDS: 10
+    steps:
+      - name: Check out the preserved test-only commit
+        uses: actions/checkout@v6
+        with:
+          ref: 236163715d7b3979be7d2d1a2a2f99180ff0da95
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Apply the pre-change migrations to isolated CI PostgreSQL
+        run: npx prisma migrate deploy
+
+      - name: Capture expected RED result
+        shell: bash
+        run: |
+          set -uo pipefail
+          output_file="$RUNNER_TEMP/lab7-red-output.txt"
+          set +e
+          npm test > "$output_file" 2>&1
+          test_status=$?
+          set -e
+          cat "$output_file"
+          printf '\nnpm_test_exit_code=%s\n' "$test_status"
+
+          if [[ "$test_status" -eq 0 ]]; then
+            echo 'The withdrawal tests unexpectedly passed on the pre-change source.' >&2
+            exit 1
+          fi
+          if ! grep -Fq 'CR-L7-01 owner withdrawal is atomic, retained, scoped, and counted separately' "$output_file"; then
+            echo 'The withdrawal test did not run; this is not valid RED evidence.' >&2
+            exit 1
+          fi
+          if ! grep -Eq 'expected 200.*got 404' "$output_file"; then
+            echo 'The failure did not show the missing withdrawal behavior (expected 200, got 404).' >&2
+            exit 1
+          fi
+
+          {
+            echo '## Lab 7 pre-change RED evidence'
+            echo '- Source: test-only commit `236163715d7b3979be7d2d1a2a2f99180ff0da95`.'
+            echo '- `npm test` ran after dependency install, Prisma generation, and migrations on isolated PostgreSQL.'
+            echo '- The withdrawal test ran and observed the expected missing endpoint: expected HTTP 200, got HTTP 404.'
+            echo "- Raw test output is attached as artifact `lab7-red-2361637`. Exit code: $test_status."
+            echo '- A green workflow conclusion means the expected RED failure was captured and validated; it does not mean the historical tests passed.'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload raw RED output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab7-red-2361637
+          path: ${{ runner.temp }}/lab7-red-output.txt
+          if-no-files-found: warn
+          retention-days: 90
