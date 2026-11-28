@@ -9,7 +9,7 @@ from reportlab.platypus import PageBreak, Paragraph, Preformatted, SimpleDocTemp
 
 
 ROOT = Path(__file__).resolve().parents[3]
-OUTPUT = ROOT / "docs/labs/lab-07/output/pdf/lab7-sprint1-maintenance-review-draft-2026-11-27.pdf"
+OUTPUT = ROOT / "docs/labs/lab-07/output/pdf/lab7-sprint1-maintenance-review-draft-2026-11-28.pdf"
 OUTPUT.parent.mkdir(parents=True, exist_ok=True)
 
 INK = colors.HexColor("#18212f")
@@ -111,7 +111,7 @@ def on_page(canvas, doc):
     canvas.line(48, 29, w - 48, 29)
     canvas.setFillColor(MID)
     canvas.setFont("Helvetica", 7)
-    canvas.drawString(48, 18, "Lathapol/Sprint-group-work  |  Evidence snapshot 27 Nov 2026, Asia/Bangkok")
+    canvas.drawString(48, 18, "Lathapol/Sprint-group-work  |  Evidence refreshed 28 Nov 2026, Asia/Bangkok; metrics cutoff 27 Nov")
     canvas.drawRightString(w - 48, 18, f"Page {doc.page}")
     canvas.restoreState()
 
@@ -135,7 +135,7 @@ story += [Spacer(1, 35 * mm), P("CPE 334  |  LAB 7", "CoverSub"),
           Spacer(1, 7 * mm),
           P("Accepted Sprint 1 baseline: 51b57adc1c51d57e23d047d628cf55966e268ad9 (Lab 6 record; no baseline tag recorded).", "Smallx"),
           P("Pre-change test parent: ab21f356ad66622ba9f9a2f05085b3438858e7cb; preserved test-only commit: 236163715d7b3979be7d2d1a2a2f99180ff0da95.", "Smallx"),
-          P("Current main/application commit: b1a74ad98f2e97753c93f5b5e0e8d30c4c193866; deployed revision: approvals-r45986444349-1 (run #13). No Lab 7 submission tag has been created.", "Smallx"),
+          P("Current main/application commit: ee4652bb05baf5f1b61526de66ce17379ac90dac; deployed revision: approvals-r45996592434-1 (run #14). No Lab 7 submission tag has been created.", "Smallx"),
           Spacer(1, 5 * mm), P("Prepared 27 November 2026 | Due 29 November 2026, 23:59 Asia/Bangkok", "Centerx"), PageBreak()]
 
 # Page 2 - contents/status
@@ -147,7 +147,7 @@ story += [P("Contents and review status", "H1x"),
              ["D - Readiness, debt and retrospective", "14-16", "D-01 to D-05"],
              ["Evidence index and limits", "17", "E-01"]], [190, 65, 248]),
           Spacer(1, 6), P("Executive status", "H2x"),
-          box("<b>NOT READY for final Lab 7 submission.</b> The bounded requester-withdrawal change is implemented, reviewed, covered in CI, and deployed. Current main run #13 completed migration, automated tests and read-only smoke checks. A read-only GET check at 27 Nov 2026 18:38 Asia/Bangkok returned health status ok and version commit b1a74ad98f2e97753c93f5b5e0e8d30c4c193866. The remaining gap is authenticated live feature/data-continuity evidence, plus both students' final contribution confirmation and retrospective edits.", LIGHT_RED, RED),
+          box("<b>NOT READY for final Lab 7 submission.</b> The bounded requester-withdrawal change is implemented, reviewed, covered in CI, and deployed. Current main run #14 completed migration, automated tests and read-only smoke checks on ee4652bb / approvals-r45996592434-1. Authenticated owner withdrawal and a normal submit/claim/decision journey have since been recorded with synthetic requests. Friend-reported negative checks need attributable evidence, a full before/after check of existing records was not captured, and both students' final contribution confirmation and retrospective edits remain pending.", LIGHT_RED, RED),
           Spacer(1, 5), P("Scope boundary", "H2x"),
           P("This report covers the adopted change to existing Sprint 1 behavior: a Requester may withdraw their own unclaimed Pending request. Later Sprint 2/3 features coexist in the codebase but are not claimed as Lab 7 maintenance. The release pipeline deploys the whole maintained application.", "Bodyx"),
           P("Current instructor instruction", "H2x"),
@@ -197,7 +197,7 @@ story += [P("Part B | Version chain and test-first sequence", "H1x"),
              ["Implementation / feature integration", "26ecd060debd1921a929ca12302b8f95f83a46cb; UI fix 38e08dc54627f1079e48b17c1a6c048b5b4fe9ef; PR #101 merge b2e43aaee533d965651f9886608c32a24d746329", "Feature route, transaction, migration and UI; merged to sprint-1-staging after review."],
              ["Regression integration", "PR #102 head 9bb739c96c9e4ceae192b7ace6614ec82a330d35; staging merge 1980773c63e568b77dbe6a168b7998898487a888", "Adds no-mutation coverage and withdrawal CI evidence."],
              ["Maintenance release", "PR #103 merge eb0734a50f06e8f94f8644fe66404c6418e8f913; run #8; revision approvals-r45865530232-1", "Reviewed staging-to-main integration and first deployment of the maintenance code."],
-             ["Current main/deployment", "SHA b1a74ad98f2e97753c93f5b5e0e8d30c4c193866; run #13; revision approvals-r45986444349-1", "PR #108 merge is docs-only, but run #13 redeployed and reports this commit through the release smoke. No Lab 7 submission tag exists." ]], [118, 205, 180]),
+             ["Current main/deployment", "SHA ee4652bb05baf5f1b61526de66ce17379ac90dac; run #14; revision approvals-r45996592434-1", "PR #109 deployed this commit successfully. No Lab 7 submission tag exists." ]], [118, 205, 180]),
           Spacer(1, 4), P("The main merge SHAs differ from PR heads because GitHub creates merge commits. PRs #104-#108 added release evidence and workflow/PDF documentation; open PR #109 refreshes the release evidence. These documentation PRs did not change the withdrawal application code.", "Smallx"),
           cap("B-01", "Trace accepted baseline through pre-change, tests, staging and main deployment", "The application version is separated from docs-only main commits", "Snapshot 27 Nov 2026", "Lab 6 acceptance; PRs #100-#109 (#108 merged; #109 open); deployment runs #8, #12 and #13"), PageBreak()]
 
@@ -239,7 +239,7 @@ story += [P("Part B | GREEN, regression and CI history", "H1x"),
              ["PR #102 run #49, head 6d679fa", "Failure: approved-state fixture contributed one reviewer decision; assertion expected zero.", "Retained the failing attempt and corrected the test oracle."],
              ["PR #102 run #50, head 5c6cb83", "Passed: 32 API tests, 6 browser tests, migration, seed and Docker build.", "Correct expected reviewer decision count to one and zero unattributed decisions."],
              ["PR #102 run #51, head 9bb739c", "Passed on final PR head and integrated staging: 32 API + 6 browser tests.", "Added no-mutation checks for returned/approved states and evidence."],
-             ["Main run #13, SHA b1a74ad", "Passed: 32 API tests, 6 Playwright tests, migration, seed, Docker build, deployment and read-only smoke.", "Current deployed main; run #13 and revision are shown on page 9."]], [137, 215, 151]),
+             ["Main run #14, SHA ee4652bb", "Successful: automated tests, migration, seed, Docker build, deployment and read-only smoke.", "Current deployed main; run #14 and revision are shown on page 9."]], [137, 215, 151]),
           Spacer(1, 5), P("Relevant regression assertions", "H2x"),
           P("CI exercises auth/session, health, request ownership and concurrent claim, return/edit/resubmit, history persistence, filters, decision summary, the CR-L7-01 API cases, the withdrawal browser confirmation/history case and the existing reviewer queue. TEST-12-01 through TEST-12-06 cover success/retention, role and owner guards, ineligible states, the claim race, filters and decision counts.", "Bodyx"),
           P("Automated browser testing is Playwright in CI. It is not described as a student manual UI session. The CI run uses synthetic fixtures and an isolated disposable PostgreSQL service.", "Bodyx"),
@@ -250,30 +250,30 @@ story += [P("Part B | Reviewed release and deployment", "H1x"),
           T([["Release evidence", "Value"],
              ["Reviewed feature and test chain", "PR #101 merged to sprint-1-staging; PR #102 added final no-mutation coverage; staging CI run #51 passed."],
              ["Main integration", "PR #103 merged staging to main at eb0734a50f06e8f94f8644fe66404c6418e8f913; Lathapol approved after confirming no partner session was expected to be active."],
-             ["Latest main snapshot", "b1a74ad98f2e97753c93f5b5e0e8d30c4c193866, deployed by Actions run #13 (27 Nov). PR #108 is documentation-only; this is the latest deployed commit."],
-             ["Cloud Run", "Revision approvals-r45986444349-1; 100% traffic; service URL https://approvals-389973748230.asia-southeast1.run.app"],
+             ["Latest main snapshot", "ee4652bb05baf5f1b61526de66ce17379ac90dac, deployed by Actions run #14 (27 Nov). PR #109 is documentation-only; this is the latest deployed commit."],
+             ["Cloud Run", "Revision approvals-r45996592434-1; 100% traffic; service URL https://approvals-389973748230.asia-southeast1.run.app"],
              ["App image", "asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app@sha256:71245040db330c551908346b3afd1467c5395a0cab265f3d6bf025b860971036"],
              ["Migration image/job", "Migration image digest sha256:1c1122ed323e47c7910ba01b3c2d197305a85da02d86d9dfe7f46ed9de12424b; execution approvals-migrate-b9fk6 succeeded before rollout."],
-             ["Health/version", "Direct GET 27 Nov 2026 18:38 Asia/Bangkok: /api/health -> data.status=ok; /api/version -> data.commit=b1a74ad98f2e97753c93f5b5e0e8d30c4c193866. Read-only; it does not exercise authenticated withdrawal behavior."],
+             ["Health/version", "Before the authenticated checks on 28 Nov 2026 (UTC): /api/health -> data.status=ok; /api/version -> data.commit=ee4652bb05baf5f1b61526de66ce17379ac90dac. Read-only; it confirms release identity, not feature behavior."],
              ["Smoke", "Run #13: Live UI, database and release commit checks passed."],
              ["Tag", "No Lab 7 submission tag is recorded. The named deliverable2-candidate-2026-11-25 tag is the preserved pre-change candidate, not the maintenance release."]], [142, 361]),
           Spacer(1, 4), P("What deployment proves and does not prove", "H2x"),
-          P("Run #13 proves migration, image deployment, 100% traffic and the workflow's read-only UI/database/release-commit smoke. Direct read-only GETs at 18:38 returned /api/health data.status=ok and /api/version data.commit=b1a74ad98f2e97753c93f5b5e0e8d30c4c193866. These checks do not prove authenticated live withdrawal, history retention, queue/count behavior, a denied Reviewer/other-owner attempt, an existing submit/claim/decision journey, or before/after continuity of existing live records. No shared request was mutated for this PDF.", "Bodyx"),
-          cap("B-07/B-08", "Deploy current main and check release health/version", "Run #13 deployed b1a74ad as approvals-r45986444349-1; GET health=ok and version=b1a74ad; authenticated feature checks unrun", "27 Nov 2026 18:38 Asia/Bangkok", "Actions run #13 job 140464023373; read-only GET /api/health and /api/version"), PageBreak()]
+          P("Actions run #14 deployed commit ee4652bb05baf5f1b61526de66ce17379ac90dac as revision approvals-r45996592434-1. Before feature checks, /api/health returned data.status=ok and /api/version returned that exact commit. On 28 Nov 2026, Codex-assisted authenticated UI checks used only synthetic requester1/reviewer1 requests: owner withdrawal with retained fields/history and one withdrawal event passed; normal submit -> claim -> approve passed. The UI offered no second withdrawal action after withdrawal. The colleague separately reported completing Reviewer/other-Requester and claimed-request denials, but their IDs/timestamps/evidence were not attached to this record. No complete database-wide before/after export was captured, so unchanged existing data is not proven by equality comparison. See docs/labs/lab-07/evidence/live-checks-2026-11-28.md.", "Bodyx"),
+          cap("B-07/B-08", "Deploy current main and check live release", "Run #14 deployed ee4652bb as approvals-r45996592434-1; health=ok; version matched; owner withdrawal and normal decision journey observed", "28 Nov 2026; UI events 05:43:07-05:50:33 UTC", "Actions run #14; /api/health; /api/version; request evidence #22/#23"), PageBreak()]
 
 # Page 10 - AC coverage/manual limit
 story += [P("Part B | Acceptance coverage and evidence limits", "H1x"),
           T([["Acceptance criterion", "Test / observed result", "Status"],
-             ["AC-12-01 owner withdraws once; fields/history retained", "TEST-12-01: 200, WITHDRAWN, reviewer null, original values and prior event retained, one fixed-reason event.", "CI GREEN; not re-run manually on Cloud Run."],
-             ["AC-12-02 auth, role and ownership", "TEST-12-02: 401/403/404 and no private data or mutation.", "CI GREEN."],
-             ["AC-12-03 claimed/returned/final/withdrawn are not eligible", "TEST-12-03 plus PR #102 no-mutation snapshots for RETURNED and APPROVED.", "CI GREEN; no live negative attempt."],
+             ["AC-12-01 owner withdraws once; fields/history retained", "Live request #22: REQUESTER owner withdrew Pending; fields retained; one Pending -> Withdrawn event at 05:44:15 UTC. No repeat action available after final state.", "Observed in authenticated UI on target revision; tool-assisted, not independent student execution."],
+             ["AC-12-02 auth, role and ownership", "CI TEST-12-02 passed. Colleague reports live Reviewer/other-Requester denials; no check IDs/timestamps/evidence were available for this report.", "Automated CI GREEN; reported live negatives not independently evidenced here."],
+             ["AC-12-03 claimed/returned/final/withdrawn are not eligible", "CI TEST-12-03 passed. Colleague reports a claimed-request live denial; no check ID/timestamp/evidence was available for this report.", "Automated CI GREEN; reported live negative not independently evidenced here."],
              ["AC-12-04 claim/withdraw race", "TEST-12-04: one 200, one 409, one state-consistent event.", "CI GREEN in isolated DB."],
-             ["AC-12-05 lists, history and UI scope", "TEST-12-05 plus Playwright confirmation and history view; reviewer queue regression.", "CI GREEN; automated browser, not human live UAT."],
+             ["AC-12-05 lists, history and UI scope", "CI TEST-12-05 plus live request #22 and #23 histories; submit -> claim -> approve events recorded.", "CI GREEN; live flow observed with synthetic accounts."],
              ["AC-12-06 summary counts state without reviewer decision", "TEST-12-06: WITHDRAWN totals reconcile; reviewer decision totals unchanged.", "CI GREEN in isolated DB."]], [151, 251, 101]),
-          Spacer(1, 6), box("<b>Outstanding human check:</b> Before claiming release acceptance, use synthetic accounts on revision approvals-r45986444349-1. Capture the authenticated owner withdrawal and retained history; verify claimed request denial; run one preserved submit/claim/decision journey; check Reviewer and other-owner denial; compare a controlled existing record before/after. Record tester, role, synthetic request IDs, expected/actual, timestamp and exact revision. Preserve records; do not reset/reseed or delete shared data.", colors.HexColor("#fff8e5"), GOLD),
+          Spacer(1, 6), box("<b>Evidence still needed:</b> Friend reports completing Reviewer/other-Requester and claimed-request denial checks, but request IDs, timestamps and evidence must be added by that tester. Capture a before/after comparison of identified existing records to prove they remained unchanged. This report records the actual operator as Codex-assisted, not as independent student UAT. Preserve all data; do not reset/reseed or delete shared data.", colors.HexColor("#fff8e5"), GOLD),
           Spacer(1, 6), P("Relevant status", "H2x"),
-          P("Issue #96 remains open. Issue #97 closed automatically with PR #103, but its post-deployment authenticated checks were not completed in the release record. The PDF reports the evidence gap rather than treating issue state as acceptance.", "Bodyx"),
-          cap("B-09/B-10", "Reconcile each contract criterion and identify unrun live checks", "All six API/browser criteria pass in CI; no authenticated live session is claimed", "Latest deployment run #13", "PR #102 CI; current main run #13; issue #96/#97"), PageBreak()]
+          P("Issue #96 remains open. Issue #97 closed automatically with PR #103 before the post-deployment authenticated checks were recorded. The later partial live evidence is documented here; issue state alone is not treated as acceptance.", "Bodyx"),
+          cap("B-09/B-10", "Reconcile contract criteria and live-check evidence", "Automated tests pass; owner withdrawal and normal workflow observed; peer negative checks need attributable evidence", "Latest deployment run #14", "PR #102 CI; current main run #14; live-check evidence #22/#23; issue #96/#97"), PageBreak()]
 
 # Page 11 - metrics 1 and 2
 story += [P("Part C | Dated metrics and embedded source lists", "H1x"),
@@ -318,7 +318,7 @@ story += [P("Part C | Current suite and CI outcome source rows", "H1x"),
              ["45927258336", "#104", "success", "cc112c0"],
              ["45940764536", "#105", "success", "f708eec"],
              ["45943962967", "#106", "success", "93eb470"]], [125, 55, 78, 245]),
-          P("Separate runs excluded from this PR-only count: workflow_dispatch RED run #1 is expected-failure evidence; current main deployment run #11 is a push event. After the snapshot cutoff, run #12 deployed 843d14d; PR #108 was then deployed by run #13 on b1a74ad. Run #13 passed after the historical cutoff.", "Tinyx"),
+          P("Separate runs excluded from this PR-only count: workflow_dispatch RED run #1 is expected-failure evidence; current main deployment run #11 is a push event. After the snapshot cutoff, run #12 deployed 843d14d, run #13 deployed b1a74ad, and run #14 deployed ee4652bb after PR #109. Runs #13 and #14 succeeded after the historical cutoff.", "Tinyx"),
           cap("C-03/C-05", "Report one suite snapshot and list every in-scope PR CI run", "32/32 API and 6/6 browser pass on the historical suite snapshot; 8 pass / 2 fail in the PR-run window", "Metrics cutoff 27 Nov 2026 16:45 Asia/Bangkok", "Actions run #11 and run IDs above"), PageBreak()]
 
 # Page 13 - UAT + action
@@ -335,33 +335,33 @@ story += [P("Part C | UAT status and evidence-based action", "H1x"),
 
 # Page 14 - readiness
 story += [P("Part D | Release readiness checklist", "H1x"),
-          box("<b>NOT READY for final Lab 7 submission.</b> The withdrawal code is deployed and automated checks pass. The submitted evidence still lacks the required authenticated post-deployment maintenance and preserved-behavior checks, independent review of this PDF, and student-confirmed reflections/contribution statements.", LIGHT_RED, RED),
+          box("<b>NOT READY for final Lab 7 submission.</b> The target release is deployed and automated checks pass. Tool-assisted live owner withdrawal and submit/claim/decision checks are now recorded. Friend-reported negative checks still need attributable evidence; a full existing-data comparison, independent review of this PDF, and both students' reflection/contribution confirmations remain outstanding.", LIGHT_RED, RED),
           Spacer(1, 6), T([["Readiness item", "Evidence/status", "Outstanding action"],
-             ["Submitted/deployed version", "Main SHA b1a74ad; run #13; revision approvals-r45986444349-1; 100% traffic; no Lab 7 tag.", "Retain this exact release identity unless another deployment occurs before submission."],
+             ["Submitted/deployed version", "Main SHA ee4652bb05baf5f1b61526de66ce17379ac90dac; run #14; revision approvals-r45996592434-1; 100% traffic; no Lab 7 tag.", "Retain this exact release identity unless another deployment occurs before submission."],
              ["Defects by severity/status", "No confirmed open Lab 7 implementation defect in these records. Issue #60 was dispositioned not-defect; this is not proof no defects exist.", "Run authenticated current-revision checks; log any actual failures as findings."],
-             ["Automated checks", "Run #13: 32 API tests and 6 Playwright tests passed; migration, seed, Docker and deploy smoke passed.", "Retain failed historical runs (#47/#49 and CI failures) in metrics and chronology."],
-             ["Selected user tests", "No student manual/live functional session recorded for the withdrawal release.", "Execute the controlled scenario in the action on page 10."],
+             ["Automated checks", "Run #14 succeeded: npm test, Playwright, migration, seed, Docker and deploy smoke steps passed.", "Retain failed historical runs (#47/#49 and CI failures) in metrics and chronology."],
+             ["Selected user tests", "Tool-assisted UI observations: request #22 owner withdrawal/retained fields/history; request #23 submit -> claim -> approve. Friend reports role/claimed denials, but attribution evidence not attached.", "Add friend check IDs/timestamps/evidence; capture an existing-record comparison and have students independently review results."],
              ["Technical debt", "Rollback compatibility after storing WITHDRAWN has not been proven.", "Assess old-client enum compatibility and define rollback limit."],
              ["Config/secrets", "No credential values included. CI used isolated synthetic DB; deployment uses secret-backed configuration.", "Use private course handoff for any demo credentials; never commit them."],
              ["Docs/run instructions", "Repo contains deployment/setup instructions, contract, tests and evidence records.", "Teammate verify the linked run/setup instructions against final candidate."],
-             ["Deploy/smoke", "Run #13 migration + release + read-only UI/database/version smoke passed; direct health/version GETs match b1a74ad.", "Smoke is not authenticated withdrawal or data-continuity evidence."]], [122, 215, 166]),
+             ["Deploy/smoke", "Run #14 deploy and read-only smoke passed; /api/health=ok and /api/version=ee4652bb05baf5f1b61526de66ce17379ac90dac before live UI checks.", "Smoke is separate from authenticated feature/data evidence; see request #22/#23 observations."]], [122, 215, 166]),
           Spacer(1, 4), P("This status is for the maintained Sprint 1 behavior and CR-L7-01 only. It is not a claim that the entire three-sprint application is complete or incomplete.", "Smallx"),
-          cap("D-01", "Assess readiness from the exact deployed revision and stated scope", "NOT READY until live behavior, data continuity and human review evidence are recorded", "27 Nov 2026 18:03 Asia/Bangkok", "Actions run #13; issue #97; release evidence"), PageBreak()]
+          cap("D-01", "Assess readiness from the exact deployed revision and stated scope", "NOT READY until remaining peer evidence, existing-data comparison, and human review are recorded", "28 Nov 2026", "Actions run #14; request #22/#23; issue #96/#97; release evidence"), PageBreak()]
 
 # Page 15 - debt / retrospectives
 story += [P("Part D | Deferred engineering risk and retrospective", "H1x"),
           P("Technical debt / risk table", "H2x"),
           T([["Item and type", "Impact", "Priority", "Disposition / action"],
              ["Old image compatibility with stored WITHDRAWN enum (deferred release risk)", "A pre-change application image may not deserialize/read a new enum state if rollback occurs after a live withdrawal.", "High until verified", "No rollback-after-withdrawal test. Document supported rollback path or rehearse compatible rollback using isolated data before accepting rollback readiness."],
-             ["No authenticated post-deployment functional/data-continuity record (evidence gap, not known product defect)", "Cannot claim live state/history/list behavior and preserved workflow were exercised on the current revision.", "High for submission readiness", "Complete the owner withdrawal, claim denial, history, existing workflow and unchanged-data check before final submission."],
-             ["No Lab 7-specific release tag", "A stable named reference is less convenient; immutable commit and revision are still recorded.", "Low", "Current main SHA b1a74ad and revision are recorded. Team may tag only after freezing the submitted version."]], [150, 135, 83, 135]),
+             ["Partial authenticated post-deployment evidence (evidence gap, not known product defect)", "Owner withdrawal and normal submit/claim/approve were observed on the current revision. Friend-reported denials lack IDs/timestamps; no whole-data before/after equality was captured.", "High for submission readiness", "Attach the other tester's records and compare selected existing test records before final submission."],
+             ["No Lab 7-specific release tag", "A stable named reference is less convenient; immutable commit and revision are still recorded.", "Low", "Current main SHA ee4652bb05baf5f1b61526de66ce17379ac90dac and revision are recorded. Team may tag only after freezing the submitted version."]], [150, 135, 83, 135]),
           Spacer(1, 5), P("These are deferred engineering/evidence risks, not assertions of known incorrect application behavior. Known/observed test failures are retained in Part B and were corrected before merge.", "Smallx"),
           P("Three retrospective answers - proposed for student review", "H2x"),
           T([["Question", "Proposed evidence-based answer - confirm or edit"],
              ["What helped?", "Keeping the test-only commit let CI demonstrate a genuine failure against the pre-change route, and the isolated database avoided changing shared requests. The teammate review caught both the UI request-body mismatch and the incorrect summary-test expectation before merge."],
              ["What hurt?", "The first feature and test CI attempts failed, and the pre-change RED result was not captured until a separate workflow was added. The deployment issue closed on merge before its required authenticated live checks were recorded."],
              ["What changes for final release?", "Add an explicit release-evidence gate for authenticated role/state checks and before/after data comparison, then require a second student to reconcile the exact deployed revision before closing the release checklist."]], [125, 378]),
-          P("These responses are drafted from repository evidence by Codex. They are not represented as either student's personal reflection until both students read, amend as needed and approve them.", "Smallx"),
+          P("These responses are drafted from repository evidence by Codex. The live checks add evidence that supports revising the final-release reflection. They are not represented as either student's personal reflection until both students read, amend as needed and approve them.", "Smallx"),
           cap("D-02/D-03", "Separate deferred risk from actual defects and propose three short reflections", "Technical limits and student confirmation needs are explicit", "Draft 27 Nov 2026", "Release record; CI run history; user/team review required"), PageBreak()]
 
 # Page 16 - contributions/AI
@@ -369,16 +369,17 @@ story += [P("Part D | Contributions, AI use and final review", "H1x"),
           T([["Member", "Recorded contribution in this evidence chain", "Review attribution"],
              ["Kittakorn Poungpien (Kittakorn-P)", "Authored feature PR #101 (3 commits, 10 files), regression/evidence PR #102 (3 commits, 2 files), main release PR #103, and PDF/release-evidence PRs #108/#109. Approved contract PR #100. GitHub history records authorship/approval; pair work outside Git is not inferred.", "Approved PR #100 with 'Approve'. Authored PRs #101-#103 and #108/#109. Human confirmation of contribution wording still required."],
              ["Lathapol Srikhiao (Lathapol)", "Authored contract PR #100 and reviewed feature, test and release changes. Later authored release/RED/metrics evidence PRs #104-#107 and reviewed PDF PRs #108/#109. Do not treat docs/CI activity as manual app UAT.", "Approved PR #101 with substantive review text; requested changes then approved PRs #102/#103 and #108; requested changes on #109, approval pending. Human confirmation of contribution wording still required."],
-             ["Codex AI assistance", "Drafted/edited code, tests, workflow/evidence docs and this report; inspected repository/API/Actions; executed local documentation build and reviewed remote CI/deployment evidence. No independent product acceptance or student UAT is claimed.", "AI output is not student review. Both students own the submitted work and must verify every claim."]], [134, 226, 143]),
+             ["Codex AI assistance", "Drafted/edited code, tests, workflow/evidence docs and this report; inspected repository/API/Actions; executed tool-assisted authenticated UI checks with synthetic accounts on the deployed app. No independent student execution or acceptance is claimed.", "AI output is not student review. Both students own the submitted work and must verify every claim."]], [134, 226, 143]),
           Spacer(1, 5), P("Limitations and sign-off", "H2x"),
           T([["Before submission", "Status"],
-             ["Authenticated live feature check on approvals-r45986444349-1; preserve existing data", "NOT RECORDED"],
+             ["Authenticated live owner-withdrawal and normal decision checks on approvals-r45996592434-1", "Recorded as tool-assisted, requests #22/#23; friend-reported negative checks still need IDs/timestamps/evidence"],
+             ["Existing-data before/after comparison; confirm no unrelated records changed", "Not captured as a full comparison; no shared record was intentionally modified"],
              ["Lathapol review of release update; confirm contribution/retrospective text", "Release wording approved on PR #108; D-section confirmation PENDING"],
              ["Kittakorn-P review of complete PDF and confirm contribution/retrospective text", "PENDING"],
              ["Both students confirm actual pair work and approve the contribution table", "PENDING"],
-             ["Freeze a final main SHA/tag after all edits", "PENDING; draft references b1a74ad"]], [294, 209]),
+             ["Freeze a final main SHA/tag after all edits", "PENDING; current evidence uses ee4652bb / approvals-r45996592434-1"]], [294, 209]),
           Spacer(1, 5), box("Do not upload this review draft to LEB2 as final. After human checks, update the PDF to the final immutable main commit/revision, remove the draft banner, retain real failed/skipped outcomes, visually verify the regenerated PDF, and have both students review each other before submission.", LIGHT_RED, RED),
-          cap("D-04/D-05", "Record actual attributed work, AI assistance and required human review", "No fabricated equal effort, manual test, acceptance or personal reflection", "27 Nov 2026", "PR history; docs/ai_use.md; remaining team review"), PageBreak()]
+          cap("D-04/D-05", "Record actual attributed work, AI assistance and required human review", "Tool-assisted test actions are attributed; student review and personal reflection confirmation remain pending", "28 Nov 2026", "PR history; docs/ai_use.md; live-check record; remaining team review"), PageBreak()]
 
 # Page 17 - index
 story += [P("Evidence index and reproduction references", "H1x"),
@@ -387,16 +388,16 @@ story += [P("Evidence index and reproduction references", "H1x"),
              ["B-01", "Lab 6 acceptance record; PRs #100-#109 (#108 merged, #109 open); commits 2361637, 26ecd06, 38e08dc; deployment runs #8/#12/#13.", "Baseline and source/version trace."],
              ["B-02", "Actions run #1, job 140322082516; artifact lab7-red-2361637.", "Actual pre-change RED command/output/counts."],
              ["B-03..06", "src/requests.ts; test/withdrawals.test.cjs; test/browser/withdrawal.spec.ts; Actions runs #47-#51 and #13.", "Code diff, criteria and current green/regression results."],
-             ["B-07..10", "PR #103; Actions run #13 job 140464023373; Cloud Run revision approvals-r45986444349-1.", "Main release, image/migration identity, smoke and live-check gap."],
+             ["B-07..10", "PR #103; Actions run #14; Cloud Run revision approvals-r45996592434-1; request evidence #22/#23.", "Main release, image/migration identity, smoke, owner withdrawal and normal journey."],
              ["C-01..06", "GitHub REST issue/PR/Actions snapshots; metrics-2026-11-27.md; issues #60/#64/#97.", "Five dated metrics, source lists and action."],
              ["D-01..05", "Current run #13; release record; PR reviews; docs/ai_use.md; this draft.", "Readiness/debt, retrospective proposals, contribution and AI-use limits."]], [78, 252, 175]),
           Spacer(1, 6), P("Reproducible source queries for the metrics snapshot", "H2x"),
           Preformatted("GET /repos/Lathapol/sprint-group-work/issues?state=all&per_page=100\nGET /repos/Lathapol/sprint-group-work/pulls?state=all&per_page=100\nGET /repos/Lathapol/sprint-group-work/actions/runs?per_page=100\nFilter closed_at / merged_at / run created_at to the stated Asia/Bangkok window.\nCount one per issue, PR or Actions run ID; preserve failures and exclude workflow_dispatch from PR CI.", styles["Codex"]),
           P("Repository and deployment references", "H2x"),
-          P(f"Repository: {link('https://github.com/Lathapol/sprint-group-work','github.com/Lathapol/sprint-group-work')} | Current main: b1a74ad | Current revision: approvals-r45986444349-1 | App: https://approvals-389973748230.asia-southeast1.run.app", "Smallx"),
+          P(f"Repository: {link('https://github.com/Lathapol/sprint-group-work','github.com/Lathapol/sprint-group-work')} | Current main: ee4652bb | Current revision: approvals-r45996592434-1 | App: https://approvals-389973748230.asia-southeast1.run.app", "Smallx"),
           P("This PDF embeds the relevant summaries and source lists so issue/PR/Actions links are corroboration, not the only evidence. No passwords, tokens or real user data are included.", "Smallx"),
           cap("E-01", "Locate each included claim by evidence ID", "Every section identifies the actual source and remaining limitations", "27 Nov 2026", "This self-contained report draft")]
 
-doc = SimpleDocTemplate(str(OUTPUT), pagesize=A4, leftMargin=48, rightMargin=48, topMargin=43, bottomMargin=39, title="CPE 334 Lab 7 - Sprint 1 Maintenance - Team Review Draft", author="Workflow and Approval System Team", subject="Self-contained Lab 7 evidence draft")
+doc = SimpleDocTemplate(str(OUTPUT), pagesize=A4, leftMargin=48, rightMargin=48, topMargin=43, bottomMargin=39, title="CPE 334 Lab 7 - Sprint 1 Maintenance - Team Review Draft 28 Nov 2026", author="Workflow and Approval System Team", subject="Self-contained Lab 7 evidence draft")
 doc.build(story, onFirstPage=on_page, onLaterPages=on_page)
 print(OUTPUT)
