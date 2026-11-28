@@ -65,3 +65,8 @@ These observations were added after the checks above, using the same deployed ap
 - The browser views were observed live, but no screenshot files were saved or attached to this repository during these checks.
 - No direct POST to the withdrawal endpoint was made for request #24; the expected backend denial response is therefore not recorded.
 - Reviewer-role denial, broad historical-data comparison, teammate review/sign-offs, and final PDF approval remain outstanding. This evidence addendum does not make the draft ready to submit.
+
+### Reviewer view of claimed request #24
+
+- Signed in as `reviewer1` (`REVIEWER`) and opened `/requests/24` on 2026-11-28. The app showed status `In review`, reviewer `reviewer1`, and the two expected history events.
+- The reviewer page exposed `Approve`, `Reject`, and `Return request` controls and no withdrawal control. This records the visible UI; it is not a direct API-role-denial test and no withdrawal POST was sent.
