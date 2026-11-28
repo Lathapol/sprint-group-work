@@ -10,7 +10,7 @@ Every run creates a fresh Cloud Run revision, including when reusing an image. `
 
 To repeat a normal release, use a feature branch, teammate-reviewed PR into `sprint-1-staging`, and teammate-reviewed release PR into `main`. The required `test-and-docker` check and up-to-date branch policy apply on both branches. Merge main into the working branch as needed before review. Authors cannot approve their own PRs.
 
-For rollback or roll-forward, open Actions, select Deploy approval app, choose Run workflow on branch main, and enter the full SHA of a previously built pipeline image in image_tag. This reuses the stored digest and skips build, tests and migration. It preserves the current database schema. Use images from releases that provide `/api/version`. Leave image_tag empty to rerun the full quality/build/migrate/release path for current main.
+For rollback after a new enum state has been stored, first run **Build enum-compatible rollback image** with the full source SHA whose application behavior should be restored. It publishes an immutable `rollback-<source-sha>` image with `WITHDRAWN` enum support. Then run **Deploy approval app** on `main` and set `image_tag` to that rollback tag. The deploy script verifies the compatibility and source labels, reuses the image digest, skips migrations, and records the original source SHA. Bare historical SHA images are rejected because old Prisma clients can fail to read new enum rows. Do not reuse the unmodified pre-withdrawal image after a WITHDRAWN record exists. Leave `image_tag` empty for a standard main release that runs quality checks, migrations, build and deploy.
 
 ## Verified automated release (C-06)
 
