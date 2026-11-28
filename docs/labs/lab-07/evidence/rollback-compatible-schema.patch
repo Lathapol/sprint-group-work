@@ -1,0 +1,11 @@
+--- a/prisma/schema.prisma
++++ b/prisma/schema.prisma
+@@
+ enum RequestState {
+   PENDING
+   IN_REVIEW
+   RETURNED
+   APPROVED
+   REJECTED
++  WITHDRAWN
+ }

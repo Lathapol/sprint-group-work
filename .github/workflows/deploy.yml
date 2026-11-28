@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       image_tag:
-        description: 'Optional full commit SHA of an existing image for rollback/roll-forward'
+        description: 'Use rollback-<40-char-source-sha> for an enum-compatible image; bare historical images are blocked'
         required: false
         type: string
 
@@ -27,8 +27,8 @@ jobs:
           IMAGE_TAG: ${{ inputs.image_tag }}
         run: |
           test "$SOURCE_REF" = refs/heads/main
-          if [[ -n "$IMAGE_TAG" && ! "$IMAGE_TAG" =~ ^[0-9a-f]{40}$ ]]; then
-            echo 'image_tag must be a full 40-character commit SHA.' >&2
+          if [[ -n "$IMAGE_TAG" && ! "$IMAGE_TAG" =~ ^rollback-[0-9a-f]{40}$ ]]; then
+            echo 'Manual rollback requires a published rollback-<40-char-source-sha> compatibility image tag.' >&2
             exit 1
           fi
 
@@ -66,11 +66,12 @@ jobs:
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
       - uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3
+      - name: Configure Artifact Registry authentication
+        run: gcloud auth configure-docker "$GCP_REGION-docker.pkg.dev" --quiet
       - name: Build and push commit images
         if: ${{ !inputs.image_tag }}
         run: |
           IMAGE_BASE="$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/approvals"
-          gcloud auth configure-docker "$GCP_REGION-docker.pkg.dev" --quiet
           docker build -t "$IMAGE_BASE/app:$IMAGE_TAG" .
           docker build --target migration -t "$IMAGE_BASE/migration:$IMAGE_TAG" .
           docker push "$IMAGE_BASE/app:$IMAGE_TAG"
@@ -78,12 +79,13 @@ jobs:
       - name: Migrate and release by digest
         run: bash deploy/release.sh
       - name: Read-only live smoke test
-        run: python deploy/smoke_test.py "$SERVICE_URL" "$IMAGE_TAG"
+        run: python deploy/smoke_test.py "$SERVICE_URL" "$RELEASE_COMMIT"
       - name: Record release
         run: |
           {
             echo '### Approval app release'
-            echo "Commit image tag: $IMAGE_TAG"
+            echo "Image tag: $IMAGE_TAG"
+            echo "Source commit: $RELEASE_COMMIT"
             echo "Image: $APP_IMAGE"
             echo "Revision: $SERVICE_REVISION"
             echo "Public URL: $SERVICE_URL"

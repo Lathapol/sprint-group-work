@@ -78,7 +78,7 @@ Each key is an actual file/test name at R, not a fabricated TEST-ID implementati
 
 Genuine preimplementation RED/GREEN remains versioned: [F06](deliverable-2/evidence/F06/README.md) RED15f2434, API GREEN0505773/UI972a578; [F07](deliverable-2/evidence/F07/README.md) REDf1fac68/UI71a1008, GREEN66c5d54, state checks a86ea85; [F08](deliverable-2/evidence/F08/README.md) REDd81325e, first implementation519c492 had real maximum-date failures, fixed f93e156, UI regression07a9720; [F10](deliverable-2/evidence/F10/README.md) REDc2367f2, implementation a089d15, clean regression7b26ca2. Logs retain intermediate failures rather than hiding them. These historical short SHAs resolve through retained logs/Git; they are not all the current deployed version.
 
-`test/release.test.cjs` checks migration-before-rollout, schema-preserving existing-image rollback and invalid tags using a stub gcloud. These are not real GCP deployment tests; L2/L3 supply that separate evidence. Historical UAT6-03 is case-specific PASS at 8bc9448/approvals-r45190529393-1, not blanket independent acceptance of R.
+`test/release.test.cjs` checks migration-before-rollout, compatibility-labelled rollback image selection, source SHA labels, migration skipping, rejection of bare historical images and invalid tags using stub gcloud/docker commands. These are not real GCP deployment tests; L2/L3 supply that separate evidence. Historical UAT6-03 is case-specific PASS at 8bc9448/approvals-r45190529393-1, not blanket independent acceptance of R.
 
 ## 3. Every AC: implemented versus executed verification
 

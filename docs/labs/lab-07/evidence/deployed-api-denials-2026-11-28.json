@@ -1,0 +1,62 @@
+{
+  "capturedAt": "2026-11-28T09:30:43.321Z",
+  "release": {
+    "commit": "1a514748d930a90a864f180696bea284fc64c289",
+    "revision": "approvals-r46129131935-1",
+    "url": "https://approvals-389973748230.asia-southeast1.run.app"
+  },
+  "roles": {
+    "requester1": "REQUESTER",
+    "requester2": "REQUESTER",
+    "reviewer1": "REVIEWER"
+  },
+  "before": {
+    "count": 24,
+    "stateCounts": {
+      "IN_REVIEW": 3,
+      "APPROVED": 8,
+      "WITHDRAWN": 2,
+      "REJECTED": 6,
+      "PENDING": 5
+    },
+    "sha256": "42b2d4bc4a72b8b6085017df8554f666b8c955e1580f7794037ba5355c1fc1ea"
+  },
+  "denials": [
+    {
+      "case": "owner_claimed",
+      "expected": 409,
+      "status": 409,
+      "code": "INVALID_TRANSITION"
+    },
+    {
+      "case": "other_requester",
+      "expected": 404,
+      "status": 404,
+      "code": "NOT_FOUND"
+    },
+    {
+      "case": "reviewer",
+      "expected": 403,
+      "status": 403,
+      "code": "FORBIDDEN"
+    }
+  ],
+  "after": {
+    "count": 24,
+    "stateCounts": {
+      "IN_REVIEW": 3,
+      "APPROVED": 8,
+      "WITHDRAWN": 2,
+      "REJECTED": 6,
+      "PENDING": 5
+    },
+    "sha256": "42b2d4bc4a72b8b6085017df8554f666b8c955e1580f7794037ba5355c1fc1ea"
+  },
+  "request24Final": {
+    "status": 200,
+    "state": "IN_REVIEW",
+    "reviewer": "reviewer1"
+  },
+  "allExpected": true,
+  "snapshotUnchanged": true
+}
