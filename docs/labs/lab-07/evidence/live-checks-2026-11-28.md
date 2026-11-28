@@ -70,3 +70,13 @@ These observations were added after the checks above, using the same deployed ap
 
 - Signed in as `reviewer1` (`REVIEWER`) and opened `/requests/24` on 2026-11-28. The app showed status `In review`, reviewer `reviewer1`, and the two expected history events.
 - The reviewer page exposed `Approve`, `Reject`, and `Return request` controls and no withdrawal control. This records the visible UI; it is not a direct API-role-denial test and no withdrawal POST was sent.
+
+## Automated withdrawal API and preservation evidence
+
+The deployed browser checks above did not send direct withdrawal API requests. The isolated integration tests do exercise those API responses and verify that denied attempts do not mutate the synthetic test records:
+
+- `test/withdrawals.test.cjs`, `TEST-12-02/03`: reviewer withdrawal -> HTTP 403; another requester -> HTTP 404; owner withdrawal after reviewer claim -> HTTP 409. The test checks the request remains `IN_REVIEW` and the history count is unchanged.
+- `test/withdrawals.test.cjs`, `TEST-12-01`: successful owner withdrawal returns HTTP 200, retains the original fields, writes exactly one history event, and a repeat withdrawal returns HTTP 409.
+- CI run [#46125181878](https://github.com/Lathapol/sprint-group-work/actions/runs/46125181878) passed on commit `56d4b653168b8bd4bd45620c521a3bbcf3c14914`; its job ran `npm test`, Playwright end-to-end tests, and the Docker build.
+
+These are automated isolated-database results, not direct API responses from the deployed database. The broad production before/after comparison, screenshot files, and student sign-offs remain outstanding.
