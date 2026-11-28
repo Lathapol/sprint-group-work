@@ -27,4 +27,16 @@
 
 ## Remaining operational step
 
-The compatible image is published. Release/build workflow changes are implemented locally and covered by five targeted release tests. They are not yet merged into the repository's main deployment workflow, and no Cloud Run revision was created for the rollback candidate. After the code change is reviewed/merged, run the rollback deployment as a no-traffic revision and verify health/version before marking operational rollback readiness accepted. One rollback-compatible image was added to Artifact Registry. No production Cloud Run service/traffic or database was changed.
+## Live zero-traffic Cloud Run rehearsal and current request/history comparison
+
+PR #111 merged as `cc31823a1fbb9f9810790324e3a806e255e02633`. Actions run #46136439520 deployed main revision `approvals-r46136439520-1` with 100% traffic. The published enum-compatible image was deployed separately as revision `approvals-lab7rb28`, tagged `lab7rb28`, at 0% traffic. Cloud Run reported the revision Ready and ContainerHealthy. The main revision continued receiving all service traffic.
+
+Read-only calls to the candidate returned HTTP 200 for health, version (source SHA `0334c966c396912dfaf2e309e044753f11d4e47c`), requester1 login, request list, request #22 detail, and request #22 history. Request #22 remained `WITHDRAWN`, reviewer unassigned, with both events intact (`null -> PENDING`, then `PENDING -> WITHDRAWN`).
+
+Reviewer1 listed all 24 reviewer-visible requests and their complete API histories from both the current main revision and the tagged rollback candidate. Both returned 24 records with state counts APPROVED 8, IN_REVIEW 3, PENDING 5, REJECTED 6, WITHDRAWN 2. SHA-256 of the serialized request/history sets was identical on both: `729fcf1fc127970bb9c746d8ecf1853d3b0b241b22877cfda6719e7f8978c59e`. No mutations were performed during comparison. Machine-readable observations are in `rollback-live-revision-2026-11-28.json`.
+
+## Acceptance disposition
+
+Scoped operational rollback and current request/history equivalence acceptance **passed**: the compatible target passed isolated tests and a live zero-traffic Cloud Run rehearsal; the release guard was merged; and the complete reviewer-visible set of requests and histories matched across main and candidate. The exact unmodified historical image remains incompatible and must not be selected. Main stayed at 100% traffic and the candidate stayed at 0% during the rehearsal.
+
+The comparison proves current equality across the two revisions for the 24 reviewer-visible records and their exposed histories, not equality for inaccessible database tables or a global pre/post-migration state. No complete database-wide pre-rollout export was retained. Preserve that limitation in the submission.

@@ -1,0 +1,61 @@
+{
+  "observedAt": "2026-11-28",
+  "purpose": "Read-only zero-traffic Cloud Run rollback rehearsal and current request/history equivalence comparison",
+  "deployment": {
+    "mergedPullRequest": 111,
+    "mergeCommit": "cc31823a1fbb9f9810790324e3a806e255e02633",
+    "actionsRun": 46136439520,
+    "mainRevision": "approvals-r46136439520-1",
+    "mainTrafficPercent": 100,
+    "mainImageDigest": "sha256:6086031d2f4e7269d221f17983ba98baadf23fe8d9803ae52b7701966401d2ce"
+  },
+  "rollbackCandidate": {
+    "revision": "approvals-lab7rb28",
+    "trafficTag": "lab7rb28",
+    "url": "https://lab7rb28---approvals-ia5ybuqdoq-as.a.run.app",
+    "allocatedTrafficPercent": 0,
+    "ready": true,
+    "containerHealthy": true,
+    "sourceCommit": "0334c966c396912dfaf2e309e044753f11d4e47c",
+    "releaseMode": "rollback-compatible",
+    "registryTag": "asia-southeast1-docker.pkg.dev/vertical-set-514506-g8/approvals/app:rollback-0334c966c396912dfaf2e309e044753f11d4e47c",
+    "registryManifestDigest": "sha256:a01e2edf25c473a1082da316725683128dc91c8635cdb004516945e4b7cfb44a",
+    "cloudRunPlatformImageDigest": "sha256:68e9f2257cf5d3c9dc30347e32ba22fcbcd0b701668bf4b3bc5d60e9e5e9ffbd"
+  },
+  "readOnlyChecks": {
+    "health": {"status": 200, "result": "ok"},
+    "version": {"status": 200, "commit": "0334c966c396912dfaf2e309e044753f11d4e47c"},
+    "requesterLogin": {"status": 200},
+    "request22": {
+      "listStatus": 200,
+      "detailStatus": 200,
+      "state": "WITHDRAWN",
+      "title": "Lab7 owner withdrawal live 2026-11-28",
+      "amount": 149.75,
+      "reviewerId": null,
+      "historyStatus": 200,
+      "historyEvents": 2,
+      "historyTransitions": ["null -> PENDING", "PENDING -> WITHDRAWN"],
+      "withdrawalReason": "Requester withdrew the request.",
+      "withdrawalActor": "requester1"
+    }
+  },
+  "crossRevisionComparison": {
+    "principal": "reviewer1",
+    "mainListStatus": 200,
+    "candidateListStatus": 200,
+    "mainRecordCount": 24,
+    "candidateRecordCount": 24,
+    "mainStateCounts": {"APPROVED": 8, "IN_REVIEW": 3, "PENDING": 5, "REJECTED": 6, "WITHDRAWN": 2},
+    "candidateStateCounts": {"APPROVED": 8, "IN_REVIEW": 3, "PENDING": 5, "REJECTED": 6, "WITHDRAWN": 2},
+    "serializedRequestsAndHistoriesSha256Main": "729fcf1fc127970bb9c746d8ecf1853d3b0b241b22877cfda6719e7f8978c59e",
+    "serializedRequestsAndHistoriesSha256Candidate": "729fcf1fc127970bb9c746d8ecf1853d3b0b241b22877cfda6719e7f8978c59e",
+    "identical": true,
+    "mutationsDuringComparison": 0
+  },
+  "scopeLimitations": [
+    "The comparison covers the complete 24-record reviewer-visible request set and all histories exposed by that API on both revisions.",
+    "No complete database-wide pre-rollout export was retained; this does not prove equality for inaccessible tables or a global pre/post migration comparison.",
+    "The candidate revision was tagged and Ready at 0% traffic; the main revision continued serving 100% of traffic."
+  ]
+}
