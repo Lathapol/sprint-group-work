@@ -372,9 +372,10 @@ story += [P("Part D | Contributions, AI use and final review", "H1x"),
              ["Codex AI assistance", "Drafted/edited code, tests, workflow/evidence docs and this report; inspected repository/API/Actions; executed tool-assisted authenticated UI checks with synthetic accounts on the deployed app. No independent student execution or acceptance is claimed.", "AI output is not student review. Both students own the submitted work and must verify every claim."]], [134, 226, 143]),
           Spacer(1, 5), P("Limitations and sign-off", "H2x"),
           T([["Before submission", "Status"],
-             ["Authenticated live owner-withdrawal and normal decision checks on approvals-r45996592434-1", "Recorded as tool-assisted, requests #22/#23; friend-reported negative checks still need IDs/timestamps/evidence"],
-             ["Existing-data before/after comparison; confirm no unrelated records changed", "Not captured as a full comparison; no shared record was intentionally modified"],
-             ["Lathapol review of release update; confirm contribution/retrospective text", "Approved PR #108 and approved the updated PR #109 after requesting history corrections; D-section confirmation PENDING"],
+             ["Authenticated live checks on approvals-r45996592434-1", "Requests #22/#23 owner and normal flows; #24 owner-after-claim, requester2 visibility and reviewer UI checks. CI #46125181878 passed isolated 403/404/409 API tests; deployed API status not separately captured."],
+             ["Existing-data before/after comparison", "No production-wide before/after export. CI checked retained fields/history and no extra event after the claimed-state denial."],
+             ["Saved live screenshots", "No screenshot files attached to this draft; live observations are transcribed in the evidence log."],
+            ["Lathapol review of release update; confirm contribution/retrospective text", "Approved PR #108 and approved the updated PR #109 after requesting history corrections; D-section confirmation PENDING"],
              ["Kittakorn-P review of complete PDF and confirm contribution/retrospective text", "PENDING"],
              ["Both students confirm actual pair work and approve the contribution table", "PENDING"],
              ["Freeze a final main SHA/tag after all edits", "PENDING; current evidence uses ee4652bb / approvals-r45996592434-1"]], [294, 209]),
@@ -397,6 +398,26 @@ story += [P("Evidence index and reproduction references", "H1x"),
           P(f"Repository: {link('https://github.com/Lathapol/sprint-group-work','github.com/Lathapol/sprint-group-work')} | Current main: ee4652bb | Current revision: approvals-r45996592434-1 | App: https://approvals-389973748230.asia-southeast1.run.app", "Smallx"),
           P("This PDF embeds the relevant summaries and source lists so issue/PR/Actions links are corroboration, not the only evidence. No passwords, tokens or real user data are included.", "Smallx"),
           cap("E-01", "Locate each included claim by evidence ID", "Every section identifies the actual source and remaining limitations", "27 Nov 2026", "This self-contained report draft")]
+
+
+# Page 18 - additional authenticated live observations and automated API results
+story += [PageBreak(), P("Part D | Additional live checks and API regression evidence", "H1x"),
+          box("STATUS: TEAM REVIEW DRAFT - NOT READY FOR LEB2 SUBMISSION", LIGHT_RED, RED),
+          Spacer(1, 5), P("Authenticated app observations on 28 Nov 2026", "H2x"),
+          T([["Case", "Observed result"],
+             ["#24 owner-after-claim", "requester1 created the synthetic Purchase request (THB 1) at 07:35:01 UTC; reviewer1 claimed it at 07:58:53 UTC. In review page showed no withdrawal control."],
+             ["#24 other requester", "requester2 opening /requests/24 saw Request not found."],
+             ["#24 reviewer UI", "reviewer1 saw In review, assigned reviewer1, and Approve/Reject/Return controls; no withdrawal control."],
+             ["#21 retained history", "requester1 saw Withdrawn, Purchase, THB 25, Unassigned. History remained Created -> Pending (13:26:14 UTC) and Pending -> Withdrawn (13:26:22 UTC), reason Requester withdrew the request."]], [125, 378]),
+          Spacer(1, 5), P("Isolated automated API results", "H2x"),
+          T([["Test", "Assertion and recorded result"],
+             ["TEST-12-02/03; test/withdrawals.test.cjs", "Reviewer -> HTTP 403; unrelated requester -> HTTP 404; owner after claim -> HTTP 409. The test asserts state remains IN_REVIEW and history count is unchanged."],
+             ["TEST-12-01; test/withdrawals.test.cjs", "Eligible owner -> HTTP 200; original request fields retained; exactly one withdrawal history row; repeat attempt -> HTTP 409."],
+             ["CI run #46125181878", "Passed on commit 56d4b653168b8bd4bd45620c521a3bbcf3c14914. npm test, Playwright end-to-end tests, and Docker build passed. This is isolated CI evidence, not an API call to the deployed database."]], [125, 378]),
+          Spacer(1, 5), P("Remaining before final submission", "H2x"),
+          P("A complete production before/after export was not captured. No live screenshot files are attached; the observations are transcribed in the evidence log. PR #110 still needs teammate review. Both students must review the contribution table and retrospective and record their sign-offs. Keep the draft marking until these human and evidence steps are complete.", "Bodyx"),
+          P(f"Evidence log: {link('https://github.com/Lathapol/sprint-group-work/blob/docs/lab7-live-check-evidence/docs/labs/lab-07/evidence/live-checks-2026-11-28.md','PR #110 branch evidence')} | CI: {link('https://github.com/Lathapol/sprint-group-work/actions/runs/46125181878','run #46125181878')}", "Smallx"),
+          cap("B-11", "Record additional post-deployment checks and separate isolated API results", "UI observations and isolated 403/404/409 tests passed; production-wide data comparison and student sign-offs remain pending", "28 Nov 2026", "Requests #21/#24; test/withdrawals.test.cjs; Actions run #46125181878; PR #110")]
 
 doc = SimpleDocTemplate(str(OUTPUT), pagesize=A4, leftMargin=48, rightMargin=48, topMargin=43, bottomMargin=39, title="CPE 334 Lab 7 - Sprint 1 Maintenance - Team Review Draft 28 Nov 2026", author="Workflow and Approval System Team", subject="Self-contained Lab 7 evidence draft")
 doc.build(story, onFirstPage=on_page, onLaterPages=on_page)
