@@ -38,8 +38,7 @@ The final history contains exactly the three expected events, in order: Created 
 
 ## Scope and limits
 
-- These browser observations were against the release commit/revision listed above. The request details/history pages are the retained browser evidence; no screenshot file was saved during the session.
-- The colleague separately reported completing Reviewer/other-Requester denial and claimed-request checks. This record does not have that tester's request IDs, timestamps, or attached evidence, so it does not count those cases as independently verified here.
+- These browser observations were against the release commit/revision listed above. The request details/history pages are the retained browser evidence; screenshots are not saved as repository evidence.
 - A before/after export of every pre-existing record was not captured. The checks did not mutate records #1-#21, but this is not a complete database-wide equality proof.
 - Both students still need to review the contribution table and confirm or edit the retrospective answers. Keep the submission PDF marked as a review draft until their review and the remaining evidence are complete.
 
@@ -64,7 +63,7 @@ These observations were added after the checks above, using the same deployed ap
 
 - The browser views were observed live, but no screenshot files were saved or attached to this repository during these checks.
 - No direct POST to the withdrawal endpoint was made for request #24; the expected backend denial response is therefore not recorded.
-- Reviewer-role denial, broad historical-data comparison, teammate review/sign-offs, and final PDF approval remain outstanding. This evidence addendum does not make the draft ready to submit.
+- Reviewer-role denial API behavior, broad historical-data comparison, teammate review/sign-offs, and final PDF approval remain outstanding. This evidence addendum does not make the draft ready to submit.
 
 ### Reviewer view of claimed request #24
 
