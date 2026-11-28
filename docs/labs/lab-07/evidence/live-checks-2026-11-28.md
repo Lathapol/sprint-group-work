@@ -42,3 +42,26 @@ The final history contains exactly the three expected events, in order: Created 
 - The colleague separately reported completing Reviewer/other-Requester denial and claimed-request checks. This record does not have that tester's request IDs, timestamps, or attached evidence, so it does not count those cases as independently verified here.
 - A before/after export of every pre-existing record was not captured. The checks did not mutate records #1-#21, but this is not a complete database-wide equality proof.
 - Both students still need to review the contribution table and confirm or edit the retrospective answers. Keep the submission PDF marked as a review draft until their review and the remaining evidence are complete.
+
+## Additional authenticated checks - 2026-11-28
+
+These observations were added after the checks above, using the same deployed app. Timestamps below are the UTC timestamps displayed in the app.
+
+### Claimed-request withdrawal and cross-requester visibility - request #24
+
+- Test account `requester1` created the synthetic request `Lab 7 claimed-withdrawal denial UAT - 2026-11-28` at `2026-11-28 07:35:01 UTC` (Purchase, THB 1; no real purchase).
+- Test account `reviewer1` claimed it at `2026-11-28 07:58:53 UTC`. The detail page showed `In review`, assigned reviewer `reviewer1`, and a Pending -> In review history event.
+- After switching back to the owner `requester1`, the request remained `In review` and the page exposed no withdrawal action. The history remained the two expected events (Created -> Pending; Pending -> In review). No withdrawal request was sent, so this verifies the UI restriction, not the backend rejection response.
+- Signed in as `requester2` and opened `/requests/24`; the app displayed `Request not found`. This verifies cross-requester detail visibility denial for this synthetic record. It does not test the reviewer-role denial or direct API behavior.
+
+### Existing withdrawn record inspection - request #21
+
+- Signed in as owner `requester1` and inspected `/requests/21`: the page showed `Withdrawn`, Purchase, THB 25, reviewer `Unassigned`.
+- History showed exactly two events: Created -> Pending by requester1 at `2026-11-27 13:26:14 UTC`, then Pending -> Withdrawn by requester1 at `2026-11-27 13:26:22 UTC`, with reason `Requester withdrew the request.`
+- This is a targeted inspection of request #21 only. It is not a before/after comparison or proof that all historical records are unchanged.
+
+### Evidence limits and remaining work
+
+- The browser views were observed live, but no screenshot files were saved or attached to this repository during these checks.
+- No direct POST to the withdrawal endpoint was made for request #24; the expected backend denial response is therefore not recorded.
+- Reviewer-role denial, broad historical-data comparison, teammate review/sign-offs, and final PDF approval remain outstanding. This evidence addendum does not make the draft ready to submit.
